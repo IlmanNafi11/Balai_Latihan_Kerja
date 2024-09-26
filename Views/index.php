@@ -20,7 +20,7 @@
 
 <body>
 <!--        ROOT Container      -->
-<div class="container-fluid m-0 p-0 w-100 h-100 d-flex">
+<div class="container-fluid root-container-login m-0 p-0 w-100 h-100 d-flex">
     <div class="container-login d-flex flex-column align-items-center justify-content-center rounded py-4">
         <div class="inner-container">
             <div class="title-container">
