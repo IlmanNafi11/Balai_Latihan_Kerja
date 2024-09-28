@@ -41,10 +41,9 @@ body
 }
 
 /* 
-    Container dashboard
+    Main root Container content
 */
-
-.dashboard-root-container
+.main-root-container
 {
     min-height: 100vh !important;
 }
@@ -230,10 +229,24 @@ body
     background-color: #F8F9FA;
 }
 
-.avatar.card-items.content-icon
+/* 
+    Table Column Actions
+*/
+.table tbody tr td a{
+    text-decoration: none;
+}
+
+/* 
+    Form input institusi
+*/
+.container-form-input
 {
-    /* width: 70px;
-    height: 70px; */
+    min-height: 100% !important;
+}
+
+.input-deskripsi-institusi textarea
+{
+    resize: none;
 }
 
 /*
@@ -256,6 +269,11 @@ body
     .card-items-dashboard-informations
     {
         width: 100%;
+    }
+
+    .form-institute-container
+    {
+        flex-direction: column;
     }
 }
 
