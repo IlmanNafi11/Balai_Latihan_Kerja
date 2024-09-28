@@ -35,16 +35,16 @@
     <hr>
     <div class="slider-menu d-flex flex-column flex-grow-1 w-100 px-4">
         <ul class="d-flex flex-column row-gap-2">
-            <li class="list-menu"><a href="#">Beranda</a></li>
-            <li class="list-menu"><a href="#">Kelola Institusi</a></li>
-            <li class="list-menu"><a href="#">Kelola Kejuruan</a></li>
-            <li class="list-menu"><a href="#">Kelola Program</a></li>
-            <li class="list-menu"><a href="#">Kelola Gedung</a></li>
-            <li class="list-menu"><a href="#">Kelola Alat</a></li>
-            <li class="list-menu"><a href="#">Kelola Instruktor</a></li>
-            <li class="list-menu"><a href="#">Kelola Pendaftaran</a></li>
-            <li class="list-menu"><a href="#">Kelola Notifikasi</a></li>
-            <li class="list-menu"><a href="#">Kelola Pengguna</a></li>
+            <li class="list-menu"><a href="../Dashboard/dashboard.php">Beranda</a></li>
+            <li class="list-menu"><a href="../Institute/institute.php">Kelola Institusi</a></li>
+            <li class="list-menu"><a href="../Departments/departments.php">Kelola Kejuruan</a></li>
+            <li class="list-menu"><a href="../Programs/programs.php">Kelola Program</a></li>
+            <li class="list-menu"><a href="../Building/building.php">Kelola Gedung</a></li>
+            <li class="list-menu"><a href="../ToolsManagement/tool.php">Kelola Alat</a></li>
+            <li class="list-menu"><a href="../Instructors/instructors.php">Kelola Instruktor</a></li>
+            <li class="list-menu"><a href="../Registers/registrantData.php">Kelola Pendaftaran</a></li>
+            <li class="list-menu"><a href="../Notifications/notifications.php">Kelola Notifikasi</a></li>
+            <li class="list-menu"><a href="../UserManagements/userManagement.php">Kelola Pengguna</a></li>
         </ul>
     </div>
     <div class="slider-logout-navigations d-flex align-items-center column-gap-2">
