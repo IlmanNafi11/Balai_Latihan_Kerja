@@ -59,7 +59,7 @@
             <!-- Form -->
             <form action="" method="post" class="mt-3">
                 <div class="form-profile-admin-container d-flex column-gap-4 row-gap-3">
-                <div class="container-form-input flex-grow-1">
+                <div class="container-form-input flex-grow-1 d-flex flex-column column-gap-4 row-gap-3">
                     <div class="input-nama-admin">
                         <label for="nama-admin" class="form-label">Nama</label>
                         <input type="text" name="nama-admin" id="nama-admin" class="form-control" placeholder="Nama"
@@ -71,7 +71,7 @@
                             placeholder="Nomor Telepon" value="085234232134" required>
                     </div>
                 </div>
-                <div class="container-form-input flex-grow-1">
+                <div class="container-form-input flex-grow-1 d-flex flex-column column-gap-4 row-gap-3">
                     <div class="input-email-admin">
                         <label for="email-admin" class="form-label">Email</label>
                         <input type="email" name="email-admin" id="email-admin" class="form-control" placeholder="Email"
