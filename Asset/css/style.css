@@ -113,7 +113,7 @@ body
 .slider-navigation
 {
     position: fixed;
-    background-color: #FF9228;
+    background: linear-gradient(177deg, rgba(255,146,40,1) 45%, rgba(249,101,91,1) 99%);
     width: 250px;
     height: calc(100% - 60px);
     right: -250px;
