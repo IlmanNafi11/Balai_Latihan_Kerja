@@ -271,7 +271,7 @@ body
         width: 100%;
     }
 
-    .form-institute-container, .form-department-container, .form-program-container, .form-building-container
+    .form-institute-container, .form-department-container, .form-program-container, .form-building-container, .form-alat-container
     {
         flex-direction: column;
     }
