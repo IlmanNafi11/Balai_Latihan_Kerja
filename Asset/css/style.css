@@ -288,6 +288,44 @@ input[type="file"] {
     display: none;
 }
 
+/* 
+    profile admin
+*/
+
+.hero-container-section
+{
+    background-image:url(../images/background-hero.png), linear-gradient(133deg, rgba(238,130,26,1) 40%, rgba(249,101,91,1) 99%);
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.avatar-profile-admin
+{
+    max-width: 180px;
+    max-height: 180px;
+    min-height: 90px;
+    min-width: 90px;
+}
+
+.subtitle-admin-profile
+{
+    text-align: center;
+    color: #fff;
+    font-family: 'Saira', 'Inter', sans-serif;
+}
+
+.subtitle-admin-profile span
+{
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+.subtitle-admin-profile small
+{
+    font-size: 0.9rem;
+    font-weight: 400;
+}
+
 /*
     Media query
 */
@@ -310,7 +348,7 @@ input[type="file"] {
         width: 100%;
     }
 
-    .form-institute-container, .form-department-container, .form-program-container, .form-building-container, .form-alat-container, .form-instruktor-container, .form-add-admin-container
+    .form-institute-container, .form-department-container, .form-program-container, .form-building-container, .form-alat-container, .form-instruktor-container, .form-add-admin-container, .form-profile-admin-container
     {
         flex-direction: column;
     }
