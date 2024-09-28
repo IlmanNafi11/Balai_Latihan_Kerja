@@ -119,7 +119,7 @@
                             <input type="url" name="link-website" id="link-website" class="form-control"
                                 placeholder="Contoh : https://kelembagaan.kemnaker.go.id/" required>
                         </div>
-                        <div class="input-deskripsi-institusi flex-grow-1 d-flex flex-column">
+                        <div class="input-deskripsi-form flex-grow-1 d-flex flex-column">
                             <label class="form-label" for="deskripsi-institusi">Deskripsi</label>
                             <textarea name="deskripsi-institusi" id="deskripsi-institusi"
                                 class="form-control flex-grow-1"
@@ -127,7 +127,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="button-action-container my-3 d-flex w-100 h-auto justify-content-end column-gap-2">
+                <div class="button-action-container-form my-3 d-flex w-100 h-auto justify-content-end column-gap-2">
                     <a href=""><button class="btn btn-primary">Simpan</button></a>
                     <a href="institute.php"><button class="btn btn-danger" type="button">Batal</button></a>
                 </div>
