@@ -31,7 +31,7 @@
 
 <body>
     <!-- ROOT Container -->
-    <div class="container-fluid main-root-container w-100 h-100">
+    <div class="container-fluid main-root-container w-100 h-100 p-0 m-0">
         <!-- Navbar -->
         <?php require_once '../Layout/navbar.php' ?>
 
