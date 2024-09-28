@@ -249,6 +249,45 @@ body
     resize: none;
 }
 
+/* 
+    Upload foto instructor
+*/
+
+.upload-area {
+    border: 2px dashed #cccccc;
+    border-radius: 12px;
+    text-align: center;
+    transition: border 0.3s ease;
+}
+
+.upload-area img {
+    max-width: 100px;
+}
+
+.upload-area:hover {
+    border-color: #FF9228;
+}
+
+.upload-area.dragover {
+    border-color: #FF9228;
+}
+
+.upload-area p {
+    font-size: 18px;
+    color: #666;
+    margin: 10px 0 0;
+}
+
+.upload-area small {
+    display: block;
+    font-size: 12px;
+    color: #999;
+}
+
+input[type="file"] {
+    display: none;
+}
+
 /*
     Media query
 */
@@ -271,7 +310,7 @@ body
         width: 100%;
     }
 
-    .form-institute-container, .form-department-container, .form-program-container, .form-building-container, .form-alat-container
+    .form-institute-container, .form-department-container, .form-program-container, .form-building-container, .form-alat-container, .form-instruktor-container
     {
         flex-direction: column;
     }
