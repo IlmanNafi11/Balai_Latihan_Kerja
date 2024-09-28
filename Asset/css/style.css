@@ -187,12 +187,13 @@ body
     color: #fff;
     width: 100%;
     display: block;
-    padding: 2px 5px;
+    padding: 10px 8px;
 }
 
-.list-menu > a:hover
+.list-menu > a:hover, .slider-logout-navigations:hover
 {
     background-color: #f0f0f02a;
+    border-radius: 6px;
 }
 
 .slider-logout-navigations > a
@@ -202,6 +203,11 @@ body
     font-size: 1rem;
     color: #fff;
     text-decoration: none;
+}
+
+.slider-logout-navigations
+{
+    padding: 10px 8px;
 }
 
 /* 
