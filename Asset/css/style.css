@@ -310,7 +310,7 @@ input[type="file"] {
         width: 100%;
     }
 
-    .form-institute-container, .form-department-container, .form-program-container, .form-building-container, .form-alat-container, .form-instruktor-container
+    .form-institute-container, .form-department-container, .form-program-container, .form-building-container, .form-alat-container, .form-instruktor-container, .form-add-admin-container
     {
         flex-direction: column;
     }
