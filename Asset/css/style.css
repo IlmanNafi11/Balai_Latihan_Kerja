@@ -326,6 +326,17 @@ input[type="file"] {
     font-weight: 400;
 }
 
+.avatar-camera-change
+{
+    background-color: rgba(0, 0, 0, 0.36);
+}
+
+.changes-foto-profile-container
+{
+    bottom: -4px;
+    right: 5px;
+}
+
 /*
     Media query
 */
