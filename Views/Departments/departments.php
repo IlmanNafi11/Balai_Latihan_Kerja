@@ -32,7 +32,7 @@
 <body>
     <div class="container-fluid main-root-container m-0 p-0 w-100 h-100">
 
-        <?php require_once '../Layout/navbar.php' ?>
+        <?php require_once '../../Views/Layout/navbar.php' ?>
 
         <div class="container-fluid container-content d-flex flex-column">
             <!-- Breadcrumb -->
@@ -43,7 +43,7 @@
                 </ol>
             </nav>
 
-            <?php require_once '../Layout/Tables/departmentsTables.php' ?>
+            <?php require_once '../../Views/Layout/Tables/departmentsTables.php' ?>
 
             <!-- Noted : tambahkan kondisional untuk melacak jumlah minimum data kemunculan pagination -->
             <!-- Pagination -->
@@ -81,6 +81,12 @@
 
     <!-- Custom Js-->
     <script src="../../Asset/js/script.js"></script>
+
+    <!-- AXIOS -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <!-- Sweet Alert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 </body>
 
