@@ -1,4 +1,4 @@
 <?php
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-require_once '../Routes/web.php';
+require_once '../vendor/autoload.php';
+require_once '../App/Config/Database.php';
+require_once '../App/Routes/web.php';
