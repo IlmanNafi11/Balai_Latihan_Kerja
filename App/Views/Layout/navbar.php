@@ -2,7 +2,7 @@
 <nav class="top-navbar d-flex px-3 py-2 justify-content-between align-items-center">
     <div class="navbar-title-container d-flex align-items-center column-gap-3 h-100 w-auto">
         <div class="logo-blk-container">
-            <img src="../../../Public/Asset/images/logo-blk.png" alt="logo BLK">
+            <img src="/Asset/images/logo-blk.png" alt="logo BLK">
         </div>
         <div class="navbar-title-container">
             <span>Balai Latihan Kerja</span>
@@ -11,7 +11,7 @@
 
     <div class="sidebar-navigations d-flex column-gap-3 h-100 align-items-center">
         <div class="avatar">
-            <img class="avatar-img w-100 h-100" src="../../../Public/Asset/images/me.jpg" alt="user-profile">
+            <img class="avatar-img w-100 h-100" src="/Asset/images/me.jpg" alt="user-profile">
         </div>
         <div class="hamburger-menu d-flex flex-column justify-content-evenly p-0 m-0 h-100" id="hamburger-menu">
             <span class="hamburger-line"></span>
@@ -25,7 +25,7 @@
 <div class="slider-navigation d-flex flex-column m-0 align-items-center" id="slider-navigation">
     <div class="slider-image-profile-container d-flex flex-column align-items-center row-gap-3 w-100 h-auto">
         <div class="avatar slider-img-avatar overflow-hidden">
-            <img class="avatar-img object-fit-cover" src="../../../Public/Asset/images/me.jpg" alt="user_profile">
+            <img class="avatar-img object-fit-cover" src="/Asset/images/me.jpg" alt="user_profile">
         </div>
         <div class="slider-subtitle-profile-container d-flex flex-column align-items-center">
             <h6>Ilman Nafian</h6>
@@ -35,20 +35,20 @@
     <hr>
     <div class="slider-menu d-flex flex-column flex-grow-1 w-100 px-4">
         <ul class="d-flex flex-column row-gap-2">
-            <li class="list-menu"><a href="../Dashboard/dashboard.php">Beranda</a></li>
-            <li class="list-menu"><a href="../Institute/institute.php">Kelola Institusi</a></li>
-            <li class="list-menu"><a href="../Departments/departments.php">Kelola Kejuruan</a></li>
-            <li class="list-menu"><a href="../Programs/programs.php">Kelola Program</a></li>
-            <li class="list-menu"><a href="../Building/building.php">Kelola Gedung</a></li>
-            <li class="list-menu"><a href="../ToolsManagement/tool.php">Kelola Alat</a></li>
-            <li class="list-menu"><a href="../Instructors/instructors.php">Kelola Instruktor</a></li>
-            <li class="list-menu"><a href="../Registers/registrantData.php">Kelola Pendaftaran</a></li>
-            <li class="list-menu"><a href="../Notifications/notifications.php">Kelola Notifikasi</a></li>
-            <li class="list-menu"><a href="../UserManagements/userManagement.php">Kelola Pengguna</a></li>
+            <li class="list-menu"><a href="/dashboard">Beranda</a></li>
+            <li class="list-menu"><a href="/institute">Kelola Institusi</a></li>
+            <li class="list-menu"><a href="/department">Kelola Kejuruan</a></li>
+            <li class="list-menu"><a href="/programs">Kelola Program</a></li>
+            <li class="list-menu"><a href="/building">Kelola Gedung</a></li>
+            <li class="list-menu"><a href="/tools">Kelola Alat</a></li>
+            <li class="list-menu"><a href="/instructor">Kelola Instruktor</a></li>
+            <li class="list-menu"><a href="/registration">Kelola Pendaftaran</a></li>
+            <li class="list-menu"><a href="/notification">Kelola Notifikasi</a></li>
+            <li class="list-menu"><a href="/user">Kelola Pengguna</a></li>
         </ul>
     </div>
     <div class="slider-logout-navigations d-flex align-items-center column-gap-2">
-        <a href="#"><Span>Keluar</Span></a>
+        <a href="/logout"><Span>Keluar</Span></a>
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#fff" class="bi bi-box-arrow-right"
             viewBox="0 0 16 16">
             <path fill-rule="evenodd"

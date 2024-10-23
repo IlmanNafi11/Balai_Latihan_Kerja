@@ -28,21 +28,21 @@
                 <h3 class="m-0">Selamat Datang</h3>
                 <small>Silahkan login untuk akses penuh.</small>
             </div>
-            <form action="" class="my-2 form-login d-flex flex-column h-100">
+            <form action="/login" method="post" class="my-2 form-login d-flex flex-column h-100">
                 <div class="input-field-container w-100 p-0 m-0 d-flex flex-column row-gap-3">
                     <div class="email-field form-floating w-100 mb-2">
                         <input type="email" name="email" class="form-control" placeholder="Masukan email anda"
                                id="input-email">
                         <label for="email" id="email-label" class="form-label">Email</label>
-                        <div class="valid-feedback"></div>
-                        <div class="invalid-feedback"></div>
+                        <div class="valid-feedback" id="valid-feedback-email"></div>
+                        <div class="invalid-feedback" id="invalid-feedback-email"></div>
                     </div>
                     <div class="password-field form-floating w-100 mb-2">
                         <input type="password" name="password" class="form-control" placeholder="Masukan kata sandi"
                                id="input-password">
                         <label for="password" id="password-label" class="form-label">Kata sandi</label>
-                        <div class="valid-feedback"></div>
-                        <div class="invalid-feedback"></div>
+                        <div class="valid-feedback" id="valid-feedback-password"></div>
+                        <div class="invalid-feedback" id="invalid-feedback-password"></div>
                     </div>
                     <div class="forgot-pass-field mb-4">
                         <small><a href="" class="text-decoration-none label-reference-credensial">Lupa kata
@@ -69,19 +69,7 @@
 <!-- AXIOS -->
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
-<!-- Logic -->
-<script>
-    const loginButton = document.getElementById('login-button');
-    let email = document.getElementById('input-email');
-    let password = document.getElementById('input-password');
-    loginButton.addEventListener('click', (event) => {
-        event.preventDefault();
-        axios.get(/Dashboard).
-        then(response => {
+<script src="/Asset/js/auth/login.js"></script>
 
-        })
-    });
-</script>
 </body>
-
 </html>

@@ -15,7 +15,7 @@
         crossorigin="anonymous">
 
     <!--    Custom Css-->
-    <link rel="stylesheet" href="../../../Public/Asset/css/style.css">
+    <link rel="stylesheet" href="/Asset/css/style.css">
 
     <!-- Font -->
     <link
@@ -34,18 +34,18 @@
     <!-- ROOT Container -->
     <div class="container-fluid main-root-container m-0 p-0 w-100 h-100">
         <!-- Navbar -->
-        <?php require_once '../Layout/navbar.php' ?>
+        <?php require_once '../App/Views/Layout/navbar.php' ?>
         <!-- Container Content -->
         <div class="container-fluid container-content d-flex flex-column">
             <!-- Breadcrumb -->
             <nav aria-label="breadcrumb" class="breadcrumb-content">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="../Dashboard/dashboard.php">Beranda</a></li>
+                    <li class="breadcrumb-item"><a href="dashboard">Beranda</a></li>
                     <li class="breadcrumb-item active" aria-current="page">Alat</li>
                 </ol>
             </nav>
 
-            <?php require_once '../Layout/Tables/toolTables.php' ?>
+            <?php require_once '../App/Views/Layout/Tables/toolTables.php' ?>
 
             <!-- Noted : tambahkan kondisional untuk melacak jumlah minimum data kemunculan pagination -->
             <!-- Pagination -->
@@ -82,7 +82,7 @@
         crossorigin="anonymous"></script>
 
     <!-- Custom Js-->
-    <script src="../../../Public/Asset/js/script.js"></script>
+    <script src="/Asset/js/script.js"></script>
 
 </body>
 

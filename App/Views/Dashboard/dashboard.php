@@ -15,7 +15,7 @@
         crossorigin="anonymous">
 
     <!--    Custom Css-->
-    <link rel="stylesheet" href="../../../Public/Asset/css/style.css">
+    <link rel="stylesheet" href="/Asset/css/style.css">
 
     <!-- Font -->
     <link
@@ -34,7 +34,7 @@
     <div class="container-fluid m-0 p-0 main-root-container h-100 w-100">
         <!--Top Navbar-->
         <?php
-        require_once '../Layout/navbar.php';
+        require_once '../App/Views/Layout/navbar.php';
         ?>
 
         <!-- Container Content -->
@@ -55,7 +55,7 @@
                         <span>20</span>
                     </div>
                     <div class="avatar card-items content-icon">
-                        <img class="avatar-img object-fit-cover w-100 h-100" src="../../../Public/Asset/images/kejuruan_icons.png"
+                        <img class="avatar-img object-fit-cover w-100 h-100" src="/Asset/images/kejuruan_icons.png"
                             alt="content-icon">
                     </div>
                 </div>
@@ -66,7 +66,7 @@
                         <span>20</span>
                     </div>
                     <div class="avatar card-items content-icon">
-                        <img class="avatar-img object-fit-cover w-100 h-100" src="../../../Public/Asset/images/program_icons.png"
+                        <img class="avatar-img object-fit-cover w-100 h-100" src="/Asset/images/program_icons.png"
                             alt="content-icon">
                     </div>
                 </div>
@@ -77,7 +77,7 @@
                         <span>20</span>
                     </div>
                     <div class="avatar card-items content-icon">
-                        <img class="avatar-img object-fit-cover w-100 h-100" src="../../../Public/Asset/images/instructor_icons.png"
+                        <img class="avatar-img object-fit-cover w-100 h-100" src="/Asset/images/instructor_icons.png"
                             alt="content-icon">
                     </div>
                 </div>
@@ -88,7 +88,7 @@
                         <span>20</span>
                     </div>
                     <div class="avatar card-items content-icon">
-                        <img class="avatar-img object-fit-cover w-100 h-100" src="../../../Public/Asset/images/building_icons.png"
+                        <img class="avatar-img object-fit-cover w-100 h-100" src="/Asset/images/building_icons.png"
                             alt="content-icon">
                     </div>
                 </div>
@@ -99,7 +99,7 @@
                         <span>20</span>
                     </div>
                     <div class="avatar card-items content-icon">
-                        <img class="avatar-img object-fit-cover w-100 h-100" src="../../../Public/Asset/images/tools_icons.png"
+                        <img class="avatar-img object-fit-cover w-100 h-100" src="/Asset/images/tools_icons.png"
                             alt="content-icon">
                     </div>
                 </div>
@@ -119,7 +119,7 @@
         crossorigin="anonymous"></script>
 
     <!-- Custmo Js-->
-    <script src="../../../Public/Asset/js/script.js"></script>
+    <script src="/Asset/js/script.js"></script>
 </body>
 
 </html>
