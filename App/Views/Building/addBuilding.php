@@ -51,16 +51,20 @@
                     <div class="input-nama-gedung flex-grow-1">
                         <label for="nama-gedung" class="form-label">Nama</label>
                         <input type="text" name="nama-gedung" id="nama-gedung" class="form-control"
-                            placeholder="Contoh: Kuli Merdeka" required>
+                            placeholder="Contoh: Kuli Merdeka">
+                        <div class="valid-feedback"></div>
+                        <div class="invalid-feedback"></div>
                     </div>
                     <div class="input-deskripsi-form flex-grow-1">
                         <label for="deskripsi-gedung" class="form-label">Deskripsi</label>
                         <textarea name="deskripsi-gedung" id="deskripsi-gedung" class="form-control"
                             placeholder="Contoh : Lorem Ipsum is simply dummy text of the printing and typesetting industry."></textarea>
+                        <div class="valid-feedback"></div>
+                        <div class="invalid-feedback"></div>
                     </div>
                 </div>
                 <div class="button-action-container-form my-3 d-flex w-100 h-auto justify-content-end column-gap-2">
-                    <a href="#"><button class="btn btn-primary">Simpan</button></a>
+                    <a href=""><button class="btn btn-primary" id="btn-simpan" type="button">Simpan</button></a>
                     <a href="/building"><button class="btn btn-danger" type="button">Batal</button></a>
                 </div>
             </form>
@@ -79,6 +83,15 @@
 
     <!-- Custom Js-->
     <script src="/Asset/js/script.js"></script>
+
+    <!-- AXIOS -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <!-- SweetAlert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- Client side handler -->
+    <script src="/Asset/js/buildings/addBuildings.js"></script>;
 
 </body>
 
