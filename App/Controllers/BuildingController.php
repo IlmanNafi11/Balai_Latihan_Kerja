@@ -15,6 +15,7 @@ class BuildingController
 
     public function index()
     {
+        $building = $this->getAllBuilding();
         require_once '../App/Views/Building/building.php';
     }
 
@@ -26,6 +27,11 @@ class BuildingController
     public function viewUpdateBuilding()
     {
         require_once '../App/Views/Building/updateBuilding.php';
+    }
+
+    public function getAllBuilding()
+    {
+        return $this->model->getAllBuilding();
     }
 
     public function creteBuilding()
