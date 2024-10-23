@@ -142,4 +142,59 @@ if ($uri == '/' || $uri == '' || $uri == 'login')
     session_destroy();
     header('Location: /');
     exit();
+} elseif ($uri == 'updateInstitute')
+{
+    session_start();
+} elseif ($uri == 'updateDepartment')
+{
+
+} elseif ($uri == 'updateProgram')
+{
+
+} elseif ($uri == 'building/updateBuilding')
+{
+    session_start();
+    if(isset($_SESSION['user'])){
+        require_once '../App/Controllers/BuildingController.php';
+        $controller = new BuildingController();
+        $controller->viewUpdateBuilding();
+    } else {
+        header('Location: /login');
+        exit();
+    }
+} elseif ($uri == 'updateTools')
+{
+
+} elseif ($uri == 'updateInstructor')
+{
+
+} elseif ($uri == 'updateNotification')
+{
+
+} elseif ($uri == 'updateUser')
+{
+
+} elseif ($uri == 'building/addBuilding')
+{
+    session_start();
+    if (isset($_SESSION['user'])){
+        require_once '../App/Controllers/BuildingController.php';
+        $controller = new BuildingController();
+        $controller->viewAddBuilding();
+    } else {
+        header('Location: /login');
+        exit();
+    }
+} elseif ($uri == 'instructor/addInstructor')
+{
+
+} elseif ($uri == 'department/addDepartment')
+{
+
+} elseif ($uri == 'program/addProgram')
+{
+
+} elseif ($uri == 'tools/addTools')
+{
+
 }
