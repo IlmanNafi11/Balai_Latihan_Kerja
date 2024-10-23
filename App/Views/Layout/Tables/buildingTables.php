@@ -15,12 +15,15 @@
                 </tr>
             </thead>
             <tbody>
+            <?php
+                if (!empty($building)) {
+                    foreach ($building as $row):?>
                 <tr>
-                    <td>1</td>
-                    <td>Kuli Merdeka</td>
-                    <td>Gedung untuk calon calon kuli yang mensejahterakan bangsa</td>
+                    <td><?php echo $row['id'] ?></td>
+                    <td><?php echo $row['nama'] ?></td>
+                    <td><?php echo $row['deskripsi'] ?></td>
                     <td class="d-flex row-gap-2 column-gap-2 flex-wrap">
-                        <a href="/building/updateBuilding"><button
+                        <a href="/building/updateBuilding?id=<?php $row['id']?>"><button
                                 class="btn btn-warning d-flex align-items-center column-gap-1"><svg
                                     xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                     class="bi bi-pencil-square" viewBox="0 0 16 16">
@@ -37,6 +40,12 @@
                                 </svg>Hapus</button></a>
                     </td>
                 </tr>
+            <?php endforeach;
+            } else { ?>
+            <tr>
+                <td colspan="4" class="text-center">Data Kosong</td>
+            </tr>
+            <?php } ?>
             </tbody>
         </table>
     </div>
