@@ -57,6 +57,24 @@ body
     height: 100%;
 }
 
+.login-btn-container a
+{
+    width: 100%;
+}
+
+.btn-login
+{
+    background-color: #FF9228;
+    color: white;
+    width: 100%;
+}
+
+.btn-login:hover
+{
+    color: white;
+    background-color: #ff8407;
+}
+
 /* 
     Top Navbar
 */
