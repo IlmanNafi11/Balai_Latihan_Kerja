@@ -197,4 +197,15 @@ if ($uri == '/' || $uri == '' || $uri == 'login')
 } elseif ($uri == 'tools/addTools')
 {
 
+} elseif ($uri == 'building/addBuilding/create')
+{
+    session_start();
+    if (isset($_SESSION['user'])){
+        require_once '../App/Controllers/BuildingController.php';
+        $controller = new BuildingController();
+        $controller->creteBuilding();
+    } else {
+        header('Location: /login');
+        exit();
+    }
 }
