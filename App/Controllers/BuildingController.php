@@ -15,4 +15,14 @@ class BuildingController
     {
         require_once '../App/Views/Building/building.php';
     }
+
+    public function viewAddBuilding()
+    {
+        require_once '../App/Views/Building/addBuilding.php';
+    }
+
+    public function viewUpdateBuilding()
+    {
+        require_once '../App/Views/Building/updateBuilding.php';
+    }
 }
