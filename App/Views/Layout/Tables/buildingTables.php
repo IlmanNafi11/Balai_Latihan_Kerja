@@ -1,7 +1,7 @@
 <div class="tables tables-program-container px-0 m-0">
     <!-- Button add data -->
     <div class="button-add-data-container">
-        <a href="addBuilding.php"><button class="btn btn-primary">+ Tambah Data</button></a>
+        <a href="/building/addBuilding"><button class="btn btn-primary">+ Tambah Data</button></a>
     </div>
     <!-- Table -->
     <div class="table-responsive-sm table-responsive-md">
@@ -20,7 +20,7 @@
                     <td>Kuli Merdeka</td>
                     <td>Gedung untuk calon calon kuli yang mensejahterakan bangsa</td>
                     <td class="d-flex row-gap-2 column-gap-2 flex-wrap">
-                        <a href="updateBuilding.php"><button
+                        <a href="/building/updateBuilding"><button
                                 class="btn btn-warning d-flex align-items-center column-gap-1"><svg
                                     xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                     class="bi bi-pencil-square" viewBox="0 0 16 16">

@@ -15,7 +15,7 @@
         crossorigin="anonymous">
 
     <!--    Custom Css-->
-    <link rel="stylesheet" href="../../../Public/Asset/css/style.css">
+    <link rel="stylesheet" href="/Asset/css/style.css">
 
     <!-- Font -->
     <link
@@ -33,14 +33,14 @@
     <!-- ROOT Container -->
     <div class="container-fluid main-root-container w-100 h-100 p-0 m-0">
         <!-- Navbar -->
-        <?php require_once '../Layout/navbar.php' ?>
+        <?php require_once '../App/Views/Layout/navbar.php' ?>
 
         <div class="container-fluid container-content d-flex flex-column h-auto">
             <!-- Breadcrumb -->
             <nav aria-label="breadcrumb" class="breadcrumb-content">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="../Dashboard/dashboard.php">Beranda</a></li>
-                    <li class="breadcrumb-item"><a href="building.php">Gedung</a></li>
+                    <li class="breadcrumb-item"><a href="/dashboard">Beranda</a></li>
+                    <li class="breadcrumb-item"><a href="/building">Gedung</a></li>
                     <li class="breadcrumb-item active" aria-current="page">Ubah Data</li>
                 </ol>
             </nav>
@@ -61,7 +61,7 @@
                 </div>
                 <div class="button-action-container-form my-3 d-flex w-100 h-auto justify-content-end column-gap-2">
                     <a href="#"><button class="btn btn-primary">Simpan</button></a>
-                    <a href="building.php"><button class="btn btn-danger" type="button">Batal</button></a>
+                    <a href="/building"><button class="btn btn-danger" type="button">Batal</button></a>
                 </div>
             </form>
         </div>
@@ -78,7 +78,7 @@
         crossorigin="anonymous"></script>
 
     <!-- Custom Js-->
-    <script src="../../../Public/Asset/js/script.js"></script>
+    <script src="/Asset/js/script.js"></script>
 
 </body>
 
