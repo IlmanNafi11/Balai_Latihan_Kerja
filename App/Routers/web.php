@@ -90,7 +90,6 @@ if ($uri == '/' || $uri == '' || $uri == 'login') {
         exit();
     }
 } elseif ($uri == 'notification') {
-    session_start();
     if (isset($_SESSION['user'])) {
         require_once '../App/Controllers/NotificationController.php';
         $controller = new NotificationController();
