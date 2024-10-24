@@ -40,12 +40,13 @@ class NotificationModel
 
     public function createNotification($message)
     {
-        $query = "INSERT INTO notifications (pesan) VALUES(:message)";
+        $query = "INSERT INTO notifications (pesan, tipe) VALUES(:message, :tipe)";
         $stmt = $this->connection->prepare($query);
         try {
             $stmt->bindParam(':message', $message);
+            $stmt->bindValue(':tipe', 'publik');
             if ($stmt->execute()) {
-                return ['success' => true, 'message' => 'Notification berhasil ditambahkan'];
+                return ['success' => true, 'message' => 'Notification berhasil ditambahkan', 'redirect_url' => '/notification'];
             } else {
                 return ['success' => false, 'message' => 'Notification gagal ditambahkan'];
             }
