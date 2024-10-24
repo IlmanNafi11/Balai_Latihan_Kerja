@@ -76,16 +76,9 @@ class BuildingController
 
     public function deleteBuilding($id)
     {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $data = json_decode(file_get_contents("php://input"), true);
-            $buildingId = $id;
-            if (empty($buildingId)) {
-                $result = $this->model->deleteBuilding($buildingId);
+        if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
+                $result = $this->model->deleteBuilding($id);
                 echo json_encode($result);
-            } else {
-                echo json_encode(['success' => false, 'message' => 'Data tidak lengkap']);
-            }
-
         }
     }
 }

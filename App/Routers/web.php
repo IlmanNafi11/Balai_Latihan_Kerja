@@ -154,7 +154,7 @@ if ($uri == '/' || $uri == '' || $uri == 'login') {
 } elseif (preg_match('/building\/delete\/(\d+)/', $uri, $matches)) {
     $id = $matches[1];
     require_once '../App/Controllers/BuildingController.php';
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
     $controller = new BuildingController();
         $controller->deleteBuilding($id);
     }
