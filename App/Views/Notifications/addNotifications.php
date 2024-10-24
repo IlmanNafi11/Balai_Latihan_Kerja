@@ -15,7 +15,7 @@
         crossorigin="anonymous">
 
     <!--    Custom Css-->
-    <link rel="stylesheet" href="../../../Public/Asset/css/style.css">
+    <link rel="stylesheet" href="/Asset/css/style.css">
 
     <!-- Font -->
     <link
@@ -34,29 +34,31 @@
     <!-- ROOT Container -->
     <div class="container-fluid main-root-container w-100 h-100 p-0 m-0">
         <!-- Navbar -->
-        <?php require_once '../Layout/navbar.php' ?>
+        <?php require_once '../App/Views/Layout/navbar.php' ?>
 
         <div class="container-fluid container-content d-flex flex-column h-auto">
             <!-- Breadcrumb -->
             <nav aria-label="breadcrumb" class="breadcrumb-content">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="../Dashboard/dashboard.php">Beranda</a></li>
-                    <li class="breadcrumb-item"><a href="notifications.php">Notifikasi</a></li>
+                    <li class="breadcrumb-item"><a href="/dashboard">Beranda</a></li>
+                    <li class="breadcrumb-item"><a href="/notification">Notifikasi</a></li>
                     <li class="breadcrumb-item active" aria-current="page">Tambah Data</li>
                 </ol>
             </nav>
 
             <!-- Form -->
-            <form action="" method="post" class="d-flex flex-column h-auto">
+            <form class="d-flex flex-column h-auto">
                 <div class="form-instruktor-container container-form-input d-flex column-gap-4 row-gap-3 w-100 h-auto">
                     <div class="input-pesan-notifikasi input-deskripsi-form w-100 h-auto">
                         <label for="pesan-notifikasi" class="form-label">Pesan Notifikasi</label>
                         <textarea name="pesan-notifikasi" id="pesan-notifikasi" class="form-control" placeholder="Contoh : Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book." required></textarea>
+                        <div class="valid-feedback"></div>
+                        <div class="invalid-feedback"></div>
                     </div>
                 </div>
                 <div class="button-action-container-form my-3 d-flex w-100 h-auto justify-content-end column-gap-2">
-                    <a href="#"><button class="btn btn-primary">Simpan</button></a>
-                    <a href="notifications.php"><button class="btn btn-danger" type="button">Batal</button></a>
+                    <button class="btn btn-primary" id="btn-simpan">Simpan</button>
+                    <a href="/notification"><button class="btn btn-danger" type="button">Batal</button></a>
                 </div>
             </form>
         </div>
@@ -73,7 +75,16 @@
         crossorigin="anonymous"></script>
 
     <!-- Custom Js-->
-    <script src="../../../Public/Asset/js/script.js"></script>
+    <script src="/Asset/js/script.js"></script>
+
+    <!-- AXIOS -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <!-- SweetAlert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- Logic Handler -->
+    <script src="/Asset/js/script.js"></script>
 
 </body>
 

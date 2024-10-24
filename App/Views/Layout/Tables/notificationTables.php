@@ -1,7 +1,7 @@
 <div class="tables tables-program-container px-0 m-0">
     <!-- Button add data -->
     <div class="button-add-data-container">
-        <a href="addNotifications.php"><button class="btn btn-primary">+ Tambah Data</button></a>
+        <a href="/notification/addNotification"><button class="btn btn-primary">+ Tambah Data</button></a>
     </div>
     <!-- Table -->
     <div class="table-responsive-sm table-responsive-md">
