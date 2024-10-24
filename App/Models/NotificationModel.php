@@ -62,7 +62,7 @@ class NotificationModel
         try {
             $stmt->bindParam(':id', $id);
             if ($stmt->execute()) {
-                return ['success' => true, 'message' => 'Notification berhasil dihapus'];
+                return ['success' => true, 'message' => 'Notification berhasil dihapus', 'redirect_url' => '/notification'];
             } else {
                 return ['success' => false, 'message' => 'Notification gagal dihapus'];
             }
