@@ -10,7 +10,6 @@ if ($uri == '/' || $uri == '' || $uri == 'login') {
         $controller->index();
     }
 } elseif ($uri == 'dashboard') {
-    session_start();
     if (isset($_SESSION['user'])) {
         require_once '../App/Controllers/DashboardController.php';
         $controller = new DashboardController();
@@ -20,7 +19,6 @@ if ($uri == '/' || $uri == '' || $uri == 'login') {
         exit();
     }
 } elseif ($uri == 'institute') {
-    session_start();
     if (isset($_SESSION['user'])) {
         require_once '../App/Controllers/InstituteController.php';
         $controller = new InstituteController();
@@ -30,7 +28,6 @@ if ($uri == '/' || $uri == '' || $uri == 'login') {
         exit();
     }
 } elseif ($uri == 'department') {
-    session_start();
     if (isset($_SESSION['user'])) {
         require_once '../App/Controllers/DepartmentsController.php';
         $controller = new DepartmentsController();
@@ -40,7 +37,6 @@ if ($uri == '/' || $uri == '' || $uri == 'login') {
         exit();
     }
 } elseif ($uri == 'programs') {
-    session_start();
     if (isset($_SESSION['user'])) {
         require_once '../App/Controllers/ProgramController.php';
         $controller = new ProgramController();
@@ -59,7 +55,6 @@ if ($uri == '/' || $uri == '' || $uri == 'login') {
         exit();
     }
 } elseif ($uri == 'tools') {
-    session_start();
     if (isset($_SESSION['user'])) {
         require_once '../App/Controllers/ToolsController.php';
         $controller = new ToolsController();
@@ -69,7 +64,6 @@ if ($uri == '/' || $uri == '' || $uri == 'login') {
         exit();
     }
 } elseif ($uri == 'instructor') {
-    session_start();
     if (isset($_SESSION['user'])) {
         require_once '../App/Controllers/InstructorController.php';
         $controller = new InstructorController();
@@ -79,7 +73,6 @@ if ($uri == '/' || $uri == '' || $uri == 'login') {
         exit();
     }
 } elseif ($uri == 'registration') {
-    session_start();
     if (isset($_SESSION['user'])) {
         require_once '../App/Controllers/RegistrationController.php';
         $controller = new RegistrationController();
@@ -98,7 +91,6 @@ if ($uri == '/' || $uri == '' || $uri == 'login') {
         exit();
     }
 } elseif ($uri == 'user') {
-    session_start();
     if (isset($_SESSION['user'])) {
         require_once '../App/Controllers/UserManajementController.php';
         $controller = new UserManajementController();
