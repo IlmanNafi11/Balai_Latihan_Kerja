@@ -16,7 +16,7 @@ axios.get(`/building/getBuilding/${id}`)
         if (response.data.success) {
             name.value = response.data.dataByID.nama;
             description.value = response.data.dataByID.deskripsi;
-        } else {
+        } else if (response.data.success == false) {
             swalWithBootstrapButtons.fire({
                 title: "Gagal!",
                 text: response.data.message,
