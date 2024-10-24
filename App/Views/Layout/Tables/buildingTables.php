@@ -23,7 +23,7 @@
                     <td><?php echo $row['nama'] ?></td>
                     <td><?php echo $row['deskripsi'] ?></td>
                     <td class="d-flex row-gap-2 column-gap-2 flex-wrap">
-                        <a href="/building/updateBuilding?id=<?php $row['id']?>"><button
+                        <a href="/building/updateBuilding/<?php echo $row['id']?>"><button
                                 class="btn btn-warning d-flex align-items-center column-gap-1"><svg
                                     xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                     class="bi bi-pencil-square" viewBox="0 0 16 16">
@@ -32,7 +32,7 @@
                                     <path fill-rule="evenodd"
                                         d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z" />
                                 </svg>Ubah</button></a>
-                        <a href="#"><button class="btn btn-danger d-flex align-items-center column-gap-1"><svg
+                        <a href="/building/delete/<?php echo $row['id']?>"><button class="btn btn-danger d-flex align-items-center column-gap-1"><svg
                                     xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                     class="bi bi-trash3" viewBox="0 0 16 16">
                                     <path
