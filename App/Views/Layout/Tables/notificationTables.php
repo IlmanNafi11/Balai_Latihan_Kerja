@@ -15,10 +15,12 @@
                 </tr>
             </thead>
             <tbody>
+            <?php if (!empty($notifications)) {
+                foreach($notifications as $notification):?>
                 <tr>
-                    <td>1</td>
-                    <td>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</td>
-                    <td>Publik</td>
+                    <td><?php echo $notification['id'] ?></td>
+                    <td><?php echo $notification['pesan'] ?></td>
+                    <td><?php echo $notification['tipe'] ?></td>
                     <td>
                         <a href="#"><button class="btn btn-danger d-flex align-items-center column-gap-1"><svg
                                     xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -28,6 +30,12 @@
                                 </svg>Hapus</button></a>
                     </td>
                 </tr>
+            <?php endforeach;
+            } else { ?>
+            <tr>
+                <td colspan="4" class="text-center">Data Kosong</td>
+            </tr>
+            <?php } ?>
             </tbody>
         </table>
     </div>
