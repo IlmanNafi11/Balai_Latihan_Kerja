@@ -43,9 +43,8 @@ class NotificationController
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $data = json_decode(file_get_contents("php://input"), true);
             $message = $data['message'];
-            $type = $data['type'];
-            if (!empty($message) && !empty($type)) {
-                $result = $this->model->createNotification($message, $type);
+            if (!empty($message)) {
+                $result = $this->model->createNotification($message);
                 echo json_encode($result);
             } else {
                 echo json_encode(['success' => false, 'message' => 'Data tidak lengkap']);
