@@ -1,5 +1,6 @@
 <?php
 $uri = trim($_SERVER['REQUEST_URI'], '/');
+session_start();
 if ($uri == '/' || $uri == '' || $uri == 'login') {
     require_once '../App/Controllers/LoginController.php';
     $controller = new LoginController();
@@ -158,4 +159,43 @@ if ($uri == '/' || $uri == '' || $uri == 'login') {
     $controller = new BuildingController();
         $controller->deleteBuilding($id);
     }
+} elseif ($uri == 'notification/addNotification')
+{
+    if (isset($_SESSION['user']))
+    {
+        require_once '../App/Controllers/NotificationController.php';
+        $controller = new NotificationController();
+        if ($_SERVER['REQUEST_METHOD'] === 'POST')
+        {
+            $controller->createNotification();
+        } else if ($_SERVER['REQUEST_METHOD'] === 'GET')
+        {
+            $controller->viewAddNotification();
+        }
+    } else
+    {
+        header('Location: /login');
+        exit();
+    }
+} elseif (preg_match('/notification\/delete\/(\d+)/', $uri, $matches))
+{
+    $id = $matches[1];
+    if (isset($_SESSION['user']))
+    {
+        require_once '../App/Controllers/NotificationController.php';
+        if ($_SERVER['REQUEST_METHOD'] === 'DELETE')
+        {
+            $controller = new NotificationController();
+            $controller->deleteNotificationById($id);
+        }
+    } else
+    {
+        header('Location: /login');
+        exit();
+    }
+} elseif ($uri == 'notification/getNotification')
+{
+    require_once '../App/Controllers/NotificationController.php';
+    $controller = new NotificationController();
+    $controller->getAllNotifications();
 }
