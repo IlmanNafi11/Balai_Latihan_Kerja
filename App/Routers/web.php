@@ -185,4 +185,75 @@ if ($uri == '/' || $uri == '' || $uri == 'login') {
     require_once '../App/Controllers/NotificationController.php';
     $controller = new NotificationController();
     $controller->getAllNotifications();
+} elseif ($uri == 'tools/addTool')
+{
+    if (isset($_SESSION['user']))
+    {
+        require_once '../App/Controllers/ToolsController.php';
+        $controller = new ToolsController();
+        if ($_SERVER['REQUEST_METHOD'] === 'POST')
+        {
+            $controller->createTools();
+        } else if ($_SERVER['REQUEST_METHOD'] === 'GET')
+        {
+            $controller->viewAddTools();
+        }
+    } else
+    {
+        header('Location: /login');
+        exit();
+    }
+} elseif (preg_match('/tools\/updateTools\/(\d+)/', $uri, $matches))
+{
+    if (isset($_SESSION['user']))
+    {
+        $id = $matches[1];
+        require_once '../App/Controllers/ToolsController.php';
+        $controller = new ToolsController();
+        if ($_SERVER['REQUEST_METHOD'] === 'POST')
+        {
+            $controller->updateTools($id);
+        } else if ($_SERVER['REQUEST_METHOD'] === 'GET')
+        {
+            $controller->viewUpdateTools();
+        }
+    } else
+    {
+        header('Location: /login');
+        exit();
+    }
+} elseif (preg_match('/tools\/deleteTools\/(\d+)/', $uri, $matches))
+{
+    if (isset($_SESSION['user']))
+    {
+        $id = $matches[1];
+        require_once '../App/Controllers/ToolsController.php';
+        if ($_SERVER['REQUEST_METHOD'] === 'DELETE')
+        {
+            $controller = new ToolsController();
+            $controller->deleteTools($id);
+        }
+    } else
+    {
+        header('Location: /login');
+        exit();
+    }
+} elseif ($uri == 'tools/getTools')
+{
+    require_once '../App/Controllers/ToolsController.php';
+    $controller = new ToolsController();
+    if ($_SERVER['REQUEST_METHOD'] === 'GET')
+    {
+        $controller = new ToolsController();
+        $controller->getAllTools();
+    }
+} elseif (preg_match('/tools\/getTools\/(\d+)/', $uri, $matches))
+{
+    $id = $matches[1];
+    require_once '../App/Controllers/ToolsController.php';
+    if ($_SERVER['REQUEST_METHOD'] === 'GET')
+    {
+        $controller = new ToolsController();
+        $controller->getToolsByID($id);
+    }
 }
