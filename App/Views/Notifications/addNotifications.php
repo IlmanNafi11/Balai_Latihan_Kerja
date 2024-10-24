@@ -51,7 +51,7 @@
                 <div class="form-instruktor-container container-form-input d-flex column-gap-4 row-gap-3 w-100 h-auto">
                     <div class="input-pesan-notifikasi input-deskripsi-form w-100 h-auto">
                         <label for="pesan-notifikasi" class="form-label">Pesan Notifikasi</label>
-                        <textarea name="pesan-notifikasi" id="pesan-notifikasi" class="form-control" placeholder="Contoh : Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book." required></textarea>
+                        <textarea name="pesan-notifikasi" id="pesan-notifikasi" class="form-control" placeholder="Contoh : Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."></textarea>
                         <div class="valid-feedback"></div>
                         <div class="invalid-feedback"></div>
                     </div>
@@ -84,7 +84,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <!-- Logic Handler -->
-    <script src="/Asset/js/script.js"></script>
+    <script src="/Asset/js/notifications/addNotifications.js"></script>
 
 </body>
 
