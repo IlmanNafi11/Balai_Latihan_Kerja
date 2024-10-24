@@ -173,7 +173,7 @@ if ($uri == '/' || $uri == '' || $uri == 'login') {
         if ($_SERVER['REQUEST_METHOD'] === 'DELETE')
         {
             $controller = new NotificationController();
-            $controller->deleteNotificationById($id);
+            $controller->deleteNotification($id);
         }
     } else
     {

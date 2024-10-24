@@ -52,10 +52,10 @@ class NotificationController
         }
     }
 
-    public function deleteNotificationById($id)
+    public function deleteNotification($id)
     {
         if ($_SERVER['REQUEST_METHOD'] == 'DELETE') {
-            $result = $this->model->deleteNotificationById($id);
+            $result = $this->model->deleteNotification($id);
             echo json_encode($result);
         }
     }
