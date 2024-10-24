@@ -84,6 +84,15 @@
     <!-- Custom Js-->
     <script src="/Asset/js/script.js"></script>
 
+    <!-- AXIOS -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <!-- SweetAlert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- Logic Handler -->
+    <script src="/Asset/js/notifications/notifications.js"></script>
+
 </body>
 
 </html>
