@@ -1,6 +1,6 @@
 <?php
 require_once '../App/Config/Database.php';
-require_once '../App/Models/LoginAuthModel.php';
+require_once '../App/Models/NotificationModel.php';
 
 class NotificationController
 {
@@ -10,11 +10,12 @@ class NotificationController
     {
         $database = new Database();
         $db = $database->getConnection();
-
+        $this->model = new NotificationModel($db);
     }
 
     public function index()
     {
+        $notifications = $this->model->getAllNotification();
         require_once "../App/Views/Notifications/notifications.php";
     }
 
@@ -25,7 +26,7 @@ class NotificationController
 
     public function getAllNotifications()
     {
-        $notifications = $this->model->getAllNotifications();
+        $notifications = $this->model->getAllNotification();
         echo json_encode($notifications);
     }
 
