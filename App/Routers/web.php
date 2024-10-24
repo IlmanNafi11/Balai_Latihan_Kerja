@@ -50,7 +50,6 @@ if ($uri == '/' || $uri == '' || $uri == 'login') {
         exit();
     }
 } elseif ($uri == 'building') {
-    session_start();
     if (isset($_SESSION['user'])) {
         require_once '../App/Controllers/BuildingController.php';
         $controller = new BuildingController();
@@ -110,7 +109,6 @@ if ($uri == '/' || $uri == '' || $uri == 'login') {
     header('Location: /');
     exit();
 } elseif (preg_match('/building\/updateBuilding\/(\d+)/', $uri, $matches)) {
-    session_start();
     if (isset($_SESSION['user'])) {
         $id = $matches[1];
         require_once '../App/Controllers/BuildingController.php';
@@ -125,7 +123,6 @@ if ($uri == '/' || $uri == '' || $uri == 'login') {
         exit();
     }
 } elseif ($uri == 'building/addBuilding') {
-    session_start();
     if (isset($_SESSION['user'])) {
         require_once '../App/Controllers/BuildingController.php';
         $controller = new BuildingController();
@@ -135,7 +132,6 @@ if ($uri == '/' || $uri == '' || $uri == 'login') {
         exit();
     }
 } elseif ($uri == 'building/addBuilding/create') {
-    session_start();
     if (isset($_SESSION['user'])) {
         require_once '../App/Controllers/BuildingController.php';
         $controller = new BuildingController();
