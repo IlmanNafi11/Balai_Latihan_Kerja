@@ -46,7 +46,7 @@
             </nav>
 
             <!-- Form -->
-            <form action="" method="post" class="d-flex flex-column h-auto">
+            <form class="d-flex flex-column h-auto">
                 <div class="form-alat-container d-flex column-gap-4 row-gap-3 w-100 h-auto">
                     <div class="container-form-input flex-grow-1 d-flex flex-column row-gap-3">
                         <div class="input-nama-alat">

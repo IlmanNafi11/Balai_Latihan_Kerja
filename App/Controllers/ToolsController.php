@@ -70,9 +70,10 @@ class ToolsController
             $data = json_decode(file_get_contents("php://input"), true);
             $name = $data['name'];
             $description = $data['description'];
+            $type = $data['type'];
             if (!empty($name) && !empty($description))
             {
-                $result = $this->model->updateTools($id, $name, $description);
+                $result = $this->model->updateTools($id, $name, $description, $type);
                 echo json_encode($result);
             } else
             {
