@@ -28,6 +28,22 @@ class InstituteModel
         }
     }
 
+    public function getInstituteById($id)
+    {
+        $query = "SELECT * FROM institute WHERE id = :id";
+        $stmt = $this->connection->prepare($query);
+        try {
+            $stmt->bindParam(':id', $id);
+            if ($stmt->execute()) {
+                return ['success' => true, 'dataByID' => $stmt->fetch(PDO::FETCH_ASSOC)];
+            } else {
+                return ['success' => false, 'message' => 'Gagal mengambil data berdasarkan id insitute'];
+            }
+        } catch (PDOException $e) {
+            return ['success' => false, 'message' => $e->getMessage()];
+        }
+    }
+
     public function updateInstitute($data = [])
     {
         $query = "UPDATE institute SET nama = :nama, pimpinan = :pimpinan, no_vin = :no_vin, no_sotk = :no_sotk, thn_berdiri = :thn_berdiri, tipe = :tipe, kepemilikan = :kepemilikan, status_beroperasi = :status_beroperasi, no_tlp = :no_tlp, no_fax = :no_fax, email = :email, website = :website, deskripsi = :deskripsi";
@@ -47,7 +63,7 @@ class InstituteModel
             $stmt->bindParam(':website', $data['website']);
             $stmt->bindParam(':deskripsi', $data['deskripsi']);
             if ($stmt->execute()) {
-                return ['success' => true, 'message' => 'Data Institusi Berhasil Diperbaharui', 'redirect_url' => '/institute`'];
+                return ['success' => true, 'message' => 'Data Institusi Berhasil Diperbaharui', 'redirect_url' => '/institute'];
             } else
             {
                 return ['success' => false, 'message' => 'Data Institusi Gagal Diperbaharui'];
