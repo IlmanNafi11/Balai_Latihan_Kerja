@@ -256,4 +256,64 @@ if ($uri == '/' || $uri == '' || $uri == 'login') {
         $controller = new ToolsController();
         $controller->getToolsByID($id);
     }
+} else if ($uri == 'department/addDepartment')
+{
+    if (isset($_SESSION['user'])){
+        require_once '../App/Controllers/DepartmentController.php';
+        $controller = new DepartmentsController();
+        if ($_SERVER['REQUEST_METHOD'] === 'POST')
+        {
+            $controller->createDepartment();
+        } else if ($_SERVER['REQUEST_METHOD'] === 'GET')
+        {
+            $controller->viewAddDepartment();
+        }
+    } else {
+        header('Location: /login');
+        exit();
+    }
+} elseif (preg_match('/department\/updateDepartment\/(\d+)/', $uri, $matches))
+{
+    if (isset($_SESSION['user']))
+    {
+        $id = $matches[1];
+        require_once '../App/Controllers/DepartmentController.php';
+        $controller = new DepartmentsController();
+        if ($_SERVER['REQUEST_METHOD'] === 'POST')
+        {
+            $controller->updateDepartment($id);
+        } else if ($_SERVER['REQUEST_METHOD'] === 'GET')
+        {
+            $controller->viewUpdateDepartment();
+        }
+    }
+} elseif (preg_match('/department\/delete\/(\d+)/', $uri, $matches))
+{
+    if (isset($_SESSION['user']))
+    {
+        $id = $matches[1];
+        require_once '../App/Controllers/DepartmentController.php';
+        if ($_SERVER['REQUEST_METHOD'] === 'DELETE')
+        {
+            $controller = new DepartmentsController();
+            $controller->deleteDepartment($id);
+        }
+    }
+} else if ($uri == 'department/getDepartment')
+{
+    require_once '../App/Controllers/DepartmentController.php';
+    $controller = new DepartmentsController();
+    if ($_SERVER['REQUEST_METHOD'] === 'GET')
+    {
+        $controller->getAllDepartments();
+    }
+} elseif (preg_match('/department\/getDepartment\/(\d+)/', $uri, $matches))
+{
+    require_once '../App/Controllers/DepartmentController.php';
+    $controller = new DepartmentsController();
+    if ($_SERVER['REQUEST_METHOD'] === 'GET')
+    {
+        $id = $matches[1];
+        $controller->getDepartmentById($id);
+    }
 }
