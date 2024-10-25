@@ -19,6 +19,16 @@ class DepartmentsController
         require_once '../App/Views/Departments/departments.php';
     }
 
+    public function viewAddDepartment()
+    {
+        require_once '../App/Views/Departments/addDepartments.php';
+    }
+
+    public function viewUpdateDepartment()
+    {
+        require_once '../App/Views/Departments/updateDepartments.php';
+    }
+
     public function getAllDepartments()
     {
         try {
@@ -30,6 +40,58 @@ class DepartmentsController
             }
         } catch (PDOException $e) {
             echo $e->getMessage();
+        }
+    }
+
+    public function getDepartmentById($id)
+    {
+        return $this->departmentModel->getDepartmentById($id);
+    }
+
+    public function createDepartment()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST')
+        {
+            $data = json_decode(file_get_contents("php://input"), true);
+            $name = $data['name'];
+            $description = $data['description'];
+            $instituteID = $data['instituteID'];
+
+            if (!empty($name) && !empty($description) && !empty($instituteID))
+            {
+                $result = $this->departmentModel->createDepartment($name, $description, $instituteID);
+                echo json_encode($result);
+            } else
+            {
+                echo json_encode(['success' => false, 'message' => 'Data Tidak Lengkap']);
+            }
+        }
+    }
+
+    public function updateDepartment($id)
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST')
+        {
+            $data = json_decode(file_get_contents("php://input"), true);
+            $name = $data['name'];
+            $description = $data['description'];
+            if (!empty($name) && !empty($description) && !empty($instituteID))
+            {
+                $result = $this->departmentModel->updateDepartment($id, $name, $description);
+                echo json_encode($result);
+            } else
+            {
+                echo json_encode(['success' => false, 'message' => 'Data Tidak Lengkap']);
+            }
+        }
+    }
+
+    public function deleteDepartment($id)
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'DELETE')
+        {
+            $result = $this->departmentModel->deleteDepartment($id);
+            echo json_encode($result);
         }
     }
 }
