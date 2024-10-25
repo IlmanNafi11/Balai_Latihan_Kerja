@@ -14,19 +14,21 @@
                 </tr>
             </thead>
             <tbody>
+            <?php if (!empty($institutes)){
+                foreach($institutes as $institute):?>
                 <tr>
-                    <td>1</td>
-                    <td>Balai Latihan Kerja Nganjuk</td>
-                    <td>Prof. H.Rianda</td>
-                    <td>Pemerintah</td>
-                    <td>Aktif</td>
-                    <td>blk@blk.com</td>
-                    <td>085xxxxxx</td>
+                    <td><?php echo $institute['id']?></td>
+                    <td><?php echo $institute['nama']?></td>
+                    <td><?php echo $institute['pimpinan']?></td>
+                    <td><?php echo $institute['kepemilikan']?></td>
+                    <td><?php echo $institute['status']?></td>
+                    <td><?php echo $institute['email']?></td>
+                    <td><?php echo $institute['no_tlp']?></td>
                     <td>
-                        <a href="../Institute/updateInstitute.php">
+                        <a href="/institute/updateInstitute/<?php echo $institute['id']?>">
                             <button class="btn btn-warning" name="edit">
-                                <svg class="mx-1" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                    fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                    fill="currentColor" class="mx-1 bi bi-pencil-square" viewBox="0 0 16 16">
                                     <path
                                         d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
                                     <path fill-rule="evenodd"
@@ -36,6 +38,12 @@
                         </a>
                     </td>
                 </tr>
+            <?php endforeach; ?>
+            <?php } else { ?>
+                <tr>
+                    <td colspan="8" class="text-center">Data Kosong</td>
+                </tr>
+            <?php } ?>
             </tbody>
         </table>
     </div>
