@@ -259,7 +259,7 @@ if ($uri == '/' || $uri == '' || $uri == 'login') {
 } else if ($uri == 'department/addDepartment')
 {
     if (isset($_SESSION['user'])){
-        require_once '../App/Controllers/DepartmentController.php';
+        require_once '../App/Controllers/DepartmentsController.php';
         $controller = new DepartmentsController();
         if ($_SERVER['REQUEST_METHOD'] === 'POST')
         {
@@ -277,7 +277,7 @@ if ($uri == '/' || $uri == '' || $uri == 'login') {
     if (isset($_SESSION['user']))
     {
         $id = $matches[1];
-        require_once '../App/Controllers/DepartmentController.php';
+        require_once '../App/Controllers/DepartmentsController.php';
         $controller = new DepartmentsController();
         if ($_SERVER['REQUEST_METHOD'] === 'POST')
         {
@@ -292,7 +292,7 @@ if ($uri == '/' || $uri == '' || $uri == 'login') {
     if (isset($_SESSION['user']))
     {
         $id = $matches[1];
-        require_once '../App/Controllers/DepartmentController.php';
+        require_once '../App/Controllers/DepartmentsController.php';
         if ($_SERVER['REQUEST_METHOD'] === 'DELETE')
         {
             $controller = new DepartmentsController();
@@ -301,7 +301,7 @@ if ($uri == '/' || $uri == '' || $uri == 'login') {
     }
 } else if ($uri == 'department/getDepartment')
 {
-    require_once '../App/Controllers/DepartmentController.php';
+    require_once '../App/Controllers/DepartmentsController.php';
     $controller = new DepartmentsController();
     if ($_SERVER['REQUEST_METHOD'] === 'GET')
     {
@@ -309,11 +309,19 @@ if ($uri == '/' || $uri == '' || $uri == 'login') {
     }
 } elseif (preg_match('/department\/getDepartment\/(\d+)/', $uri, $matches))
 {
-    require_once '../App/Controllers/DepartmentController.php';
+    require_once '../App/Controllers/DepartmentsController.php';
     $controller = new DepartmentsController();
     if ($_SERVER['REQUEST_METHOD'] === 'GET')
     {
         $id = $matches[1];
         $controller->getDepartmentById($id);
+    }
+} else if ($uri == 'institute/getInstituteId')
+{
+    require_once '../App/Controllers/InstituteController.php';
+    if ($_SERVER['REQUEST_METHOD'] === 'GET')
+    {
+        $controller = new InstituteController();
+        $controller->getInstituteId();
     }
 }
