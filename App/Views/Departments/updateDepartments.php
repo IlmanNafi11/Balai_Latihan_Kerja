@@ -15,7 +15,7 @@
         crossorigin="anonymous">
 
     <!--    Custom Css-->
-    <link rel="stylesheet" href="../../../Public/Asset/css/style.css">
+    <link rel="stylesheet" href="/Asset/css/style.css">
 
     <!-- Font -->
     <link
@@ -33,14 +33,14 @@
     <!-- ROOT Container -->
     <div class="container-fluid main-root-container w-100 h-100 m-0 p-0">
         <!-- Navbar -->
-        <?php require_once '../Layout/navbar.php' ?>
+        <?php require_once '../App/Views/Layout/navbar.php' ?>
 
         <div class="container-fluid container-content d-flex flex-column h-auto">
             <!-- Breadcrumb -->
             <nav aria-label="breadcrumb" class="breadcrumb-content">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="../Dashboard/dashboard.php">Beranda</a></li>
-                    <li class="breadcrumb-item"><a href="departments.php">Kejuruan</a></li>
+                    <li class="breadcrumb-item"><a href="/dashboard">Beranda</a></li>
+                    <li class="breadcrumb-item"><a href="/department">Kejuruan</a></li>
                     <li class="breadcrumb-item active" aria-current="page">Ubah Data</li>
                 </ol>
             </nav>
@@ -51,17 +51,21 @@
                     <div class="input-nama-kejuruan flex-grow-1">
                         <label for="nama-kejuruan" class="form-label">Nama</label>
                         <input type="text" name="nama-kejuruan" id="nama-kejuruan" class="form-control"
-                            placeholder="Contoh: Teknik Elektro" required>
+                            placeholder="Contoh: Teknik Elektro">
+                        <div class="valid-feedback"></div>
+                        <div class="invalid-feedback"></div>
                     </div>
                     <div class="input-deskripsi-form flex-grow-1">
                         <label for="deskripsi-kejuruan" class="form-label">Deskripsi</label>
                         <textarea name="deskripsi-kejuruan" id="deskripsi-kejuruan" class="form-control"
                             placeholder="Contoh : Lorem Ipsum is simply dummy text of the printing and typesetting industry."></textarea>
+                        <div class="valid-feedback"></div>
+                        <div class="invalid-feedback"></div>
                     </div>
                 </div>
                 <div class="button-action-container-form my-3 d-flex w-100 h-auto justify-content-end column-gap-2">
-                    <a href="#"><button class="btn btn-primary">Simpan</button></a>
-                    <a href="departments.php"><button class="btn btn-danger" type="button">Batal</button></a>
+                    <button class="btn btn-primary" id="btn-simpan">Simpan</button>
+                    <a href="/department"><button class="btn btn-danger" type="button">Batal</button></a>
                 </div>
             </form>
         </div>
@@ -78,7 +82,16 @@
         crossorigin="anonymous"></script>
 
     <!-- Custom Js-->
-    <script src="../../../Public/Asset/js/script.js"></script>
+    <script src="/Asset/js/script.js"></script>
+
+    <!-- AXIOS -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <!-- SweetAlert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- Logic Handler -->
+    <script src="/Asset/js/departments/updateDepartments.js"></script>
 
 </body>
 
