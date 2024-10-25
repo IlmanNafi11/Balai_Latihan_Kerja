@@ -324,4 +324,31 @@ if ($uri == '/' || $uri == '' || $uri == 'login') {
         $controller = new InstituteController();
         $controller->getInstituteId();
     }
+} else if (preg_match('/institute\/updateInstitute\/(\d+)/', $uri, $matches))
+{
+    if (isset($_SESSION['user']))
+    {
+        $id = $matches[1];
+        require_once '../App/Controllers/InstituteController.php';
+        $controller = new InstituteController();
+        if ($_SERVER['REQUEST_METHOD'] === 'GET')
+        {
+            $controller->viewUpdateInstitute();
+        } else
+        {
+            $controller->updateInstitute($id);
+        }
+    }
+} else if (preg_match('/institute\/getInstitute\/(\d+)/', $uri, $matches))
+{
+    if (isset($_SESSION['user']))
+    {
+        $id = $matches[1];
+        require_once '../App/Controllers/InstituteController.php';
+        $controller = new InstituteController();
+        if ($_SERVER['REQUEST_METHOD'] === 'GET')
+        {
+            $controller->getInstituteById($id);
+        }
+    }
 }
