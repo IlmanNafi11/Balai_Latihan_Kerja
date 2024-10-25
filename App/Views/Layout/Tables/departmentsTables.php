@@ -1,7 +1,7 @@
 <div class="tables tables-department-container px-0 m-0">
     <!-- Button add data -->
     <div class="button-add-data-container">
-        <a href="addDepartments.php">
+        <a href="/department/addDepartment"><i class="fa fa-angle-left"></i>
             <button class="btn btn-primary">+ Tambah Data</button>
         </a>
     </div>
@@ -18,20 +18,16 @@
             </thead>
             <tbody>
             <?php if (!empty($department)) {
-                foreach ($department
-
-                         as $row): ?>
+                foreach ($department as $row): ?>
                     <tr>
                         <td><?= $row['id'] ?></td>
                         <td><?= $row['nama'] ?></td>
                         <td><?= $row['deskripsi'] ?></td>
                         <td>
-                            <a href="updateDepartments.php?id=<?= $row['id'] ?>">
+                            <a href="/department/updateDepartment/<?= $row['id']?>">
                                 <button class="btn btn-warning">Ubah</button>
                             </a>
-                            <a href="#">
-                                <button class="btn btn-danger">Hapus</button>
-                            </a>
+                                <button onclick="deleteDepartments(<?= $row['id']?>)" class="btn btn-danger">Hapus</button>
                         </td>
                     </tr>
                 <?php endforeach;
