@@ -45,7 +45,7 @@ class DepartmentsController
 
     public function getDepartmentById($id)
     {
-        return $this->departmentModel->getDepartmentById($id);
+        echo json_encode($this->departmentModel->getDepartmentById($id));
     }
 
     public function createDepartment()
@@ -75,7 +75,7 @@ class DepartmentsController
             $data = json_decode(file_get_contents("php://input"), true);
             $name = $data['name'];
             $description = $data['description'];
-            if (!empty($name) && !empty($description) && !empty($instituteID))
+            if (!empty($name) && !empty($description))
             {
                 $result = $this->departmentModel->updateDepartment($id, $name, $description);
                 echo json_encode($result);
