@@ -88,6 +88,9 @@
     <!-- Sweet Alert -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+    <!-- Logic Handler -->
+    <script src="/Asset/js/departments/departments.js"></script>
+
 </body>
 
 </html>
