@@ -47,7 +47,7 @@ class ToolsModel
             $stmt->bindParam(":description", $description);
             $stmt->bindParam(":type", $type);
             if ($stmt->execute()) {
-                return ['success' => true, 'message' => 'Data Berhasil Disimpan'];
+                return ['success' => true, 'message' => 'Data Berhasil Disimpan', 'redirect_url' => '/tools'];
             } else {
                 return ['success' => false, 'message' => 'Gagal Menyimpan Data'];
             }
