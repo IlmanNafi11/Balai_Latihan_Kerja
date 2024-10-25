@@ -222,7 +222,7 @@ if ($uri == '/' || $uri == '' || $uri == 'login') {
         header('Location: /login');
         exit();
     }
-} elseif (preg_match('/tools\/deleteTools\/(\d+)/', $uri, $matches))
+} elseif (preg_match('/tools\/delete\/(\d+)/', $uri, $matches))
 {
     if (isset($_SESSION['user']))
     {
