@@ -82,7 +82,7 @@ class ToolsModel
         try {
             $stmt->bindParam(":id", $id);
             if ($stmt->execute()) {
-                return ['success' => true, 'message' => 'Data Berhasil Dihapus'];
+                return ['success' => true, 'message' => 'Data Berhasil Dihapus', 'redirect_url' => '/tools'];
             } else {
                 return ['success' => false, 'message' => 'Gagal Menghapus Data'];
             }
