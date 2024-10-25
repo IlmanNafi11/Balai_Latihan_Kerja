@@ -33,7 +33,6 @@ class LoginController
         $user = $this->loginModel->login($email, $password);
 
         if ($user) {
-            session_start();
             $_SESSION['user'] = $user;
             echo json_encode(['status' => 'success', 'message' => 'Login berhasil', 'redirect_url' => '/dashboard']);
         } else {
