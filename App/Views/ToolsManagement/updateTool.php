@@ -15,7 +15,7 @@
         crossorigin="anonymous">
 
     <!--    Custom Css-->
-    <link rel="stylesheet" href="../../../Public/Asset/css/style.css">
+    <link rel="stylesheet" href="/Asset/css/style.css">
 
     <!-- Font -->
     <link
@@ -33,14 +33,14 @@
     <!-- ROOT Container -->
     <div class="container-fluid main-root-container w-100 h-100 p-0 m-0">
         <!-- Navbar -->
-        <?php require_once '../Layout/navbar.php' ?>
+        <?php require_once '../App/Views/Layout/navbar.php' ?>
 
         <div class="container-fluid container-content d-flex flex-column h-auto">
             <!-- Breadcrumb -->
             <nav aria-label="breadcrumb" class="breadcrumb-content">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="../Dashboard/dashboard.php">Beranda</a></li>
-                    <li class="breadcrumb-item"><a href="tool.php">Alat</a></li>
+                    <li class="breadcrumb-item"><a href="/dashboard">Beranda</a></li>
+                    <li class="breadcrumb-item"><a href="/tools">Alat</a></li>
                     <li class="breadcrumb-item active" aria-current="page">Ubah Data</li>
                 </ol>
             </nav>
@@ -52,11 +52,15 @@
                         <div class="input-nama-alat">
                             <label for="nama-alat" class="form-label">Nama</label>
                             <input type="text" name="nama-alat" id="nama-alat" class="form-control"
-                                placeholder="Contoh: Las Argon" required>
+                                placeholder="Contoh: Las Argon">
+                            <div class="valid-feedback"></div>
+                            <div class="invalid-feedback"></div>
                         </div>
                         <div class="input-tipe-alat">
                             <label for="tipe-alat" class="form-label">Tipe</label>
-                            <input type="text" name="tipe-alat" id="tipe-alat" class="form-control" placeholder="Contoh: R70G" required>
+                            <input type="text" name="tipe-alat" id="tipe-alat" class="form-control" placeholder="Contoh: R70G">
+                            <div class="valid-feedback"></div>
+                            <div class="invalid-feedback"></div>
                         </div>
 
                     </div>
@@ -65,12 +69,14 @@
                             <label for="deskripsi-alat" class="form-label">Deskripsi</label>
                             <textarea name="deskripsi-alat" id="deskripsi-alat" class="form-control flex-grow-1"
                                 placeholder="Contoh : Lorem Ipsum is simply dummy text of the printing and typesetting industry."></textarea>
+                            <div class="valid-feedback"></div>
+                            <div class="invalid-feedback"></div>
                         </div>
                     </div>
                 </div>
                 <div class="button-action-container-form my-3 d-flex w-100 h-auto justify-content-end column-gap-2">
-                    <a href="#"><button class="btn btn-primary">Simpan</button></a>
-                    <a href="tool.php"><button class="btn btn-danger" type="button">Batal</button></a>
+                    <button class="btn btn-primary" id="btn-simpan">Simpan</button>
+                    <a href="/tools"><button class="btn btn-danger" type="button">Batal</button></a>
                 </div>
             </form>
         </div>
@@ -87,7 +93,16 @@
         crossorigin="anonymous"></script>
 
     <!-- Custom Js-->
-    <script src="../../../Public/Asset/js/script.js"></script>
+    <script src="/Asset/js/script.js"></script>
+
+    <!-- AXIOS -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <!-- SweetAlert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- Logic Handler -->
+    <script src="/Asset/js/tools/updateTools.js"></script>
 
 </body>
 
