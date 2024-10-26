@@ -15,7 +15,7 @@
         crossorigin="anonymous">
 
     <!--    Custom Css-->
-    <link rel="stylesheet" href="../../../Public/Asset/css/style.css">
+    <link rel="stylesheet" href="/Asset/css/style.css">
 
     <!-- Font -->
     <link
@@ -34,7 +34,7 @@
     <!-- ROOT Container -->
     <div class="container-fluid main-root-container w-100 h-100 p-0 m-0">
         <!-- Navbar -->
-        <?php require_once '../Layout/navbar.php' ?>
+        <?php require_once '../App/Views/Layout/navbar.php' ?>
 
         <div class="container-fluid container-content d-flex flex-column h-auto">
             <!-- Breadcrumb -->
@@ -53,40 +53,49 @@
                         <div class="input-nama-instruktor">
                             <label for="nama-instruktor" class="form-label">Nama</label>
                             <input type="text" name="nama-instruktor" id="nama-instruktor" class="form-control"
-                                placeholder="Contoh: Rigen" required>
+                                placeholder="Contoh: Rigen">
+                            <div class="valid-feedback" id="valid-feedback-email"></div>
+                            <div class="invalid-feedback" id="invalid-feedback-email"></div>
                         </div>
                         <div class="input-email-instruktor">
                             <label for="email-instruktor" class="form-label">Email</label>
                             <input type="email" name="email-instruktor" id="email-instruktor" class="form-control"
-                                placeholder="Contoh: rigen@gmail.com" required>
+                                placeholder="Contoh: rigen@gmail.com">
+                            <div class="valid-feedback" id="valid-feedback-email"></div>
+                            <div class="invalid-feedback" id="invalid-feedback-email"></div>
                         </div>
                         <div class="input-alamat-instruktor">
                             <label for="alamat-instruktor" class="form-label">Alamat</label>
                             <input type="text" name="alamat-instruktor" id="alamat-instruktor" class="form-control"
-                                placeholder="Contoh : Nganjuk, Nganjuk, Jawa Timur" required>
+                                placeholder="Contoh : Nganjuk, Nganjuk, Jawa Timur">
+                            <div class="valid-feedback" id="valid-feedback-email"></div>
+                            <div class="invalid-feedback" id="invalid-feedback-email"></div>
                         </div>
                     </div>
                     <div class="container-form-input flex-grow-1 d-flex flex-column row-gap-3">
                         <div class="input-no-hp-instruktor">
                             <label for="no-hp-instruktor" class="form-label">Nomor Telepon</label>
                             <input type="text" name="no-hp-instruktor" id="no-hp-instruktor" class="form-control"
-                                placeholder="Contoh : 08xxxxxx" required>
+                                placeholder="Contoh : 08xxxxxx">
+                            <div class="valid-feedback" id="valid-feedback-email"></div>
+                            <div class="invalid-feedback" id="invalid-feedback-email"></div>
                         </div>
                         <div class="input-pas-foto flex-grow-1 d-flex flex-column">
                             <label for="fileInput" class="form-label">Pas Foto</label>
                             <div class="upload-area w-100 m-0 p-3 flex-grow-1" id="upload-area">
-                                <img src="../../../Public/Asset/images/upload_icons.png" alt="upload icon" />
+                                <img src="/Asset/images/upload_icons.png" alt="upload icon" />
                                 <p>Upload file</p>
                                 <small>*jpg, png</small>
                                 <input type="file" id="fileInput" accept=".jpg,.jpeg,.png" />
+                                <div class="valid-feedback" id="valid-feedback-email"></div>
+                                <div class="invalid-feedback" id="invalid-feedback-email"></div>
                             </div>
                         </div>
-
                     </div>
                 </div>
                 <div class="button-action-container-form my-3 d-flex w-100 h-auto justify-content-end column-gap-2">
-                    <a href="#"><button class="btn btn-primary">Simpan</button></a>
-                    <a href="instructors.php"><button class="btn btn-danger" type="button">Batal</button></a>
+                    <button class="btn btn-primary" id="btn-simpan" type="button">Simpan</button>
+                    <a href="/instructor"><button class="btn btn-danger" type="button">Batal</button></a>
                 </div>
             </form>
         </div>
@@ -103,7 +112,16 @@
         crossorigin="anonymous"></script>
 
     <!-- Custom Js-->
-    <script src="../../../Public/Asset/js/script.js"></script>
+    <script src="/Asset/js/script.js"></script>
+
+    <!-- AXIOS -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <!-- SweetAlert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- Logic Handler -->
+    <script type="module" src="/Asset/js/instructors/addInstructors.js"></script>
 
 </body>
 
