@@ -48,6 +48,14 @@ class DepartmentsController
         echo json_encode($this->departmentModel->getDepartmentById($id));
     }
 
+    public function getDepartmentName()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'GET')
+        {
+            echo json_encode($this->departmentModel->getDepartmentName());
+        }
+    }
+
     public function createDepartment()
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST')
