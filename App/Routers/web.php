@@ -351,4 +351,33 @@ if ($uri == '/' || $uri == '' || $uri == 'login') {
             $controller->getInstituteById($id);
         }
     }
+} else if ($uri == 'programs/addPrograms')
+{
+    if (isset($_SESSION['user']))
+    {
+        require_once '../App/Controllers/ProgramController.php';
+        $controller = new ProgramController();
+        if ($_SERVER['REQUEST_METHOD'] === 'POST')
+        {
+
+        } else if ($_SERVER['REQUEST_METHOD'] === 'GET')
+        {
+            $controller->viewAddProgram();
+        }
+    }
+} else if (preg_match('/programs\/updatePrograms\/(\d+)/', $uri, $matches))
+{
+    if (isset($_SESSION['user']))
+    {
+        $id = $matches[1];
+        require_once '../App/Controllers/ProgramController.php';
+        $controller = new ProgramController();
+        if ($_SERVER['REQUEST_METHOD'] === 'POST')
+        {
+
+        } else if ($_SERVER['REQUEST_METHOD'] === 'GET')
+        {
+            $controller->viewUpdateProgram();
+        }
+    }
 }
