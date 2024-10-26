@@ -17,4 +17,14 @@ class ProgramController
     {
         require_once '../App/Views/Programs/programs.php';
     }
+
+    public function viewAddProgram()
+    {
+        require_once '../App/Views/Programs/addPrograms.php';
+    }
+
+    public function viewUpdateProgram()
+    {
+        require_once '../App/Views/Programs/updatePrograms.php';
+    }
 }
