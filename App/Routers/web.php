@@ -380,4 +380,37 @@ if ($uri == '/' || $uri == '' || $uri == 'login') {
             $controller->viewUpdateProgram();
         }
     }
+} else if (preg_match('/programs\/getProgram\/(\d+)/', $uri, $matches))
+{
+    if ($_SERVER['REQUEST_METHOD'] === 'GET')
+    {
+        $id = $matches[1];
+        require_once '../App/Controllers/ProgramController.php';
+        $controller = new ProgramController();
+        if ($_SERVER['REQUEST_METHOD'] === 'GET')
+        {
+            $controller->getProgramById($id);
+        }
+    }
+} else if ($uri == 'department/getDepartmentName')
+{
+    if ($_SERVER['REQUEST_METHOD'] === 'GET')
+    {
+        require_once '../App/Controllers/DepartmentsController.php';
+        $controller = new DepartmentsController();
+        $controller->getDepartmentName();
+    }
+} else if ($uri == 'instructor/addInstructor') {
+    if (isset($_SESSION['user']))
+    {
+        require_once '../App/Controllers/InstructorController.php';
+        $controller = new InstructorController();
+        if ($_SERVER['REQUEST_METHOD'] === 'POST')
+        {
+            $controller->createInstructors();
+        } else if ($_SERVER['REQUEST_METHOD'] === 'GET')
+        {
+            $controller->viewAddInstructor();
+        }
+    }
 }
