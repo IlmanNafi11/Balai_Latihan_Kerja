@@ -38,6 +38,18 @@ class DepartmentModel
         }
     }
 
+    public function getDepartmentName()
+    {
+        $query = "SELECT id, nama FROM departments";
+        $stmt = $this->connection->prepare($query);
+        try {
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            return ['success' => false, 'message' => $e->getMessage()];
+        }
+    }
+
     public function createDepartment($nama, $deskripsi, $instituteID)
     {
         $query = "INSERT INTO departments (nama, deskripsi, institute_id) VALUES (:nama, :deskripsi, :institusi_id)";
