@@ -71,17 +71,18 @@ class InstructorModel
         }
     }
 
-    public function updateInstructor($id, $nama, $no_telp, $email)
+    public function updateInstructor($id, $nama, $no_telp, $email, $address)
     {
-        $query = "UPDATE instructors SET nama = :nama, no_tlp = :no_tlp, email = :email WHERE id = :id";
+        $query = "UPDATE instructors SET nama = :nama, no_tlp = :no_tlp, email = :email, alamat = :address WHERE id = :id";
         $stmt = $this->connection->prepare($query);
         try {
             $stmt->bindParam(':nama', $nama);
             $stmt->bindParam(':no_tlp', $no_telp);
             $stmt->bindParam(':email', $email);
+            $stmt->bindParam(':address', $address);
             $stmt->bindParam(':id', $id);
             if ($stmt->execute()) {
-                return ['success' => true, 'message' => 'Data Berhasil Diperbarui'];
+                return ['success' => true, 'message' => 'Data Berhasil Diperbarui', 'redirect_url' => '/instructor'];
             } else {
                 return ['success' => false, 'message' => 'Data Gagal Diperbarui'];
             }
@@ -97,7 +98,7 @@ class InstructorModel
         try {
             $stmt->bindParam(':id', $id);
             if ($stmt->execute()) {
-                return ['success' => true, 'message' => 'Data Berhasil Dihapus'];
+                return ['success' => true, 'message' => 'Data Berhasil Dihapus', 'redirect_url' => '/instructor'];
             } else {
                 return ['success' => false, 'message' => 'Data Gagal Dihapus'];
             }
