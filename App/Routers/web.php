@@ -413,4 +413,55 @@ if ($uri == '/' || $uri == '' || $uri == 'login') {
             $controller->viewAddInstructor();
         }
     }
+} else if (preg_match('/instructor\/updateInstructor\/(\d+)/', $uri, $matches))
+{
+    if (isset($_SESSION['user']))
+    {
+        $id = $matches[1];
+        require_once '../App/Controllers/InstructorController.php';
+        $controller = new InstructorController();
+        if ($_SERVER['REQUEST_METHOD'] === 'POST')
+        {
+            $controller->updateInstructors($id);
+        } else if ($_SERVER['REQUEST_METHOD'] === 'GET')
+        {
+            $controller->viewUpdateInstructor();
+        }
+    }
+} else if (preg_match('/instructor\/getInstructor\/(\d+)/', $uri, $matches))
+{
+    if ($_SERVER['REQUEST_METHOD'] === 'GET'){
+        $id = $matches[1];
+        require_once '../App/Controllers/InstructorController.php';
+        $controller = new InstructorController();
+        $controller->getInstructorById($id);
+    }
+} else if ($uri == '/instructor/getInstructor')
+{
+    if ($_SERVER['REQUEST_METHOD'] === 'GET')
+    {
+        require_once '../App/Controllers/InstructorController.php';
+        $controller = new InstructorController();
+        $controller->getAllInstructors();
+    }
+} else if ($uri == '/instructor/getInstructorName')
+{
+    if ($_SERVER['REQUEST_METHOD'] === 'GET')
+    {
+        require_once '../App/Controllers/InstructorController.php';
+        $controller = new InstructorController();
+        $controller->getInstructorName();
+    }
+} else if (preg_match('/instructor\/deleteInstructor\/(\d+)/', $uri, $matches))
+{
+    if (isset($_SESSION['user']))
+    {
+        $id = $matches[1];
+        require_once '../App/Controllers/InstructorController.php';
+        $controller = new InstructorController();
+        if ($_SERVER['REQUEST_METHOD'] === 'DELETE')
+        {
+            $controller->deleteInstructors($id);
+        }
+    }
 }
