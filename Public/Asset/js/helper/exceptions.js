@@ -5,14 +5,14 @@ const swalWithBootstrapButtons = Swal.mixin({
     }, buttonsStyling: false
 });
 
-export function questionAlert(title, message, confirmText, onConfirm) {
+export function questionAlert(title, message, confirmText, onConfirm, onCancel) {
     swalWithBootstrapButtons.fire({
         title: title,
         text: message,
         icon: "question",
         showCancelButton: true,
         confirmButtonText: confirmText,
-        cancelButtonText: "Tidak, Batal!",
+        cancelButtonText: "Batal!",
         reverseButtons: true
     })
         .then((result) => {
@@ -20,6 +20,8 @@ export function questionAlert(title, message, confirmText, onConfirm) {
                 if (onConfirm && typeof onConfirm === 'function') {
                     onConfirm();
                 }
+            } else if (onCancel && typeof onCancel === 'function') {
+                onCancel();
             }
         });
 }
@@ -41,6 +43,14 @@ export function errorAlert(errorMessage) {
     swalWithBootstrapButtons.fire({
         title: "Gagal!",
         text: errorMessage,
+        icon: "error"
+    });
+}
+
+export function cancelAlert() {
+    swalWithBootstrapButtons.fire({
+        title: "Dibatalkan",
+        text: "Data anda aman :)",
         icon: "error"
     });
 }
