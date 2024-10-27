@@ -40,8 +40,8 @@
             <!-- Breadcrumb -->
             <nav aria-label="breadcrumb" class="breadcrumb-content">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="../Dashboard/dashboard.php">Beranda</a></li>
-                    <li class="breadcrumb-item"><a href="instructors.php">Instruktor</a></li>
+                    <li class="breadcrumb-item"><a href="/dashboard">Beranda</a></li>
+                    <li class="breadcrumb-item"><a href="/instructor">Instruktor</a></li>
                     <li class="breadcrumb-item active" aria-current="page">Tambah Data</li>
                 </ol>
             </nav>
