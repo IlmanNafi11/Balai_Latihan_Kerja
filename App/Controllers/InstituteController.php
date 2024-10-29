@@ -28,6 +28,11 @@ class InstituteController
         echo json_encode($this->model->getInstituteId());
     }
 
+    public function getAllInstitute()
+    {
+        echo json_encode($this->model->getAllInstitute());
+    }
+
     public function getInstituteById($id)
     {
         echo json_encode($this->model->getInstituteById($id));
