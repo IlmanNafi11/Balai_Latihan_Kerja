@@ -15,9 +15,14 @@ class ToolsModel
         $stmt = $this->connection->prepare($query);
         try {
             $stmt->execute();
-            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            if (empty($data)) {
+                return ['success' => true, 'isEmpty' => true, 'message' => 'Data Kosong'];
+            } else {
+                return ['success' => true, 'isEmpty' => false, 'tools' => $data];
+            }
         } catch (PDOException $e) {
-            return ['success' => false, 'message' => 'Terjadi Kesalahan: ' . $e->getMessage()];
+            return ['success' => false, 'message' => 'Terjadi Kesalahan : ' . $e->getMessage()];
         }
     }
 
@@ -27,15 +32,34 @@ class ToolsModel
         $stmt = $this->connection->prepare($query);
         try {
             $stmt->bindParam(":id", $id);
-            if ($stmt->execute()) {
-                $data = $stmt->fetch(PDO::FETCH_ASSOC);
-                return ['success' => true, 'dataByID' => $data];
+            $stmt->execute();
+            $data = $stmt->fetch(PDO::FETCH_ASSOC);
+            if (empty($data)) {
+                return ['success' => true, 'isEmpty' => true, 'message' => 'Data Tidak ditemukan'];
             } else {
-                return ['success' => false, 'message' => 'Data tidak Ditemukan'];
+                return ['success' => true, 'isEmpty' => false, 'tools' => $data];
             }
         } catch (PDOException $e) {
             return ['success' => false, 'message' => 'Terjadi Kesalahan: ' . $e->getMessage()];
         }
+    }
+
+    public function getToolsName()
+    {
+        $query = "SELECT id, nama FROM tools";
+        $stmt = $this->connection->prepare($query);
+        try {
+            $stmt->execute();
+            $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            if (empty($data)) {
+                return ['success' => true, 'isEmpty' => true, 'message' => 'Data Kosong'];
+            } else {
+                return ['success' => true, 'isEmpty' => false, 'tools' => $data];
+            }
+        } catch (PDOException $e) {
+            return ['success' => false, 'message' => 'Terjadi Kesalahan : ' . $e->getMessage()];
+        }
+
     }
 
     public function createTools($name, $description, $type)
@@ -46,13 +70,10 @@ class ToolsModel
             $stmt->bindParam(":name", $name);
             $stmt->bindParam(":description", $description);
             $stmt->bindParam(":type", $type);
-            if ($stmt->execute()) {
-                return ['success' => true, 'message' => 'Data Berhasil Disimpan', 'redirect_url' => '/tools'];
-            } else {
-                return ['success' => false, 'message' => 'Gagal Menyimpan Data'];
-            }
+            $stmt->execute();
+            return ['success' => true, 'message' => 'Data Berhasil Disimpan', 'redirect_url' => '/tools'];
         } catch (PDOException $e) {
-            return ['success' => false, 'message' => 'Terjadi Kesalahan: ' . $e->getMessage()];
+            return ['success' => false, 'message' => 'Terjadi Kesalahan : ' . $e->getMessage()];
         }
     }
 
@@ -65,13 +86,9 @@ class ToolsModel
             $stmt->bindParam(":name", $name);
             $stmt->bindParam(":description", $description);
             $stmt->bindParam(":type", $type);
-            if ($stmt->execute()) {
-                return ['success' => true, 'message' => 'Data Berhasil Diperbarui', 'redirect_url' => '/tools'];
-            } else {
-                return ['success' => false, 'message' => 'Gagal Memperbarui Data'];
-            }
+            return ['success' => true, 'message' => 'Data Berhasil Diperbarui', 'redirect_url' => '/tools'];
         } catch (PDOException $e) {
-            return ['success' => false, 'message' => 'Terjadi Kesalahan: ' . $e->getMessage()];
+            return ['success' => false, 'message' => 'Terjadi Kesalahan : ' . $e->getMessage()];
         }
     }
 
@@ -81,11 +98,7 @@ class ToolsModel
         $stmt = $this->connection->prepare($query);
         try {
             $stmt->bindParam(":id", $id);
-            if ($stmt->execute()) {
-                return ['success' => true, 'message' => 'Data Berhasil Dihapus', 'redirect_url' => '/tools'];
-            } else {
-                return ['success' => false, 'message' => 'Gagal Menghapus Data'];
-            }
+            return ['success' => true, 'message' => 'Data Berhasil Dihapus', 'redirect_url' => '/tools'];
         } catch (PDOException $e) {
             return ['success' => false, 'message' => 'Terjadi Kesalahan: ' . $e->getMessage()];
         }
