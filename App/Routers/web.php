@@ -1,4 +1,6 @@
 <?php
+require_once '../App/Helper/ControllerHelper.php';
+
 $uri = trim($_SERVER['REQUEST_URI'], '/');
 session_start();
 if ($uri == '/' || $uri == '' || $uri == 'login') {
@@ -138,6 +140,15 @@ if ($uri == '/' || $uri == '' || $uri == 'login') {
     if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         $controller = new BuildingController();
         $controller->getBuildingById($id);
+    }
+} elseif ($uri == 'building/getBuildingName')
+{
+    if (isset($_SESSION['user']))
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'GET')
+        {
+            loadController('BuildingController', 'getBuildingName');
+        }
     }
 } elseif (preg_match('/building\/delete\/(\d+)/', $uri, $matches)) {
     $id = $matches[1];
@@ -324,6 +335,12 @@ if ($uri == '/' || $uri == '' || $uri == 'login') {
         $controller = new InstituteController();
         $controller->getInstituteId();
     }
+} else if ($uri == 'institute/getInstitute')
+{
+    if ($_SERVER['REQUEST_METHOD'] === 'GET')
+    {
+        loadController('InstituteController', 'getAllInstitute');
+    }
 } else if (preg_match('/institute\/updateInstitute\/(\d+)/', $uri, $matches))
 {
     if (isset($_SESSION['user']))
@@ -355,14 +372,12 @@ if ($uri == '/' || $uri == '' || $uri == 'login') {
 {
     if (isset($_SESSION['user']))
     {
-        require_once '../App/Controllers/ProgramController.php';
-        $controller = new ProgramController();
         if ($_SERVER['REQUEST_METHOD'] === 'POST')
         {
 
         } else if ($_SERVER['REQUEST_METHOD'] === 'GET')
         {
-            $controller->viewAddProgram();
+            loadController('ProgramController', 'viewAddProgram');
         }
     }
 } else if (preg_match('/programs\/updatePrograms\/(\d+)/', $uri, $matches))
@@ -444,7 +459,7 @@ if ($uri == '/' || $uri == '' || $uri == 'login') {
         $controller = new InstructorController();
         $controller->getAllInstructors();
     }
-} else if ($uri == '/instructor/getInstructorName')
+} else if ($uri == 'instructor/getInstructorName')
 {
     if ($_SERVER['REQUEST_METHOD'] === 'GET')
     {
