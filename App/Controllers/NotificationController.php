@@ -26,37 +26,28 @@ class NotificationController
 
     public function getAllNotifications()
     {
-        $notifications = $this->model->getAllNotification();
-        echo json_encode($notifications);
+        echo json_encode($this->model->getAllNotification());
     }
 
     public function getNotificationById($id)
     {
-        $data = $this->model->getNotificationById($id);
-        if (empty($data)) {
-            echo json_encode($data);
-        }
+        echo json_encode($this->model->getNotificationById($id));
     }
 
     public function createNotification()
     {
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $data = json_decode(file_get_contents("php://input"), true);
-            $message = $data['message'];
-            if (!empty($message)) {
-                $result = $this->model->createNotification($message);
-                echo json_encode($result);
-            } else {
-                echo json_encode(['success' => false, 'message' => 'Data tidak lengkap']);
-            }
+        $data = json_decode(file_get_contents("php://input"), true);
+        $message = $data['message'];
+        if (!empty($message)) {
+            $result = $this->model->createNotification($message);
+            echo json_encode($result);
+        } else {
+            echo json_encode(['success' => false, 'message' => 'Data Kosong']);
         }
     }
 
     public function deleteNotification($id)
     {
-        if ($_SERVER['REQUEST_METHOD'] == 'DELETE') {
-            $result = $this->model->deleteNotification($id);
-            echo json_encode($result);
-        }
+        echo json_encode($this->model->deleteNotification($id));
     }
 }
