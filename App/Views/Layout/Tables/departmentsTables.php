@@ -17,17 +17,17 @@
             </tr>
             </thead>
             <tbody>
-            <?php if (!empty($department)) {
-                foreach ($department as $row): ?>
+            <?php if (!empty($department) && !$department['isEmpty']) {
+                foreach ($department['departments'] as $row): ?>
                     <tr>
                         <td><?= $row['id'] ?></td>
                         <td><?= $row['nama'] ?></td>
                         <td><?= $row['deskripsi'] ?></td>
                         <td>
-                            <a href="/department/updateDepartment/<?= $row['id']?>">
+                            <a href="/department/updateDepartment/<?= $row['id'] ?>">
                                 <button class="btn btn-warning">Ubah</button>
                             </a>
-                                <button onclick="deleteDepartments(<?= $row['id']?>)" class="btn btn-danger">Hapus</button>
+                            <button onclick="deleteDepartments(<?= $row['id'] ?>)" class="btn btn-danger">Hapus</button>
                         </td>
                     </tr>
                 <?php endforeach;
