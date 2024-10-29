@@ -36,58 +36,39 @@ class ToolsController
 
     public function getToolsByID($id)
     {
-        $data = $this->model->getToolsById($id);
-        if (!empty($data))
-        {
-            echo json_encode($data);
-        }
+        echo json_encode($this->model->getToolsById($id));
     }
 
     public function createTools()
     {
-        if ($_SERVER['REQUEST_METHOD'] == 'POST')
-        {
-            $data = json_decode(file_get_contents("php://input"), true);
-            $name = $data['name'];
-            $type = $data['type'];
-            $description = $data['description'];
-
-            if (!empty($name) && !empty($description))
-            {
-                $result = $this->model->createTools($name, $description, $type);
-                echo json_encode($result);
-            } else
-            {
-                echo json_encode(['status' => false, 'message' => 'Data tidak lengkap']);
-            }
+        $data = json_decode(file_get_contents("php://input"), true);
+        $name = $data['name'];
+        $type = $data['type'];
+        $description = $data['description'];
+        if (!empty($name) && !empty($description)) {
+            $result = $this->model->createTools($name, $description, $type);
+            echo json_encode($result);
+        } else {
+            echo json_encode(['status' => false, 'message' => 'Data tidak lengkap']);
         }
     }
 
     public function updateTools($id)
     {
-        if ($_SERVER['REQUEST_METHOD'] == 'POST')
-        {
-            $data = json_decode(file_get_contents("php://input"), true);
-            $name = $data['name'];
-            $description = $data['description'];
-            $type = $data['type'];
-            if (!empty($name) && !empty($description))
-            {
-                $result = $this->model->updateTools($id, $name, $description, $type);
-                echo json_encode($result);
-            } else
-            {
-                echo json_encode(['status' => false, 'message' => 'Data tidak lengkap']);
-            }
+        $data = json_decode(file_get_contents("php://input"), true);
+        $name = $data['name'];
+        $description = $data['description'];
+        $type = $data['type'];
+        if (!empty($name) && !empty($description)) {
+            $result = $this->model->updateTools($id, $name, $description, $type);
+            echo json_encode($result);
+        } else {
+            echo json_encode(['status' => false, 'message' => 'Data tidak lengkap']);
         }
     }
 
     public function deleteTools($id)
     {
-        if ($_SERVER['REQUEST_METHOD'] == 'DELETE')
-        {
-            $result = $this->model->deleteTools($id);
-            echo json_encode($result);
-        }
+        echo json_encode($this->model->deleteTools($id));
     }
 }
