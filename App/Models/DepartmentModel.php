@@ -15,7 +15,12 @@ class DepartmentModel
         $stmt = $this->connection->prepare($query);
         try {
             $stmt->execute();
-            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            if (empty($data)) {
+                return ['success' => true, 'isEmpty' => true, 'message' => 'Data Kosong'];
+            } else {
+                return ['success' => true, 'isEmpty' => false, 'departments' => $data];
+            }
         } catch (PDOException $e) {
             return ['success' => false, 'message' => $e->getMessage()];
         }
@@ -28,10 +33,12 @@ class DepartmentModel
         $stmt = $this->connection->prepare($query);
         try {
             $stmt->bindParam(":id", $id);
-            if ($stmt->execute()) {
-                return ['success' => true, 'dataByID' => $stmt->fetch(PDO::FETCH_ASSOC)];
+            $stmt->execute();
+            $data = $stmt->fetch(PDO::FETCH_ASSOC);
+            if (empty($data)) {
+                return ['success' => true, 'isEmpty' => true, 'message' => 'Data Tidak Ditemukan'];
             } else {
-                return ['success' => false, 'message' => 'Data tidak ditemukan'];
+                return ['success' => true, 'isEmpty' => false, 'department' => $data];
             }
         } catch (PDOException $e) {
             return ['success' => false, 'message' => $e->getMessage()];
@@ -44,7 +51,12 @@ class DepartmentModel
         $stmt = $this->connection->prepare($query);
         try {
             $stmt->execute();
-            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            if (empty($data)) {
+                return ['success' => true, 'isEmpty' => true, 'message' => 'Data Kosong'];
+            } else {
+                return ['success' => true, 'isEmpty' => false, 'departments' => $data];
+            }
         } catch (PDOException $e) {
             return ['success' => false, 'message' => $e->getMessage()];
         }
@@ -58,11 +70,8 @@ class DepartmentModel
             $stmt->bindParam(":nama", $nama);
             $stmt->bindParam(":deskripsi", $deskripsi);
             $stmt->bindParam(":institusi_id", $instituteID);
-            if ($stmt->execute()) {
-                return ['success' => true, 'message' => 'Data berhasil ditambahkan', 'redirect_url' => '/department'];
-            } else {
-                return ['success' => false, 'message' => 'Data gagal ditambahkan'];
-            }
+            $stmt->execute();
+            return ['success' => true, 'message' => 'Data berhasil ditambahkan', 'redirect_url' => '/department'];
         } catch (PDOException $e) {
             return ['success' => false, 'message' => $e->getMessage()];
         }
@@ -76,11 +85,8 @@ class DepartmentModel
             $stmt->bindParam(":nama", $nama);
             $stmt->bindParam(":deskripsi", $deskripsi);
             $stmt->bindParam(":id", $id);
-            if ($stmt->execute()) {
-                return ['success' => true, 'message' => 'Data berhasil diubah', 'redirect_url' => '/department'];
-            } else {
-                return ['success' => false, 'message' => 'Data gagal diubah'];
-            }
+            $stmt->execute();
+            return ['success' => true, 'message' => 'Data berhasil diperbarui', 'redirect_url' => '/department'];
         } catch (PDOException $e) {
             return ['success' => false, 'message' => $e->getMessage()];
         }
@@ -92,11 +98,8 @@ class DepartmentModel
         $stmt = $this->connection->prepare($query);
         try {
             $stmt->bindParam(":id", $id);
-            if ($stmt->execute()) {
-                return ['success' => true, 'message' => 'Data berhasil dihapus', 'redirect_url' => '/department'];
-            } else {
-                return ['success' => false, 'message' => 'Data gagal dihapus'];
-            }
+            $stmt->execute();
+            return ['success' => true, 'message' => 'Data berhasil dihapus', 'redirect_url' => '/department'];
         } catch (PDOException $e) {
             return ['success' => false, 'message' => $e->getMessage()];
         }
