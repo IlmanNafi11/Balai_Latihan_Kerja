@@ -1,5 +1,4 @@
 <?php
-require_once '../App/Config/Database.php';
 require_once '../App/Models/DepartmentModel.php';
 
 class DepartmentsController
@@ -31,16 +30,7 @@ class DepartmentsController
 
     public function getAllDepartments()
     {
-        try {
-            $department = $this->departmentModel->getAllDepartment();
-            if (!empty($department)) {
-                echo json_encode($department);
-            } else {
-                echo json_encode(array('message' => 'Data Kosong'));
-            }
-        } catch (PDOException $e) {
-            echo $e->getMessage();
-        }
+        echo json_encode($this->departmentModel->getAllDepartment());
     }
 
     public function getDepartmentById($id)
@@ -50,56 +40,39 @@ class DepartmentsController
 
     public function getDepartmentName()
     {
-        if ($_SERVER['REQUEST_METHOD'] == 'GET')
-        {
-            echo json_encode($this->departmentModel->getDepartmentName());
-        }
+        echo json_encode($this->departmentModel->getDepartmentName());
     }
 
     public function createDepartment()
     {
-        if ($_SERVER['REQUEST_METHOD'] == 'POST')
-        {
-            $data = json_decode(file_get_contents("php://input"), true);
-            $name = $data['name'];
-            $description = $data['description'];
-            $instituteID = $data['instituteID'];
+        $data = json_decode(file_get_contents("php://input"), true);
+        $name = $data['name'];
+        $description = $data['description'];
+        $instituteID = $data['instituteID'];
 
-            if (!empty($name) && !empty($description) && !empty($instituteID))
-            {
-                $result = $this->departmentModel->createDepartment($name, $description, $instituteID);
-                echo json_encode($result);
-            } else
-            {
-                echo json_encode(['success' => false, 'message' => 'Data Tidak Lengkap']);
-            }
+        if (!empty($name) && !empty($description) && !empty($instituteID)) {
+            $result = $this->departmentModel->createDepartment($name, $description, $instituteID);
+            echo json_encode($result);
+        } else {
+            echo json_encode(['success' => false, 'message' => 'Data Tidak Lengkap']);
         }
     }
 
     public function updateDepartment($id)
     {
-        if ($_SERVER['REQUEST_METHOD'] == 'POST')
-        {
-            $data = json_decode(file_get_contents("php://input"), true);
-            $name = $data['name'];
-            $description = $data['description'];
-            if (!empty($name) && !empty($description))
-            {
-                $result = $this->departmentModel->updateDepartment($id, $name, $description);
-                echo json_encode($result);
-            } else
-            {
-                echo json_encode(['success' => false, 'message' => 'Data Tidak Lengkap']);
-            }
+        $data = json_decode(file_get_contents("php://input"), true);
+        $name = $data['name'];
+        $description = $data['description'];
+        if (!empty($name) && !empty($description)) {
+            $result = $this->departmentModel->updateDepartment($id, $name, $description);
+            echo json_encode($result);
+        } else {
+            echo json_encode(['success' => false, 'message' => 'Data Tidak Lengkap']);
         }
     }
 
     public function deleteDepartment($id)
     {
-        if ($_SERVER['REQUEST_METHOD'] == 'DELETE')
-        {
-            $result = $this->departmentModel->deleteDepartment($id);
-            echo json_encode($result);
-        }
+        echo json_encode($this->departmentModel->deleteDepartment($id));
     }
 }
