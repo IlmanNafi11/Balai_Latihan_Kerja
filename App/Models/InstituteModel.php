@@ -3,6 +3,7 @@
 class InstituteModel
 {
     private $connection;
+
     public function __construct($db)
     {
         $this->connection = $db;
@@ -12,8 +13,16 @@ class InstituteModel
     {
         $query = "SELECT * FROM institute";
         $stmt = $this->connection->prepare($query);
-        if ($stmt->execute()) {
-            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        try {
+            $stmt->execute();
+            $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            if (empty($data)) {
+                return ['success' => true, 'isEmpty' => true, 'message' => 'Data Kosong'];
+            } else {
+                return ['success' => true, 'isEmpty' => false, 'institutes' => $data];
+            }
+        } catch (PDOException $e) {
+            ['success' => false, 'message' => 'Terjadi Kesalahan : ' . $e->getMessage()];
         }
     }
 
@@ -21,10 +30,16 @@ class InstituteModel
     {
         $query = "SELECT id FROM institute";
         $stmt = $this->connection->prepare($query);
-        if ($stmt->execute()) {
-            return $stmt->fetch(PDO::FETCH_ASSOC);
-        } else {
-            return ['success' => false, 'message' => 'Gagal mengambil id insitute'];
+        try {
+            $stmt->execute();
+            $data = $stmt->fetch(PDO::FETCH_ASSOC);
+            if (empty($data)) {
+                return ['success' => true, 'isEmpty' => true, 'message' => 'Data Kosong'];
+            } else {
+                return ['success' => true, 'isEmpty' => false, 'institutes' => $data];
+            }
+        } catch (PDOException $e) {
+            ['success' => false, 'message' => 'Terjadi Kesalahan : ' . $e->getMessage()];
         }
     }
 
@@ -34,10 +49,12 @@ class InstituteModel
         $stmt = $this->connection->prepare($query);
         try {
             $stmt->bindParam(':id', $id);
-            if ($stmt->execute()) {
-                return ['success' => true, 'dataByID' => $stmt->fetch(PDO::FETCH_ASSOC)];
+            $stmt->execute();
+            $data = $stmt->fetch(PDO::FETCH_ASSOC);
+            if (empty($data)) {
+                return ['success' => true, 'isEmpty' => true, 'message' => 'Data Tidak Ditemukan'];
             } else {
-                return ['success' => false, 'message' => 'Gagal mengambil data berdasarkan id insitute'];
+                return ['success' => true, 'isEmpty' => false, 'institutes' => $data];
             }
         } catch (PDOException $e) {
             return ['success' => false, 'message' => $e->getMessage()];
@@ -62,12 +79,8 @@ class InstituteModel
             $stmt->bindParam(':email', $data['email']);
             $stmt->bindParam(':website', $data['website']);
             $stmt->bindParam(':deskripsi', $data['deskripsi']);
-            if ($stmt->execute()) {
-                return ['success' => true, 'message' => 'Data Institusi Berhasil Diperbaharui', 'redirect_url' => '/institute'];
-            } else
-            {
-                return ['success' => false, 'message' => 'Data Institusi Gagal Diperbaharui'];
-            }
+            $stmt->execute();
+            return ['success' => true, 'message' => 'Data Berhasil diperbarui', 'redirect_url' => '/institute'];
         } catch (PDOException $e) {
             return ['success' => false, 'message' => $e->getMessage()];
         }
