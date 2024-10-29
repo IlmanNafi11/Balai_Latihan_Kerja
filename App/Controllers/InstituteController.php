@@ -1,6 +1,6 @@
 <?php
-require_once '../App/Config/Database.php';
 require_once '../App/Models/InstituteModel.php';
+
 class InstituteController
 {
     private $model;
@@ -56,12 +56,8 @@ class InstituteController
             'website' => $data['website'],
             'deskripsi' => $data['deskripsi']
         ];
-        if (!empty($institute))
-        {
-            $result = $this->model->updateInstitute($institute);
-            echo json_encode($result);
-        } else {
-            echo json_encode(['success' => false, 'message' => 'Data kosong']);
-        }
+
+        $result = $this->model->updateInstitute($institute);
+        echo json_encode($result);
     }
 }
