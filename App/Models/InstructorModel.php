@@ -15,7 +15,12 @@ class InstructorModel
         $stmt = $this->connection->prepare($query);
         try {
             $stmt->execute();
-            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            if (empty($data)) {
+                return ['success' => true, 'isEmpty' => true, 'message' => 'Data Kosong'];
+            } else {
+                return ['success' => true, 'isEmpty' => false, 'instructors' => $data];
+            }
         } catch (PDOException $e) {
             return ['success' => false, 'message' => $e->getMessage()];
         }
@@ -27,10 +32,12 @@ class InstructorModel
         $stmt = $this->connection->prepare($query);
         try {
             $stmt->bindParam(':id', $id);
-            if ($stmt->execute()) {
-                return ['success' => true, 'dataByID' => $stmt->fetch(PDO::FETCH_ASSOC)];
+            $stmt->execute();
+            $data = $stmt->fetch(PDO::FETCH_ASSOC);
+            if (empty($data)) {
+                return ['success' => true, 'isEmpty' => true, 'message' => 'Data Tidak Ditemukan'];
             } else {
-                return ['success' => false, 'message' => 'Data Tidak Ditemukan'];
+                return ['success' => true, 'isEmpty' => false, 'instructor' => $data];
             }
         } catch (PDOException $e) {
             return ['success' => false, 'message' => $e->getMessage()];
@@ -42,17 +49,19 @@ class InstructorModel
         $query = "SELECT id, nama FROM instructors";
         $stmt = $this->connection->prepare($query);
         try {
-            if ($stmt->execute()) {
-                return $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $stmt->execute();
+            $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            if (empty($data)) {
+                return ['success' => true, 'isEmpty' => true, 'message' => 'Data Kosong'];
             } else {
-                return ['success' => false, 'message' => 'Data Kosong'];
+                return ['success' => true, 'isEmpty' => false, 'instructors' => $data];
             }
         } catch (PDOException $e) {
-            return ['success' => false, 'message' => $e->getMessage()];
+            return ['success' => false, 'message' => 'Terjadi Kesalahan : ' . $e->getMessage()];
         }
     }
 
-    public function createInstructor($nama, $no_telp, $email,$address)
+    public function createInstructor($nama, $no_telp, $email, $address)
     {
         $query = "INSERT INTO instructors (nama, no_tlp, email, alamat) VALUES (:nama, :no_tlp, :email, :alamat)";
         $stmt = $this->connection->prepare($query);
@@ -61,11 +70,8 @@ class InstructorModel
             $stmt->bindParam(':no_tlp', $no_telp);
             $stmt->bindParam(':email', $email);
             $stmt->bindParam(':alamat', $address);
-            if ($stmt->execute()) {
-                return ['success' => true, 'message' => 'Data Berhasil Disimpan', 'redirect_url' => '/instructor'];
-            } else {
-                return ['success' => false, 'message' => 'Data Gagal Disimpan'];
-            }
+            $stmt->execute();
+            return ['success' => true, 'message' => 'Data Berhasil Disimpan', 'redirect_url' => '/instructor'];
         } catch (PDOException $e) {
             return ['success' => false, 'message' => $e->getMessage()];
         }
@@ -81,11 +87,8 @@ class InstructorModel
             $stmt->bindParam(':email', $email);
             $stmt->bindParam(':address', $address);
             $stmt->bindParam(':id', $id);
-            if ($stmt->execute()) {
-                return ['success' => true, 'message' => 'Data Berhasil Diperbarui', 'redirect_url' => '/instructor'];
-            } else {
-                return ['success' => false, 'message' => 'Data Gagal Diperbarui'];
-            }
+            $stmt->execute();
+            return ['success' => true, 'message' => 'Data Berhasil Diperbarui', 'redirect_url' => '/instructor'];
         } catch (PDOException $e) {
             return ['success' => false, 'message' => $e->getMessage()];
         }
@@ -97,11 +100,8 @@ class InstructorModel
         $stmt = $this->connection->prepare($query);
         try {
             $stmt->bindParam(':id', $id);
-            if ($stmt->execute()) {
-                return ['success' => true, 'message' => 'Data Berhasil Dihapus', 'redirect_url' => '/instructor'];
-            } else {
-                return ['success' => false, 'message' => 'Data Gagal Dihapus'];
-            }
+            $stmt->execute();
+            return ['success' => true, 'message' => 'Data Berhasil Dihapus', 'redirect_url' => '/instructor'];
         } catch (PDOException $e) {
             return ['success' => false, 'message' => $e->getMessage()];
         }
