@@ -15,9 +15,14 @@ class NotificationModel
         $stmt = $this->connection->prepare($query);
         try {
             $stmt->execute();
-            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            if (empty($data)) {
+                return ['success' => true, 'isEmpty' => true, 'message' => "Data Kosong"];
+            } else {
+                return ['success' => true, 'isEmpty' => false, 'notifications' => $data];
+            }
         } catch (PDOException $e) {
-            return $e->getMessage();
+            return ['success' => false, 'message' => 'Terjadi Kesalahan: ' . $e->getMessage()];
         }
     }
 
@@ -27,11 +32,12 @@ class NotificationModel
         $stmt = $this->connection->prepare($query);
         try {
             $stmt->bindParam(':id', $id);
-            if ($stmt->execute()) {
-                $dataByID = $stmt->fetch(PDO::FETCH_ASSOC);
-                return ['success' => true, 'dataByID' => $dataByID];
+            $stmt->execute();
+            $data = $stmt->fetch(PDO::FETCH_ASSOC);
+            if (empty($data)) {
+                return ['success' => true, 'isEmpty' => true, 'message' => "Data Tidak Ditemukan"];
             } else {
-                return ['success' => false, 'message' => 'Data tidak ditemukan'];
+                return ['success' => true, 'isEmpty' => false, 'notifications' => $data];
             }
         } catch (PDOException $e) {
             return ['success' => false, 'message' => 'Terjadi Kesalahan: ' . $e->getMessage()];
@@ -45,11 +51,8 @@ class NotificationModel
         try {
             $stmt->bindParam(':message', $message);
             $stmt->bindValue(':tipe', 'publik');
-            if ($stmt->execute()) {
-                return ['success' => true, 'message' => 'Notification berhasil ditambahkan', 'redirect_url' => '/notification'];
-            } else {
-                return ['success' => false, 'message' => 'Notification gagal ditambahkan'];
-            }
+            $stmt->execute();
+            return ['success' => true, 'message' => 'Notifikasi berhasil ditambahkan', 'redirect_url' => '/notification'];
         } catch (PDOException $e) {
             return ['success' => false, 'message' => 'Terjadi Kesalahan: ' . $e->getMessage()];
         }
@@ -61,11 +64,8 @@ class NotificationModel
         $stmt = $this->connection->prepare($query);
         try {
             $stmt->bindParam(':id', $id);
-            if ($stmt->execute()) {
-                return ['success' => true, 'message' => 'Notification berhasil dihapus', 'redirect_url' => '/notification'];
-            } else {
-                return ['success' => false, 'message' => 'Notification gagal dihapus'];
-            }
+            $stmt->execute();
+            return ['success' => true, 'message' => 'Notifikasi berhasil dihapus', 'redirect_url' => '/notification'];
         } catch (PDOException $e) {
             return ['success' => false, 'message' => 'Terjadi Kesalahan: ' . $e->getMessage()];
         }
