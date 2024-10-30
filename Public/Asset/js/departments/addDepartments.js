@@ -1,3 +1,6 @@
+import {errorAlert, questionAlert, successAlert} from "../helper/exceptions.js";
+import {blurValidate, onSaveValidate} from "../helper/validators.js";
+
 const name = document.getElementById('nama-kejuruan');
 const description = document.getElementById('deskripsi-kejuruan');
 const btnSimpan = document.getElementById('btn-simpan');
@@ -5,130 +8,49 @@ const validName = name.nextElementSibling;
 const invalidName = validName.nextElementSibling;
 const validDescription = description.nextElementSibling;
 const invalidDescription = validDescription.nextElementSibling;
-const regex = /^[a-zA-Z0-9 .,]+$/;
-let isValid = true;
+const regexName = /^[a-zA-Z ]+$/;
+const regexDesc = /^[a-zA-Z0-9 .,]+$/;
 let instituteId = null;
 
 axios.get('/institute/getInstituteId')
     .then(response => {
-        instituteId = response.data.id;
+        if (response.data.success && !response.data.isEmpty) {
+            instituteId = response.data.institutes.id;
+        } else {
+            errorAlert(response.data.message);
+        }
     })
     .catch(error => {
-        console.log(error);
+        errorAlert(error.message);
     });
+
+// Blur validation Event
+blurValidate(name, "Nama Kejuruan", validName, invalidName, null, regexName, 50);
+blurValidate(description, "Deskripsi Kejuruan", validDescription, invalidDescription, null, regexDesc, 255);
+
 btnSimpan.addEventListener('click', (e) => {
-   e.preventDefault();
-    name.classList.remove('is-invalid', 'is-valid');
-    if (name.value.trim() === '') {
-        name.classList.add('is-invalid');
-        invalidName.textContent = 'Nama Kejuruan tidak boleh kosong';
-        isValid = false;
-    } else if (!regex.test(name.value.trim())) {
-        name.classList.add('is-invalid');
-        invalidName.textContent = 'Nama Kejuruan tidak valid';
-        isValid = false;
-    } else {
-        name.classList.add('is-valid')
-        validName.textContent = 'Bagus!';
-    }
+    e.preventDefault();
 
-    description.classList.remove('is-invalid', 'is-valid');
-    if (description.value.trim() === '') {
-        description.classList.add('is-invalid');
-        invalidDescription.textContent = 'Deskripsi Kejuruan tidak boleh kosong';
-        isValid = false;
-    } else if (!regex.test(description.value.trim())) {
-        description.classList.add('is-invalid');
-        invalidDescription.textContent = 'Deskripsi Kejuruan tidak valid';
-        isValid = false;
-    } else {
-        name.classList.add('is-valid')
-        validName.textContent = 'Bagus!';
-    }
-
-    if (isValid && blurValidate()){
-        const swalWithBootstrapButtons = Swal.mixin({
-            customClass: {
-                confirmButton: 'btn btn-success',
-                cancelButton: 'btn btn-danger'
-            }, buttonsStyling: false
-        });
-
-        swalWithBootstrapButtons.fire({
-            title: "Simpan data?",
-            text: "Pastikan semua data telah diisi dengan benar!",
-            icon: "question",
-            showCancelButton: true,
-            confirmButtonText: "Ya, Simpan",
-            cancelButtonText: "Tidak, Batal!",
-            reverseButtons: true
-        })
-            .then((result) => {
-                if (result.isConfirmed) {
-                    axios.post(`/department/addDepartment`, {
-                        'name': name.value,
-                        'description': description.value,
-                        'instituteID': instituteId,
-                    })
-                        .then(response => {
-                            if (response.data.success) {
-                                swalWithBootstrapButtons.fire({
-                                    title: "Sukses!",
-                                    text: "Data berhasil disimpan!",
-                                    icon: "success"
-                                })
-                                    .then((result) => {
-                                        if (result.isConfirmed) {
-                                            window.location.href = response.data.redirect_url;
-                                        }
-                                    });
-                            } else if (response.data.success == false) {
-                                swalWithBootstrapButtons.fire({
-                                    title: "Gagal!",
-                                    text: response.data.message,
-                                    icon: "error"
-                                });
-                            }
-                        })
-                        .catch(error => {
-                            swalWithBootstrapButtons.fire({
-                                title: "Gagal!",
-                                text: error.message,
-                                icon: "error"
-                            });
-                        });
-                }
+    let isValid = true;
+    isValid = onSaveValidate(name, "Nama Kejuruan", validName, invalidName, null, regexName, 50) && isValid;
+    isValid = onSaveValidate(description, "Deskripsi Kejuruan", validDescription, invalidDescription, null, regexDesc, 255) && isValid;
+    if (isValid) {
+        questionAlert("Simpan data?", "Pastikan semua data telah diisi dengan benar!", "Ya, Simpan", () => {
+            axios.post(`/department/addDepartment`, {
+                'name': name.value,
+                'description': description.value,
+                'instituteID': instituteId,
             })
+                .then(response => {
+                    if (response.data.success) {
+                        successAlert("Data berhasil disimpan!", response.data.redirect_url);
+                    } else if (!response.data.success) {
+                        errorAlert(response.data.message);
+                    }
+                })
+                .catch(error => {
+                    errorAlert(error.message);
+                });
+        });
     }
 });
-
-function blurValidate() {
-    name.classList.remove('is-invalid', 'is-valid');
-    if (name.value.trim() === '') {
-        name.classList.add('is-invalid');
-        invalidName.textContent = 'Nama Kejuruan tidak boleh kosong';
-        isValid = false;
-    } else if (!regex.test(name.value.trim())) {
-        name.classList.add('is-invalid');
-        invalidName.textContent = 'Nama Kejuruan tidak valid';
-        isValid = false;
-    } else {
-        name.classList.add('is-valid')
-        validName.textContent = 'Bagus!';
-    }
-
-    description.classList.remove('is-invalid', 'is-valid');
-    if (description.value.trim() === '') {
-        description.classList.add('is-invalid');
-        invalidDescription.textContent = 'Deskripsi Kejuruan tidak boleh kosong';
-        isValid = false;
-    } else if (!regex.test(description.value.trim())) {
-        description.classList.add('is-invalid');
-        invalidDescription.textContent = 'Deskripsi Kejuruan tidak valid';
-        isValid = false;
-    } else {
-        name.classList.add('is-valid')
-        validName.textContent = 'Bagus!';
-    }
-    return isValid;
-}
