@@ -1,5 +1,5 @@
-import {emptyValidate, regexValidate, lengthValidate} from "../helper/validators.js";
-import {successAlert, errorAlert, questionAlert} from "../helper/exceptions.js";
+import { blurValidate, onSaveValidate } from "../helper/validators.js";
+import { successAlert, errorAlert, questionAlert } from "../helper/exceptions.js";
 
 const name = document.getElementById('nama-instruktor');
 const email = document.getElementById('email-instruktor');
@@ -22,31 +22,23 @@ const regexKombinasi = /^[a-zA-Z0-9 ,.]+$/;
 
 const btnSimpan = document.getElementById('btn-simpan');
 
+blurValidate(name, "Nama Instruktor", validName, invalidName, null, regexNama, 50);
+blurValidate(email, "Email Instruktor", validEmail, invalidEmail, null, regexEmail, 50);
+blurValidate(phone, "Nomor Hp Instruktor", validPhone, invalidPhone, null, regexNoTlp, 13);
+blurValidate(address, "Alamat Instruktor", validAddress, invalidAddress, null, regexKombinasi, 150);
+
 btnSimpan.addEventListener('click', (e) => {
     e.preventDefault();
+    let isValid = true;
 
-    // empty validations
-    let isNameValid = emptyValidate(name, "Bagus!", "Nama Instruktor tidak boleh kosong", validName, invalidName);
-    let isEmailValid = emptyValidate(email, "Bagus!", "Email Instruktor tidak boleh kosong", validEmail, invalidEmail);
-    let isPhoneValid = emptyValidate(phone, "Bagus!", "No Telephon Instructor tidak boleh kosong", validPhone, invalidPhone);
-    let isAddressValid = emptyValidate(address, "Bagus!", "Alamat Instruktor tidak boleh kosong", validAddress, invalidAddress);
+    isValid = onSaveValidate(name, "Nama Instruktor", validName, invalidName, null, regexNama, 50) && isValid;
+    isValid = onSaveValidate(email, "Email Instruktor", validEmail, invalidEmail, null, regexEmail, 50) && isValid;
+    isValid = onSaveValidate(phone, "Nomor Hp Instruktor", validPhone, invalidPhone, null, regexNoTlp, 13) && isValid;
+    isValid = onSaveValidate(address, "Alamat Instruktor", validAddress, invalidAddress, null, regexKombinasi, 150) && isValid;
 
-    // regex validation
-    isNameValid = isNameValid && regexValidate(name, "Bagus!", "Nama Instructor tidak valid", validName, invalidName, regexNama);
-    isEmailValid = isEmailValid && regexValidate(email, "Bagus!", "Email Instruktor tidak valid", validEmail, invalidEmail, regexEmail);
-    isPhoneValid = isPhoneValid && regexValidate(phone, "Bagus!", "No Telephon Instructor tidak valid", validPhone, invalidPhone, regexNoTlp);
-    isAddressValid = isAddressValid && regexValidate(address, "Bagus!", "Alamat Instruktor tidak boleh kosong", validAddress, invalidAddress, regexKombinasi);
-
-    // length validation
-    isNameValid = isNameValid && lengthValidate(name, "Bagus", "Nama Istruktor tidak boleh lebih dari 50 digit", validName, invalidName, 50);
-    isEmailValid = isEmailValid && lengthValidate(email, "Bagus", "Email Istruktor tidak boleh lebih dari 50 digit", validEmail, invalidEmail, 50);
-    isPhoneValid = isPhoneValid && lengthValidate(phone, "Bagus", "Nomor Hp Istruktor harus terdiri dari 12-13 digit", validPhone, invalidPhone, 13, 12);
-    isAddressValid = isAddressValid && lengthValidate(address, "Bagus", "Alamat Istruktor tidak boleh lebih dari 150 digit", validAddress, invalidAddress, 150);
-
-    let isAllValid = isNameValid && isEmailValid && isPhoneValid && isAddressValid;
-    if (isAllValid) {
-        questionAlert("Simpan Data?", "Pastikan semua data telah diisi dengan benar", "Ya, Simpan", ()=> {
-            axios.post(`/instructor/addInstructor`,{
+    if (isValid) {
+        questionAlert("Simpan Data?", "Pastikan semua data telah diisi dengan benar", "Ya, Simpan", () => {
+            axios.post(`/instructor/addInstructor`, {
                 'name': name.value,
                 'email': email.value,
                 'phone': phone.value,
@@ -55,12 +47,12 @@ btnSimpan.addEventListener('click', (e) => {
                 .then(response => {
                     if (response.data.success) {
                         successAlert('Data Berhasil disimpan!', response.data.redirect_url);
-                    } else if (!response.data.success) {
-                        errorAlert('Terjadi Kesalahan');
+                    } else {
+                        errorAlert(response.data.message);
                     }
                 })
                 .catch(error => {
-                    errorAlert(`Terjadi Kesalahan: ${error.message}`);
+                    errorAlert(error.message);
                 });
         });
     }

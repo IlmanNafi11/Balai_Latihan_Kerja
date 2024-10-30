@@ -2,13 +2,19 @@ import {successAlert, errorAlert, questionAlert, cancelAlert} from "../helper/ex
 
 window.deleteInstructor = deleteInstructor;
 function deleteInstructor(id) {
-    questionAlert("Hapus data?", "Data tidak dapat dikembalikan setelah dihapus!", "Hapus", () => {
+    questionAlert("Hapus data?", "Data tidak dapat dikembalikan setelah dihapus!", "Ya, Hapus", () => {
         axios.delete(`/instructor/deleteInstructor/${id}`)
             .then(response => {
-                successAlert("Data berhasil dihapus!", response.data.redirect_url);
+                const row = document.getElementById(`row-${id}`);
+                if (row){
+                    row.remove();
+                }
+                successAlert("Data berhasil dihapus!", response.data.redirect_url, false);
             })
             .catch((error) => {
-                errorAlert(`Terjadi Kesalahan: ${error}`);
+                errorAlert(error.message);
             });
-    }, cancelAlert);
+    }, () => {
+        cancelAlert("Data anda aman :)");
+    });
 }
