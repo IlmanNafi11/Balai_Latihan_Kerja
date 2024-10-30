@@ -19,7 +19,7 @@ class BuildingModel
             if ($data) {
                 return ['success' => true, 'isEmpty' => false, 'buildings' => $data];
             } else {
-                return ['success' => false, 'isEmpty' => true, 'message' => 'Data Kosong'];
+                return ['success' => true, 'isEmpty' => true, 'message' => 'Data Kosong'];
             }
         } catch (PDOException $e) {
             return ['success' => false, 'isEmpty' => true, 'message' => $e->getMessage()];
@@ -37,7 +37,7 @@ class BuildingModel
             if ($data) {
                 return ['success' => true, 'isEmpty' => false, 'buildings' => $data];
             } else {
-                return ['success' => false, 'isEmpty' => true, 'message' => "Data tidak ditemukan"];
+                return ['success' => true, 'isEmpty' => true, 'message' => "Data tidak ditemukan"];
             }
         } catch (PDOException $e) {
             return ['success' => false, 'message' => 'Terjadi Kesalahan: ' . $e->getMessage()];
