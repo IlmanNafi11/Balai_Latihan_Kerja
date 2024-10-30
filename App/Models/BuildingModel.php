@@ -96,6 +96,7 @@ class BuildingModel
         $stmt = $this->connection->prepare($query);
         try {
             $stmt->bindParam(":id", $id);
+            $stmt->execute();
             return ['success' => true, 'message' => 'Data Gedung berhasil dihapus', 'redirect_url' => '/building'];
         } catch (PDOException $e) {
             return ['success' => false, 'message' => 'Terjadi kesalahan : ' . $e->getMessage()];
