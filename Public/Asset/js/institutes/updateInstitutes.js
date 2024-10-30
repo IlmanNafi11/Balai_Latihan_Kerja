@@ -1,3 +1,6 @@
+import {sliceUri, onSaveValidate, blurValidate} from "../helper/validators.js";
+import {errorAlert, questionAlert, successAlert} from "../helper/exceptions.js";
+
 const nama = document.getElementById('nama-institusi');
 const pimpinan = document.getElementById('nama-pimpinan');
 const noVin = document.getElementById('nomor-vin');
@@ -48,460 +51,97 @@ const regexNumerik = /^[0-9]+$/;
 const regexEmail = /^[\w.-]+@[a-zA-Z\d.-]+\.[a-zA-Z]{2,}$/;
 const regexNoTlp = /^08\d{10,11}$/;
 const regexUrl = /^(https?:\/\/)?(www\.)?[a-zA-Z0-9-]+\.[a-zA-Z]{2,}(\/\S*)?$/;
-let isValid = true;
-let id = window.location.pathname.split('/').pop();
+let id = sliceUri();
 
 const today = new Date();
 const formattedToday = today.toISOString().split('T')[0];
 tahunBerdiri.setAttribute('max', formattedToday);
 
-const swalWithBootstrapButtons = Swal.mixin({
-    customClass: {
-        confirmButton: 'btn btn-success',
-        cancelButton: 'btn btn-danger'
-    }, buttonsStyling: false
-});
-
 axios.get(`/institute/getInstitute/${id}`)
     .then((response) => {
-        nama.value = response.data.dataByID.nama;
-        pimpinan.value = response.data.dataByID.pimpinan;
-        noVin.value = response.data.dataByID.no_vin;
-        noSotk.value = response.data.dataByID.no_sotk;
-        tahunBerdiri.value = response.data.dataByID.thn_berdiri;
-        tipeInstitusi.value = response.data.dataByID.tipe;
-        kepemilikan.value = response.data.dataByID.kepemilikan;
-        statusBeroperasi.value = response.data.dataByID.status;
-        noTlp.value = response.data.dataByID.no_tlp;
-        noFax.value = response.data.dataByID.no_fax;
-        email.value = response.data.dataByID.email;
-        website.value = response.data.dataByID.website;
-        deskripsi.value = response.data.dataByID.deskripsi;
+        if (response.data.success) {
+            nama.value = response.data.institutes.nama;
+            pimpinan.value = response.data.institutes.pimpinan;
+            noVin.value = response.data.institutes.no_vin;
+            noSotk.value = response.data.institutes.no_sotk;
+            tahunBerdiri.value = response.data.institutes.thn_berdiri;
+            tipeInstitusi.value = response.data.institutes.tipe;
+            kepemilikan.value = response.data.institutes.kepemilikan;
+            statusBeroperasi.value = response.data.institutes.status_beroperasi;
+            noTlp.value = response.data.institutes.no_tlp;
+            noFax.value = response.data.institutes.no_fax;
+            email.value = response.data.institutes.email;
+            website.value = response.data.institutes.website;
+            deskripsi.value = response.data.institutes.deskripsi;
+        } else {
+            errorAlert("Gagal dalam mengambil data!");
+        }
+
     })
     .catch(error => {
-        swalWithBootstrapButtons.fire({
-            title: "Gagal!",
-            text: error.message,
-            icon: "error"
-        });
+        errorAlert(error.message);
     })
 
-function dateValidate(tgl) {
-    if (new Date(tgl) >= today) {
-        return false;
-    }
-    return true;
-}
-
-function blurValidate() {
-    nama.addEventListener('blur', () => {
-        nama.classList.remove('is-invalid', 'is-valid');
-        if (nama.value.trim() === '') {
-            nama.classList.add('is-invalid');
-            invalidNama.textContent = 'Nama Institusi tidak boleh kosong';
-            isValid = false;
-        } else if (!regexString.test(nama.value.trim())) {
-            nama.classList.add('is-invalid');
-            invalidNama.textContent = 'Nama institusi tidak valid';
-            isValid = false;
-        } else {
-            nama.classList.add('is-valid')
-            validNama.textContent = 'Bagus!';
-        }
-    });
-
-    pimpinan.addEventListener('blur', () => {
-        pimpinan.classList.remove('is-invalid', 'is-valid');
-        if (pimpinan.value.trim() === '') {
-            pimpinan.classList.add('is-invalid');
-            invalidPimpinan.textContent = 'Nama Pimpinan tidak boleh kosong';
-            isValid = false;
-        } else if (!regexKombinasi.test(pimpinan.value.trim())) {
-            pimpinan.classList.add('is-invalid');
-            invalidPimpinan.textContent = 'Nama Pimpinan tidak valid';
-            isValid = false;
-        } else {
-            pimpinan.classList.add('is-valid');
-            validPimpinan.textContent = 'Bagus!';
-        }
-    });
-
-    noVin.addEventListener('blur', () => {
-        noVin.classList.remove('is-invalid', 'is-valid');
-        if (noVin.value.trim() === '') {
-            noVin.classList.add('is-invalid');
-            invalidNoVin.textContent = 'No Vin tidak boleh kosong';
-            isValid = false;
-        } else if (!regexNumerik.test(noVin.value.trim())) {
-            noVin.classList.add('is-invalid');
-            invalidNoVin.textContent = 'Nomor Vin hanya boleh mengandung angka dari 0-9';
-        } else {
-            noVin.classList.add('is-valid');
-            validNoVin.textContent = 'Bagus!';
-        }
-    });
-
-    noSotk.addEventListener('blur', () => {
-        noSotk.classList.remove('is-valid', 'is-invalid');
-        if (noSotk.value.trim() === '') {
-            noSotk.classList.add('is-invalid');
-            invalidNoSotk.textContent = 'Nomor SOTK dan tanda daftar tidak boleh kosong';
-            isValid = false;
-        } else if (!regexSotk.test(noSotk.value.trim())) {
-            noSotk.classList.add('is-invalid');
-            invalidNoSotk.textContent = 'Nomor SOTK dan tanda daftar tidak valid';
-            isValid = false;
-        } else {
-            noSotk.classList.add('is-valid');
-            validNoSotk.textContent = 'Bagus!';
-        }
-    });
-
-    tahunBerdiri.addEventListener('blur', () => {
-        tahunBerdiri.classList.remove('is-invalid', 'is-valid');
-        if (tahunBerdiri.value.trim() === '') {
-            tahunBerdiri.classList.add('is-invalid');
-            invalidTahunBerdiri.textContent = 'Tahun berdiri tidak boleh kosong';
-            isValid = false;
-        } else if (!dateValidate(tahunBerdiri.value.trim())) {
-            tahunBerdiri.classList.add('is-invalid');
-            invalidTahunBerdiri.textContent = 'Tahun berdiri tidak valid';
-            isValid = false;
-        } else {
-            tahunBerdiri.classList.add('is-valid');
-            validTahunBerdiri.textContent = 'Bagus!';
-        }
-    });
-
-    tipeInstitusi.addEventListener('blur', () => {
-        tipeInstitusi.classList.remove('is-invalid', 'is-valid');
-        if (tipeInstitusi.value.trim() === '') {
-            tipeInstitusi.classList.add('is-invalid');
-            invalidTipeInstitusi.textContent = 'Tipe Institusi tidak boleh kosong';
-            isValid = false;
-        } else if (!regexString.test(tipeInstitusi.value.trim())) {
-            tipeInstitusi.classList.add('is-invalid');
-            invalidTipeInstitusi.textContent = 'Tipe institusi tidak valid';
-            isValid = false;
-        } else {
-            tipeInstitusi.classList.add('is-valid')
-            validTipeInstitusi.textContent = 'Bagus!';
-        }
-    });
-
-    noTlp.addEventListener('blur', () => {
-        noTlp.classList.remove('is-invalid', 'is-valid');
-        if (noTlp.value.trim() === '') {
-            noTlp.classList.add('is-invalid');
-            invalidNoTlp.textContent = 'Nomor Telephon tidak boleh kosong';
-            isValid = false;
-        } else if (!regexNoTlp.test(noTlp.value.trim())) {
-            noTlp.classList.add('is-invalid');
-            invalidNoTlp.textContent = 'Nomor Telephon tidak valid';
-            isValid = false;
-        } else {
-            noTlp.classList.add('is-valid');
-            validNoTlp.textContent = 'Bagus!';
-        }
-    });
-
-    noFax.addEventListener('blur', () => {
-        noFax.classList.remove('is-invalid', 'is-valid');
-        if (noFax.value.trim() === '') {
-            noFax.classList.add('is-invalid');
-            invalidNoFax.textContent = 'Nomor Fax tidak boleh kosong';
-            isValid = false;
-        } else if (!regexNumerik.test(noFax.value.trim())) {
-            noFax.classList.add('is-invalid');
-            invalidNoFax.textContent = 'Nomor Fax tidak valid';
-            isValid = false;
-        } else {
-            noFax.classList.add('is-valid');
-            validNoFax.textContent = 'Bagus!';
-        }
-    });
-
-    email.addEventListener('blur', () => {
-        email.classList.remove('is-invalid', 'is-valid');
-        if (email.value.trim() === '') {
-            email.classList.add('is-invalid');
-            invalidEmail.textContent = 'Email tidak boleh kosong';
-            isValid = false;
-        } else if (!regexEmail.test(email.value.trim())) {
-            email.classList.add('is-invalid');
-            invalidEmail.textContent = 'Email tidak valid';
-            isValid = false;
-        } else {
-            email.classList.add('is-valid');
-            validEmail.textContent = 'Bagus!';
-        }
-    });
-
-    website.addEventListener('blur', () => {
-        website.classList.remove('is-valid', 'is-invalid');
-        if (website.value.trim() === '') {
-            website.classList.add('is-invalid');
-            invalidWebsite.textContent = 'URL website tidak boleh kosong';
-            isValid = false;
-        } else if (!regexUrl.test(website.value.trim())) {
-            website.classList.add('is-invalid');
-            invalidWebsite.textContent = 'URL tidak valid';
-            isValid = false;
-        } else {
-            website.classList.add('is-valid');
-            validWebsite.textContent = 'Bagus!';
-        }
-    });
-
-    deskripsi.addEventListener('blur', () => {
-        deskripsi.classList.remove('is-invalid', 'is-valid');
-        if (deskripsi.value.trim() === '') {
-            deskripsi.classList.add('is-invalid');
-            invalidDeskripsi.textContent = 'Deskripsi tidak boleh kosong';
-            isValid = false;
-        } else if (!regexKombinasi.test(deskripsi.value.trim())) {
-            deskripsi.classList.add('is-invalid');
-            invalidDeskripsi.textContent = 'Deskripsi tidak valid';
-            isValid = false;
-        } else {
-            deskripsi.classList.add('is-valid');
-            validDeskripsi.textContent = 'Bagus!';
-        }
-    });
-
-    statusBeroperasi.addEventListener('blur', () => {
-        statusBeroperasi.classList.add('is-valid');
-        validStatusBeroperasi.textContent = 'Bagus!';
-    });
-
-    kepemilikan.addEventListener('blur', () => {
-        kepemilikan.classList.add('is-valid');
-        validKepemilikan.textContent = 'Bagus!';
-    });
-
-    return isValid;
-}
-
-blurValidate();
-
+blurValidate(nama, "Nama Institusi", validNama, invalidNama, null, regexString, 50);
+blurValidate(pimpinan, "Nama Pimpinan", validPimpinan, invalidPimpinan, null, regexKombinasi, 50);
+blurValidate(noVin, "Nomor VIN", validNoVin, invalidNoVin, null, regexNumerik, 10);
+blurValidate(noSotk, "Nomor SOTK dan Tanda Daftar", validNoSotk, invalidNoSotk, null, regexSotk, 20);
+blurValidate(tahunBerdiri, "Tahun berdiri", validTahunBerdiri, invalidTahunBerdiri, null, null, 10);
+blurValidate(tipeInstitusi, "Tipe Institusi", validTipeInstitusi, invalidTipeInstitusi, null, regexString, 25);
+blurValidate(kepemilikan, "Status Kepemilikan", validKepemilikan, invalidKepemilikan, null, null, 25);
+blurValidate(statusBeroperasi, "Status Beroperasi", validStatusBeroperasi, invalidStatusBeroperasi, null, null, 16);
+blurValidate(noTlp, "Nomor telepon", validNoTlp, invalidNoTlp, null, regexNoTlp, 13);
+blurValidate(noFax, "Nomor Fax", validNoFax, invalidNoFax, null, regexNumerik, 5);
+blurValidate(email, "Email", validEmail, invalidEmail, null, regexEmail, 50);
+blurValidate(website, "Link Website", validWebsite, invalidWebsite, null, regexUrl, 100);
+blurValidate(deskripsi, "Deskripsi Institusi", validDeskripsi, invalidDeskripsi, null, regexKombinasi, 255);
 btnSimpan.addEventListener('click', (e) => {
     e.preventDefault();
 
-    nama.classList.remove('is-invalid', 'is-valid');
-    if (nama.value.trim() === '') {
-        nama.classList.add('is-invalid');
-        invalidNama.textContent = 'Nama Institusi tidak boleh kosong';
-        isValid = false;
-    } else if (!regexString.test(nama.value.trim())) {
-        nama.classList.add('is-invalid');
-        invalidNama.textContent = 'Nama institusi tidak valid';
-        isValid = false;
-    } else {
-        nama.classList.add('is-valid')
-        validNama.textContent = 'Bagus!';
-    }
+    let isValid = true;
+    isValid = onSaveValidate(nama, "Nama Institusi", validNama, invalidNama, null, regexString, 50) && isValid;
+    isValid = onSaveValidate(pimpinan, "Nama Pimpinan", validPimpinan, invalidPimpinan, null, regexKombinasi, 50) && isValid;
+    isValid = onSaveValidate(noVin, "Nomor VIN", validNoVin, invalidNoVin, null, regexNumerik, 10) && isValid;
+    isValid = onSaveValidate(noSotk, "Nomor SOTK dan Tanda Daftar", validNoSotk, invalidNoSotk, null, regexSotk, 20) && isValid;
+    isValid = onSaveValidate(tahunBerdiri, "Tahun berdiri", validTahunBerdiri, invalidTahunBerdiri, null, null, 10) && isValid;
+    isValid = onSaveValidate(tipeInstitusi, "Tipe Institusi", validTipeInstitusi, invalidTipeInstitusi, null, regexString, 25) && isValid;
+    isValid = onSaveValidate(kepemilikan, "Status Kepemilikan", validKepemilikan, invalidKepemilikan, null, null, 25) && isValid;
+    isValid = onSaveValidate(statusBeroperasi, "Status Beroperasi", validStatusBeroperasi, invalidStatusBeroperasi, null, null, 16) && isValid;
+    isValid = onSaveValidate(noTlp, "Nomor telepon", validNoTlp, invalidNoTlp, null, regexNoTlp, 13) && isValid;
+    isValid = onSaveValidate(noFax, "Nomor Fax", validNoFax, invalidNoFax, null, regexNumerik, 5) && isValid;
+    isValid = onSaveValidate(email, "Email", validEmail, invalidEmail, null, regexEmail, 50) && isValid;
+    isValid = onSaveValidate(website, "Link Website", validWebsite, invalidWebsite, null, regexUrl, 100) && isValid;
+    isValid = onSaveValidate(deskripsi, "Deskripsi Institusi", validDeskripsi, invalidDeskripsi, null, regexKombinasi, 255) && isValid;
 
-    pimpinan.classList.remove('is-invalid', 'is-valid');
-    if (pimpinan.value.trim() === '') {
-        pimpinan.classList.add('is-invalid');
-        invalidPimpinan.textContent = 'Nama Pimpinan tidak boleh kosong';
-        isValid = false;
-    } else if (!regexKombinasi.test(pimpinan.value.trim())) {
-        pimpinan.classList.add('is-invalid');
-        invalidPimpinan.textContent = 'Nama Pimpinan tidak valid';
-        isValid = false;
-    } else {
-        pimpinan.classList.add('is-valid');
-        validPimpinan.textContent = 'Bagus!';
-    }
-
-    noVin.classList.remove('is-invalid', 'is-valid');
-    if (noVin.value.trim() === '') {
-        noVin.classList.add('is-invalid');
-        invalidNoVin.textContent = 'No Vin tidak boleh kosong';
-        isValid = false;
-    } else if (!regexNumerik.test(noVin.value.trim())) {
-        noVin.classList.add('is-invalid');
-        invalidNoVin.textContent = 'Nomor Vin hanya boleh mengandung angka dari 0-9';
-    } else {
-        noVin.classList.add('is-valid');
-        validNoVin.textContent = 'Bagus!';
-    }
-
-    noSotk.classList.remove('is-valid', 'is-invalid');
-    if (noSotk.value.trim() === '') {
-        noSotk.classList.add('is-invalid');
-        invalidNoSotk.textContent = 'Nomor SOTK dan tanda daftar tidak boleh kosong';
-        isValid = false;
-    } else if (!regexSotk.test(noSotk.value.trim())) {
-        noSotk.classList.add('is-invalid');
-        invalidNoSotk.textContent = 'Nomor SOTK dan tanda daftar tidak valid';
-        isValid = false;
-    } else {
-        noSotk.classList.add('is-valid');
-        validNoSotk.textContent = 'Bagus!';
-    }
-
-    tahunBerdiri.classList.remove('is-invalid', 'is-valid');
-    if (tahunBerdiri.value.trim() === '') {
-        tahunBerdiri.classList.add('is-invalid');
-        invalidTahunBerdiri.textContent = 'Tahun berdiri tidak boleh kosong';
-        isValid = false;
-    } else if (!dateValidate(tahunBerdiri.value.trim())) {
-        tahunBerdiri.classList.add('is-invalid');
-        invalidTahunBerdiri.textContent = 'Tahun berdiri tidak valid';
-        isValid = false;
-    } else {
-        tahunBerdiri.classList.add('is-valid');
-        validTahunBerdiri.textContent = 'Bagus!';
-    }
-
-    tipeInstitusi.classList.remove('is-invalid', 'is-valid');
-    if (tipeInstitusi.value.trim() === '') {
-        tipeInstitusi.classList.add('is-invalid');
-        invalidTipeInstitusi.textContent = 'Tipe Institusi tidak boleh kosong';
-        isValid = false;
-    } else if (!regexString.test(tipeInstitusi.value.trim())) {
-        tipeInstitusi.classList.add('is-invalid');
-        invalidTipeInstitusi.textContent = 'Tipe institusi tidak valid';
-        isValid = false;
-    } else {
-        tipeInstitusi.classList.add('is-valid')
-        validTipeInstitusi.textContent = 'Bagus!';
-    }
-
-    noTlp.classList.remove('is-invalid', 'is-valid');
-    if (noTlp.value.trim() === '') {
-        noTlp.classList.add('is-invalid');
-        invalidNoTlp.textContent = 'Nomor Telephon tidak boleh kosong';
-        isValid = false;
-    } else if (!regexNoTlp.test(noTlp.value.trim())) {
-        noTlp.classList.add('is-invalid');
-        invalidNoTlp.textContent = 'Nomor Telephon tidak valid';
-        isValid = false;
-    } else {
-        noTlp.classList.add('is-valid');
-        validNoTlp.textContent = 'Bagus!';
-    }
-
-    noFax.classList.remove('is-invalid', 'is-valid');
-    if (noFax.value.trim() === '') {
-        noFax.classList.add('is-invalid');
-        invalidNoFax.textContent = 'Nomor Fax tidak boleh kosong';
-        isValid = false;
-    } else if (!regexNumerik.test(noFax.value.trim())) {
-        noFax.classList.add('is-invalid');
-        invalidNoFax.textContent = 'Nomor Fax tidak valid';
-        isValid = false;
-    } else {
-        noFax.classList.add('is-valid');
-        validNoFax.textContent = 'Bagus!';
-    }
-
-    email.classList.remove('is-invalid', 'is-valid');
-    if (email.value.trim() === '') {
-        email.classList.add('is-invalid');
-        invalidEmail.textContent = 'Email tidak boleh kosong';
-        isValid = false;
-    } else if (!regexEmail.test(email.value.trim())) {
-        email.classList.add('is-invalid');
-        invalidEmail.textContent = 'Email tidak valid';
-        isValid = false;
-    } else {
-        email.classList.add('is-valid');
-        validEmail.textContent = 'Bagus!';
-    }
-
-    website.classList.remove('is-valid', 'is-invalid');
-    if (website.value.trim() === '') {
-        website.classList.add('is-invalid');
-        invalidWebsite.textContent = 'URL website tidak boleh kosong';
-        isValid = false;
-    } else if (!regexUrl.test(website.value.trim())) {
-        website.classList.add('is-invalid');
-        invalidWebsite.textContent = 'URL tidak valid';
-        isValid = false;
-    } else {
-        website.classList.add('is-valid');
-        validWebsite.textContent = 'Bagus!';
-    }
-
-    deskripsi.classList.remove('is-invalid', 'is-valid');
-    if (deskripsi.value.trim() === '') {
-        deskripsi.classList.add('is-invalid');
-        invalidDeskripsi.textContent = 'Deskripsi tidak boleh kosong';
-        isValid = false;
-    } else if (!regexKombinasi.test(deskripsi.value.trim())) {
-        deskripsi.classList.add('is-invalid');
-        invalidDeskripsi.textContent = 'Deskripsi tidak valid';
-        isValid = false;
-    } else {
-        deskripsi.classList.add('is-valid');
-        validDeskripsi.textContent = 'Bagus!';
-    }
-
-    statusBeroperasi.classList.add('is-valid');
-    validStatusBeroperasi.textContent = 'Bagus!';
-
-    kepemilikan.classList.add('is-valid');
-    validKepemilikan.textContent = 'Bagus!';
-
-    if (isValid){
-        swalWithBootstrapButtons.fire({
-            title: "Perbarui data?",
-            text: "Pastikan semua data telah diisi dengan benar!",
-            icon: "question",
-            showCancelButton: true,
-            confirmButtonText: "Ya, Simpan",
-            cancelButtonText: "Tidak, Batal!",
-            reverseButtons: true
-        })
-            .then((result) => {
-                if (result.isConfirmed) {
-                    axios.post(`/institute/updateInstitute/${id}`, {
-                        'id': id,
-                        'nama': nama.value,
-                        'pimpinan': pimpinan.value,
-                        'no_vin': noVin.value,
-                        'no_sotk': noSotk.value,
-                        'thn_berdiri': tahunBerdiri.value,
-                        'tipe': tipeInstitusi.value,
-                        'kepemilikan': kepemilikan.value,
-                        'no_tlp': noTlp.value,
-                        'no_fax': noFax.value,
-                        'email': email.value,
-                        'website': website.value,
-                        'deskripsi': deskripsi.value
-                    })
-                        .then(response => {
-                            if (response.data.success) {
-                                swalWithBootstrapButtons.fire({
-                                    title: "Sukses!",
-                                    text: "Data berhasil disimpan!",
-                                    icon: "success"
-                                })
-                                    .then((result) => {
-                                        if (result.isConfirmed) {
-                                            window.location.href = response.data.redirect_url;
-                                        }
-                                    });
-                            } else if (response.data.success == false) {
-                                swalWithBootstrapButtons.fire({
-                                    title: "Gagal!",
-                                    text: response.data.message,
-                                    icon: "error"
-                                });
-                            }
-                        })
-                        .catch(error => {
-                            swalWithBootstrapButtons.fire({
-                                title: "Gagal!",
-                                text: error.message,
-                                icon: "error"
-                            });
-                        });
-                }
+    if (isValid) {
+        questionAlert("Perbarui data?", "Pastikan data telah diperbarui dengan benar!", "Ya, Perbarui", () => {
+            axios.post(`/institute/updateInstitute/${id}`, {
+                'id': id,
+                'nama': nama.value,
+                'pimpinan': pimpinan.value,
+                'no_vin': noVin.value,
+                'no_sotk': noSotk.value,
+                'thn_berdiri': tahunBerdiri.value,
+                'tipe': tipeInstitusi.value,
+                'kepemilikan': kepemilikan.value,
+                'status_beroperasi': statusBeroperasi.value,
+                'no_tlp': noTlp.value,
+                'no_fax': noFax.value,
+                'email': email.value,
+                'website': website.value,
+                'deskripsi': deskripsi.value
             })
+                .then(response => {
+                    if (response.data.success) {
+                        successAlert("Data Berhasil diperbarui!", response.data.redirect_url);
+                    } else {
+                        errorAlert(response.data.message);
+                    }
+                })
+                .catch(error => {
+                    errorAlert(error.message);
+                });
+        })
     }
 });
 
