@@ -10,7 +10,7 @@
         <table class="table table-hover align-middle">
             <thead>
             <tr>
-                <td>ID</td>
+                <td>No</td>
                 <td>Nama</td>
                 <td>Tipe</td>
                 <td>Deskripsi</td>
@@ -19,10 +19,11 @@
             </thead>
             <tbody>
             <?php if (!empty($tools) && !$tools['isEmpty']) {
+                $no = 1;
                 foreach ($tools['tools'] as $tool):
                     ?>
-                    <tr>
-                        <td><?php echo $tool['id'] ?></td>
+                    <tr id="row-<?php echo $tool['id'] ?>">
+                        <td><?php echo $no ?></td>
                         <td><?php echo $tool['nama'] ?></td>
                         <td><?php echo $tool['tipe'] ?></td>
                         <td><?php echo $tool['deskripsi'] ?></td>
@@ -54,7 +55,8 @@
                             </button>
                         </td>
                     </tr>
-                <?php endforeach;
+                    <?php $no++;
+                endforeach;
             } else { ?>
                 <tr>
                     <td colspan="6" class="text-center">Data Kosong</td>
