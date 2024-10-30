@@ -46,7 +46,7 @@
             </nav>
 
             <!-- Form -->
-            <form class="d-flex flex-column h-auto">
+            <form class="d-flex flex-column h-auto form-control">
                 <div class="form-alat-container d-flex column-gap-4 row-gap-3 w-100 h-auto">
                     <div class="container-form-input flex-grow-1 d-flex flex-column row-gap-3">
                         <div class="input-nama-alat">
@@ -102,7 +102,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <!-- Logic Handler -->
-    <script src="/Asset/js/tools/addTools.js"></script>
+    <script type="module" src="/Asset/js/tools/addTools.js"></script>
 
 </body>
 
