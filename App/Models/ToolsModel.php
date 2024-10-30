@@ -86,6 +86,7 @@ class ToolsModel
             $stmt->bindParam(":name", $name);
             $stmt->bindParam(":description", $description);
             $stmt->bindParam(":type", $type);
+            $stmt->execute();
             return ['success' => true, 'message' => 'Data Berhasil Diperbarui', 'redirect_url' => '/tools'];
         } catch (PDOException $e) {
             return ['success' => false, 'message' => 'Terjadi Kesalahan : ' . $e->getMessage()];
@@ -98,6 +99,7 @@ class ToolsModel
         $stmt = $this->connection->prepare($query);
         try {
             $stmt->bindParam(":id", $id);
+            $stmt->execute();
             return ['success' => true, 'message' => 'Data Berhasil Dihapus', 'redirect_url' => '/tools'];
         } catch (PDOException $e) {
             return ['success' => false, 'message' => 'Terjadi Kesalahan: ' . $e->getMessage()];
