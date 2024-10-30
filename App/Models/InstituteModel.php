@@ -63,9 +63,10 @@ class InstituteModel
 
     public function updateInstitute($data = [])
     {
-        $query = "UPDATE institute SET nama = :nama, pimpinan = :pimpinan, no_vin = :no_vin, no_sotk = :no_sotk, thn_berdiri = :thn_berdiri, tipe = :tipe, kepemilikan = :kepemilikan, status_beroperasi = :status_beroperasi, no_tlp = :no_tlp, no_fax = :no_fax, email = :email, website = :website, deskripsi = :deskripsi";
+        $query = "UPDATE institute SET nama = :nama, pimpinan = :pimpinan, no_vin = :no_vin, no_sotk = :no_sotk, thn_berdiri = :thn_berdiri, tipe = :tipe, kepemilikan = :kepemilikan, status_beroperasi = :status_beroperasi, no_tlp = :no_tlp, no_fax = :no_fax, email = :email, website = :website, deskripsi = :deskripsi WHERE id = :id";
         $stmt = $this->connection->prepare($query);
         try {
+            $stmt->bindParam(':id', $data['id']);
             $stmt->bindParam(':nama', $data['nama']);
             $stmt->bindParam(':pimpinan', $data['pimpinan']);
             $stmt->bindParam(':no_vin', $data['no_vin']);
