@@ -10,7 +10,7 @@
         <table class="table table-hover align-middle">
             <thead>
             <tr>
-                <td>ID</td>
+                <td>No</td>
                 <td>Nama</td>
                 <td>Deskripsi</td>
                 <td>Aksi</td>
@@ -18,9 +18,10 @@
             </thead>
             <tbody>
             <?php if (!empty($department) && !$department['isEmpty']) {
+                $no = 1;
                 foreach ($department['departments'] as $row): ?>
-                    <tr>
-                        <td><?= $row['id'] ?></td>
+                    <tr id="row-<?php echo $row['id'] ?>">
+                        <td><?= $no ?></td>
                         <td><?= $row['nama'] ?></td>
                         <td><?= $row['deskripsi'] ?></td>
                         <td>
@@ -30,7 +31,8 @@
                             <button onclick="deleteDepartments(<?= $row['id'] ?>)" class="btn btn-danger">Hapus</button>
                         </td>
                     </tr>
-                <?php endforeach;
+                    <?php $no++;
+                endforeach;
             } else { ?>
                 <tr>
                     <td colspan="4" class="text-center">Data tidak ditemukan</td>
