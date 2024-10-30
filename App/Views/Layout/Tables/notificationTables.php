@@ -10,7 +10,7 @@
         <table class="table table-hover align-middle">
             <thead>
             <tr>
-                <td>ID</td>
+                <td>No</td>
                 <td>Pesan</td>
                 <td>Target</td>
                 <td>Aksi</td>
@@ -18,9 +18,10 @@
             </thead>
             <tbody>
             <?php if (!empty($notifications) && !$notifications['isEmpty']) {
+                $no = 1;
                 foreach ($notifications['notifications'] as $notification):?>
-                    <tr>
-                        <td><?php echo $notification['id'] ?></td>
+                    <tr id="row-<?php echo $notification['id'];?>">
+                        <td><?php echo $no ?></td>
                         <td><?php echo $notification['pesan'] ?></td>
                         <td><?php echo $notification['tipe'] ?></td>
                         <td>
@@ -36,7 +37,7 @@
                             </button>
                         </td>
                     </tr>
-                <?php endforeach;
+                <?php $no++; endforeach;
             } else { ?>
                 <tr>
                     <td colspan="4" class="text-center">Data Kosong</td>
