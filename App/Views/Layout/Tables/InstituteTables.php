@@ -3,7 +3,7 @@
         <table class="table table-hover align-middle">
             <thead>
             <tr>
-                <td>ID</td>
+                <td>No</td>
                 <td>Nama</td>
                 <td>Pimpinan</td>
                 <td>Kepemilikan</td>
@@ -15,9 +15,10 @@
             </thead>
             <tbody>
             <?php if (!empty($institutes) && !$institutes['isEmpty']) {
+                $no = 1;
                 foreach ($institutes['institutes'] as $institute):?>
-                    <tr>
-                        <td><?php echo $institute['id'] ?></td>
+                    <tr id="<?php $institute['id'] ?>">
+                        <td><?php echo $no ?></td>
                         <td><?php echo $institute['nama'] ?></td>
                         <td><?php echo $institute['pimpinan'] ?></td>
                         <td><?php echo $institute['kepemilikan'] ?></td>
@@ -39,7 +40,8 @@
                             </a>
                         </td>
                     </tr>
-                <?php endforeach; ?>
+                    <?php $no++;
+                endforeach; ?>
             <?php } else { ?>
                 <tr>
                     <td colspan="8" class="text-center">Data Kosong</td>
