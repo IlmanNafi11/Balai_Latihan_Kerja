@@ -46,7 +46,7 @@
         </nav>
 
         <!-- Form -->
-        <form class="d-flex flex-column h-auto">
+        <form class="d-flex flex-column h-auto form-control">
             <div class="form-department-container container-form-input d-flex column-gap-4 row-gap-3 h-100 w-100">
                 <div class="input-nama-kejuruan flex-grow-1">
                     <label for="nama-kejuruan" class="form-label">Nama</label>
