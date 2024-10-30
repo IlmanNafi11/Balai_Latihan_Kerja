@@ -10,7 +10,7 @@
         <table class="table table-hover align-middle">
             <thead>
             <tr>
-                <td>ID</td>
+                <td>No</td>
                 <td>Nama</td>
                 <td>Deskripsi</td>
                 <td>Aksi</td>
@@ -18,12 +18,13 @@
             </thead>
             <tbody>
             <?php
+            $no = 1;
             if (!empty($buildings) && !$buildings['isEmpty']) {
                 foreach ($buildings['buildings'] as $row):?>
-                    <tr>
-                        <td><?php echo $row['id'] ?></td>
-                        <td><?php echo $row['nama'] ?></td>
-                        <td><?php echo $row['deskripsi'] ?></td>
+                    <tr id="row-<?php echo $row['id']; ?>">
+                        <td><?php echo $no; ?></td>
+                        <td><?php echo $row['nama']; ?></td>
+                        <td><?php echo $row['deskripsi']; ?></td>
                         <td class="d-flex row-gap-2 column-gap-2 flex-wrap">
                             <a href="/building/updateBuilding/<?php echo $row['id'] ?>">
                                 <button
@@ -52,7 +53,8 @@
                             </button>
                         </td>
                     </tr>
-                <?php endforeach;
+                    <?php $no++;
+                endforeach;
             } else { ?>
                 <tr>
                     <td colspan="4" class="text-center">Data Kosong</td>
