@@ -10,7 +10,7 @@
         <table class="table table-hover align-middle">
             <thead>
             <tr>
-                <td>ID</td>
+                <td>No</td>
                 <td>Nama</td>
                 <td>Nomor Telepon</td>
                 <td>Email</td>
@@ -21,9 +21,10 @@
             </thead>
             <tbody>
             <?php if (!empty($instructors) && !$instructors['isEmpty']) {
+                $no = 1;
                 foreach ($instructors['instructors'] as $instructor): ?>
-                    <tr>
-                        <td><?php echo $instructor['id'] ?></td>
+                    <tr id="row-<?php echo $instructor['id'] ?>">
+                        <td><?php echo $no ?></td>
                         <td><?php echo $instructor['nama'] ?></td>
                         <td><?php echo $instructor['no_tlp'] ?></td>
                         <td><?php echo $instructor['email'] ?></td>
@@ -62,7 +63,7 @@
                             </button>
                         </td>
                     </tr>
-                <?php endforeach;
+                    <?php $no++; endforeach;
             } else { ?>
                 <tr>
                     <td colspan="7" class="text-center">Data Kosong</td>
