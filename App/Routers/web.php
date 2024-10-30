@@ -1,482 +1,388 @@
 <?php
+require_once '../App/Config/Database.php';
 require_once '../App/Helper/ControllerHelper.php';
 
 $uri = trim($_SERVER['REQUEST_URI'], '/');
 session_start();
+// Login
 if ($uri == '/' || $uri == '' || $uri == 'login') {
-    require_once '../App/Controllers/LoginController.php';
-    $controller = new LoginController();
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $controller->login();
-    } else {
-        $controller->index();
+        loadController('LoginController', 'login');
+    } else if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+        loadController('LoginController', 'index');
     }
-} elseif ($uri == 'dashboard') {
+} // Dashboard
+elseif ($uri == 'dashboard') {
     if (isset($_SESSION['user'])) {
-        require_once '../App/Controllers/DashboardController.php';
-        $controller = new DashboardController();
-        $controller->index();
-    } else {
-        header('Location: /login');
-        exit();
-    }
-} elseif ($uri == 'institute') {
-    if (isset($_SESSION['user'])) {
-        require_once '../App/Controllers/InstituteController.php';
-        $controller = new InstituteController();
-        $controller->index();
-    } else {
-        header('Location: /login');
-        exit();
-    }
-} elseif ($uri == 'department') {
-    if (isset($_SESSION['user'])) {
-        require_once '../App/Controllers/DepartmentsController.php';
-        $controller = new DepartmentsController();
-        $controller->index();
-    } else {
-        header('Location: /login');
-        exit();
-    }
-} elseif ($uri == 'programs') {
-    if (isset($_SESSION['user'])) {
-        require_once '../App/Controllers/ProgramController.php';
-        $controller = new ProgramController();
-        $controller->index();
-    } else {
-        header('Location: /login');
-        exit();
-    }
-} elseif ($uri == 'building') {
-    if (isset($_SESSION['user'])) {
-        require_once '../App/Controllers/BuildingController.php';
-        $controller = new BuildingController();
-        $controller->index();
-    } else {
-        header('Location: /login');
-        exit();
-    }
-} elseif ($uri == 'tools') {
-    if (isset($_SESSION['user'])) {
-        require_once '../App/Controllers/ToolsController.php';
-        $controller = new ToolsController();
-        $controller->index();
-    } else {
-        header('Location: /login');
-        exit();
-    }
-} elseif ($uri == 'instructor') {
-    if (isset($_SESSION['user'])) {
-        require_once '../App/Controllers/InstructorController.php';
-        $controller = new InstructorController();
-        $controller->index();
-    } else {
-        header('Location: /login');
-        exit();
-    }
-} elseif ($uri == 'registration') {
-    if (isset($_SESSION['user'])) {
-        require_once '../App/Controllers/RegistrationController.php';
-        $controller = new RegistrationController();
-        $controller->index();
-    } else {
-        header('Location: /login');
-        exit();
-    }
-} elseif ($uri == 'notification') {
-    if (isset($_SESSION['user'])) {
-        require_once '../App/Controllers/NotificationController.php';
-        $controller = new NotificationController();
-        $controller->index();
-    } else {
-        header('Location: /login');
-        exit();
-    }
-} elseif ($uri == 'user') {
-    if (isset($_SESSION['user'])) {
-        require_once '../App/Controllers/UserManajementController.php';
-        $controller = new UserManajementController();
-        $controller->index();
-    }
-} elseif ($uri == 'logout') {
-    session_destroy();
-    header('Location: /');
-    exit();
-} elseif (preg_match('/building\/updateBuilding\/(\d+)/', $uri, $matches)) {
-    if (isset($_SESSION['user'])) {
-        $id = $matches[1];
-        require_once '../App/Controllers/BuildingController.php';
-        $controller = new BuildingController();
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-            $controller->viewUpdateBuilding();
-        } elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $controller->updateBuilding($id);
+            loadController('DashboardController', 'index');
         }
     } else {
         header('Location: /login');
         exit();
     }
-} elseif ($uri == 'building/addBuilding') {
+} // Institute
+elseif ($uri == 'institute') {
     if (isset($_SESSION['user'])) {
-        require_once '../App/Controllers/BuildingController.php';
-        $controller = new BuildingController();
-        $controller->viewAddBuilding();
+        if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+            loadController('InstituteController', 'index');
+        }
     } else {
         header('Location: /login');
         exit();
     }
-} elseif ($uri == 'building/addBuilding/create') {
+} // UPDATE Institute
+else if (preg_match('/institute\/updateInstitute\/(\d+)/', $uri, $matches)) {
     if (isset($_SESSION['user'])) {
-        require_once '../App/Controllers/BuildingController.php';
-        $controller = new BuildingController();
-        $controller->creteBuilding();
-    } else {
-        header('Location: /login');
-        exit();
+        $id = $matches[1];
+        if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+            loadController('InstituteController', 'viewUpdateInstitute');
+        } else if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            loadController('InstituteController', 'updateInstitute', $id);
+        }
     }
-} elseif (preg_match('/building\/getBuilding\/(\d+)/', $uri, $matches)) {
-    $id = $matches[1];
-    require_once '../App/Controllers/BuildingController.php';
+} // GET All Institute ID
+else if ($uri == 'institute/getInstituteId') {
     if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-        $controller = new BuildingController();
-        $controller->getBuildingById($id);
+        loadController('InstituteController', 'getInstituteId');
     }
-} elseif ($uri == 'building/getBuildingName')
-{
-    if (isset($_SESSION['user']))
-    {
-        if ($_SERVER['REQUEST_METHOD'] === 'GET')
-        {
-            loadController('BuildingController', 'getBuildingName');
-        }
-    }
-} elseif (preg_match('/building\/delete\/(\d+)/', $uri, $matches)) {
-    $id = $matches[1];
-    require_once '../App/Controllers/BuildingController.php';
-    if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
-    $controller = new BuildingController();
-        $controller->deleteBuilding($id);
-    }
-} elseif ($uri == 'notification/addNotification')
-{
-    if (isset($_SESSION['user']))
-    {
-        require_once '../App/Controllers/NotificationController.php';
-        $controller = new NotificationController();
-        if ($_SERVER['REQUEST_METHOD'] === 'POST')
-        {
-            $controller->createNotification();
-        } else if ($_SERVER['REQUEST_METHOD'] === 'GET')
-        {
-            $controller->viewAddNotification();
-        }
-    } else
-    {
-        header('Location: /login');
-        exit();
-    }
-} elseif (preg_match('/notification\/delete\/(\d+)/', $uri, $matches))
-{
-    $id = $matches[1];
-    if (isset($_SESSION['user']))
-    {
-        require_once '../App/Controllers/NotificationController.php';
-        if ($_SERVER['REQUEST_METHOD'] === 'DELETE')
-        {
-            $controller = new NotificationController();
-            $controller->deleteNotification($id);
-        }
-    } else
-    {
-        header('Location: /login');
-        exit();
-    }
-} elseif ($uri == 'notification/getNotification')
-{
-    require_once '../App/Controllers/NotificationController.php';
-    $controller = new NotificationController();
-    $controller->getAllNotifications();
-} elseif ($uri == 'tools/addTool')
-{
-    if (isset($_SESSION['user']))
-    {
-        require_once '../App/Controllers/ToolsController.php';
-        $controller = new ToolsController();
-        if ($_SERVER['REQUEST_METHOD'] === 'POST')
-        {
-            $controller->createTools();
-        } else if ($_SERVER['REQUEST_METHOD'] === 'GET')
-        {
-            $controller->viewAddTools();
-        }
-    } else
-    {
-        header('Location: /login');
-        exit();
-    }
-} elseif (preg_match('/tools\/updateTools\/(\d+)/', $uri, $matches))
-{
-    if (isset($_SESSION['user']))
-    {
-        $id = $matches[1];
-        require_once '../App/Controllers/ToolsController.php';
-        $controller = new ToolsController();
-        if ($_SERVER['REQUEST_METHOD'] === 'POST')
-        {
-            $controller->updateTools($id);
-        } else if ($_SERVER['REQUEST_METHOD'] === 'GET')
-        {
-            $controller->viewUpdateTools();
-        }
-    } else
-    {
-        header('Location: /login');
-        exit();
-    }
-} elseif (preg_match('/tools\/delete\/(\d+)/', $uri, $matches))
-{
-    if (isset($_SESSION['user']))
-    {
-        $id = $matches[1];
-        require_once '../App/Controllers/ToolsController.php';
-        if ($_SERVER['REQUEST_METHOD'] === 'DELETE')
-        {
-            $controller = new ToolsController();
-            $controller->deleteTools($id);
-        }
-    } else
-    {
-        header('Location: /login');
-        exit();
-    }
-} elseif ($uri == 'tools/getTools')
-{
-    require_once '../App/Controllers/ToolsController.php';
-    $controller = new ToolsController();
-    if ($_SERVER['REQUEST_METHOD'] === 'GET')
-    {
-        $controller = new ToolsController();
-        $controller->getAllTools();
-    }
-} elseif (preg_match('/tools\/getTools\/(\d+)/', $uri, $matches))
-{
-    $id = $matches[1];
-    require_once '../App/Controllers/ToolsController.php';
-    if ($_SERVER['REQUEST_METHOD'] === 'GET')
-    {
-        $controller = new ToolsController();
-        $controller->getToolsByID($id);
-    }
-} else if ($uri == 'department/addDepartment')
-{
-    if (isset($_SESSION['user'])){
-        require_once '../App/Controllers/DepartmentsController.php';
-        $controller = new DepartmentsController();
-        if ($_SERVER['REQUEST_METHOD'] === 'POST')
-        {
-            $controller->createDepartment();
-        } else if ($_SERVER['REQUEST_METHOD'] === 'GET')
-        {
-            $controller->viewAddDepartment();
-        }
-    } else {
-        header('Location: /login');
-        exit();
-    }
-} elseif (preg_match('/department\/updateDepartment\/(\d+)/', $uri, $matches))
-{
-    if (isset($_SESSION['user']))
-    {
-        $id = $matches[1];
-        require_once '../App/Controllers/DepartmentsController.php';
-        $controller = new DepartmentsController();
-        if ($_SERVER['REQUEST_METHOD'] === 'POST')
-        {
-            $controller->updateDepartment($id);
-        } else if ($_SERVER['REQUEST_METHOD'] === 'GET')
-        {
-            $controller->viewUpdateDepartment();
-        }
-    }
-} elseif (preg_match('/department\/delete\/(\d+)/', $uri, $matches))
-{
-    if (isset($_SESSION['user']))
-    {
-        $id = $matches[1];
-        require_once '../App/Controllers/DepartmentsController.php';
-        if ($_SERVER['REQUEST_METHOD'] === 'DELETE')
-        {
-            $controller = new DepartmentsController();
-            $controller->deleteDepartment($id);
-        }
-    }
-} else if ($uri == 'department/getDepartment')
-{
-    require_once '../App/Controllers/DepartmentsController.php';
-    $controller = new DepartmentsController();
-    if ($_SERVER['REQUEST_METHOD'] === 'GET')
-    {
-        $controller->getAllDepartments();
-    }
-} elseif (preg_match('/department\/getDepartment\/(\d+)/', $uri, $matches))
-{
-    require_once '../App/Controllers/DepartmentsController.php';
-    $controller = new DepartmentsController();
-    if ($_SERVER['REQUEST_METHOD'] === 'GET')
-    {
-        $id = $matches[1];
-        $controller->getDepartmentById($id);
-    }
-} else if ($uri == 'institute/getInstituteId')
-{
-    require_once '../App/Controllers/InstituteController.php';
-    if ($_SERVER['REQUEST_METHOD'] === 'GET')
-    {
-        $controller = new InstituteController();
-        $controller->getInstituteId();
-    }
-} else if ($uri == 'institute/getInstitute')
-{
-    if ($_SERVER['REQUEST_METHOD'] === 'GET')
-    {
+} // GET All Institute Data
+else if ($uri == 'institute/getInstitute') {
+    if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         loadController('InstituteController', 'getAllInstitute');
     }
-} else if (preg_match('/institute\/updateInstitute\/(\d+)/', $uri, $matches))
-{
-    if (isset($_SESSION['user']))
-    {
-        $id = $matches[1];
-        require_once '../App/Controllers/InstituteController.php';
-        $controller = new InstituteController();
-        if ($_SERVER['REQUEST_METHOD'] === 'GET')
-        {
-            $controller->viewUpdateInstitute();
-        } else
-        {
-            $controller->updateInstitute($id);
+} // GET Institute By ID
+else if (preg_match('/institute\/getInstitute\/(\d+)/', $uri, $matches)) {
+    if (isset($_SESSION['user'])) {
+        if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+            $id = $matches[1];
+            loadController('InstituteController', 'getInstituteById', $id);
         }
     }
-} else if (preg_match('/institute\/getInstitute\/(\d+)/', $uri, $matches))
-{
-    if (isset($_SESSION['user']))
-    {
+} // Department
+elseif ($uri == 'department') {
+    if (isset($_SESSION['user'])) {
+        if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+            loadController('DepartmentsController', 'index');
+        }
+    } else {
+        header('Location: /login');
+        exit();
+    }
+} // ADD Department
+else if ($uri == 'department/addDepartment') {
+    if (isset($_SESSION['user'])) {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            loadController('DepartmentsController', 'createDepartment');
+        } else if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+            loadController('DepartmentsController', 'viewAddDepartment');
+        }
+    } else {
+        header('Location: /login');
+        exit();
+    }
+} // UPDATE Department
+elseif (preg_match('/department\/updateDepartment\/(\d+)/', $uri, $matches)) {
+    if (isset($_SESSION['user'])) {
         $id = $matches[1];
-        require_once '../App/Controllers/InstituteController.php';
-        $controller = new InstituteController();
-        if ($_SERVER['REQUEST_METHOD'] === 'GET')
-        {
-            $controller->getInstituteById($id);
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            loadController('DepartmentsController', 'updateDepartment', $id);
+        } else if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+            loadController('DepartmentsController', 'viewUpdateDepartment', $id);
         }
     }
-} else if ($uri == 'programs/addPrograms')
-{
-    if (isset($_SESSION['user']))
-    {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST')
-        {
+} // DELETE Department
+elseif (preg_match('/department\/delete\/(\d+)/', $uri, $matches)) {
+    if (isset($_SESSION['user'])) {
+        $id = $matches[1];
+        if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
+            loadController('DepartmentsController', 'deleteDepartment', $id);
+        }
+    }
+} // GET All Departments Data
+else if ($uri == 'department/getDepartment') {
+    if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+        loadController('DepartmentsController', 'getAllDepartments');
+    }
+} // GET Department By ID
+elseif (preg_match('/department\/getDepartment\/(\d+)/', $uri, $matches)) {
+    if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+        $id = $matches[1];
+        loadController('DepartmentsController', 'getDepartmentById', $id);
+    }
+} // GET Department Name
+else if ($uri == 'department/getDepartmentName') {
+    if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+        loadController('DepartmentsController', 'getDepartmentName');
+    }
+} // Programs
+elseif ($uri == 'programs') {
+    if (isset($_SESSION['user'])) {
+        if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+            loadController('ProgramController', 'index');
+        }
+    } else {
+        header('Location: /login');
+        exit();
+    }
+} // ADD Program
+else if ($uri == 'programs/addPrograms') {
+    if (isset($_SESSION['user'])) {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-        } else if ($_SERVER['REQUEST_METHOD'] === 'GET')
-        {
+        } else if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             loadController('ProgramController', 'viewAddProgram');
         }
     }
-} else if (preg_match('/programs\/updatePrograms\/(\d+)/', $uri, $matches))
-{
-    if (isset($_SESSION['user']))
-    {
+} // UPDATE Program
+else if (preg_match('/programs\/updatePrograms\/(\d+)/', $uri, $matches)) {
+    if (isset($_SESSION['user'])) {
         $id = $matches[1];
-        require_once '../App/Controllers/ProgramController.php';
-        $controller = new ProgramController();
-        if ($_SERVER['REQUEST_METHOD'] === 'POST')
-        {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-        } else if ($_SERVER['REQUEST_METHOD'] === 'GET')
-        {
-            $controller->viewUpdateProgram();
+        } else if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+            loadController('ProgramController', 'viewUpdateProgram', $id);
         }
     }
-} else if (preg_match('/programs\/getProgram\/(\d+)/', $uri, $matches))
-{
-    if ($_SERVER['REQUEST_METHOD'] === 'GET')
-    {
+} // GET Program By ID
+else if (preg_match('/programs\/getProgram\/(\d+)/', $uri, $matches)) {
+    if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         $id = $matches[1];
-        require_once '../App/Controllers/ProgramController.php';
-        $controller = new ProgramController();
-        if ($_SERVER['REQUEST_METHOD'] === 'GET')
-        {
-            $controller->getProgramById($id);
+        loadController('ProgramController', 'getProgramById', $id);
+    }
+} // Building
+elseif ($uri == 'building') {
+    if (isset($_SESSION['user'])) {
+        if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+            loadController('BuildingController', 'index');
         }
+    } else {
+        header('Location: /login');
+        exit();
     }
-} else if ($uri == 'department/getDepartmentName')
-{
-    if ($_SERVER['REQUEST_METHOD'] === 'GET')
-    {
-        require_once '../App/Controllers/DepartmentsController.php';
-        $controller = new DepartmentsController();
-        $controller->getDepartmentName();
-    }
-} else if ($uri == 'instructor/addInstructor') {
-    if (isset($_SESSION['user']))
-    {
-        require_once '../App/Controllers/InstructorController.php';
-        $controller = new InstructorController();
-        if ($_SERVER['REQUEST_METHOD'] === 'POST')
-        {
-            $controller->createInstructors();
-        } else if ($_SERVER['REQUEST_METHOD'] === 'GET')
-        {
-            $controller->viewAddInstructor();
+} // ADD Building
+elseif ($uri == 'building/addBuilding') {
+    if (isset($_SESSION['user'])) {
+        if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+            loadController('BuildingController', 'viewAddBuilding');
+        } else if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            loadController('BuildingController', 'creteBuilding');
         }
+    } else {
+        header('Location: /login');
+        exit();
     }
-} else if (preg_match('/instructor\/updateInstructor\/(\d+)/', $uri, $matches))
-{
-    if (isset($_SESSION['user']))
-    {
+} // UPDATE Building
+elseif (preg_match('/building\/updateBuilding\/(\d+)/', $uri, $matches)) {
+    if (isset($_SESSION['user'])) {
         $id = $matches[1];
-        require_once '../App/Controllers/InstructorController.php';
-        $controller = new InstructorController();
-        if ($_SERVER['REQUEST_METHOD'] === 'POST')
-        {
-            $controller->updateInstructors($id);
-        } else if ($_SERVER['REQUEST_METHOD'] === 'GET')
-        {
-            $controller->viewUpdateInstructor();
+        if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+            loadController('BuildingController', 'viewUpdateBuilding');
+        } elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            loadController('BuildingController', 'updateBuilding', $id);
+        }
+    } else {
+        header('Location: /login');
+        exit();
+    }
+} // DELETE Building
+elseif (preg_match('/building\/delete\/(\d+)/', $uri, $matches)) {
+    $id = $matches[1];
+    if ($_SESSION['user']) {
+        if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
+            loadController('BuildingController', 'deleteBuilding', $id);
+        }
+    } else {
+        header('Location: /login');
+        exit();
+    }
+} // GET Building By ID
+elseif (preg_match('/building\/getBuilding\/(\d+)/', $uri, $matches)) {
+    $id = $matches[1];
+    if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+        loadController('BuildingController', 'getBuildingById', $id);
+    }
+} // GET All Building Name
+elseif ($uri == 'building/getBuildingName') {
+    if (isset($_SESSION['user'])) {
+        if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+            loadController('BuildingController', 'getBuildingName');
+        }
+    } else {
+        header('Location: /login');
+        exit();
+    }
+} // Tools
+elseif ($uri == 'tools') {
+    if (isset($_SESSION['user'])) {
+        if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+            loadController('ToolsController', 'index');
+        }
+    } else {
+        header('Location: /login');
+        exit();
+    }
+} // ADD Tools
+elseif ($uri == 'tools/addTool') {
+    if (isset($_SESSION['user'])) {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            loadController('ToolsController', 'createTools');
+        } else if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+            loadController('ToolsController', 'viewAddTools');
+        }
+    } else {
+        header('Location: /login');
+        exit();
+    }
+} // UPDATE Tools
+elseif (preg_match('/tools\/updateTools\/(\d+)/', $uri, $matches)) {
+    if (isset($_SESSION['user'])) {
+        $id = $matches[1];
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            loadController('ToolsController', 'updateTools', $id);
+        } else if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+            loadController('ToolsController', 'viewUpdateTools', $id);
+        }
+    } else {
+        header('Location: /login');
+        exit();
+    }
+} // DELETE Tools
+elseif (preg_match('/tools\/delete\/(\d+)/', $uri, $matches)) {
+    if (isset($_SESSION['user'])) {
+        $id = $matches[1];
+        if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
+            loadController('ToolsController', 'deleteTools', $id);
+        }
+    } else {
+        header('Location: /login');
+        exit();
+    }
+} // GET All Tools Data
+elseif ($uri == 'tools/getTools') {
+    if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+        loadController('ToolsController', 'getAllTools');
+    }
+} // GET Tools By ID
+elseif (preg_match('/tools\/getTools\/(\d+)/', $uri, $matches)) {
+    $id = $matches[1];
+    if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+        loadController('ToolsController', 'getToolsById', $id);
+    }
+} // Instructor
+elseif ($uri == 'instructor') {
+    if (isset($_SESSION['user'])) {
+        if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+            loadController('InstructorController', 'index');
+        }
+    } else {
+        header('Location: /login');
+        exit();
+    }
+} // ADD Intructor
+else if ($uri == 'instructor/addInstructor') {
+    if (isset($_SESSION['user'])) {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            loadController('InstructorController', 'createInstructors');
+        } else if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+            loadController('InstructorController', 'viewAddInstructor');
         }
     }
-} else if (preg_match('/instructor\/getInstructor\/(\d+)/', $uri, $matches))
-{
-    if ($_SERVER['REQUEST_METHOD'] === 'GET'){
+} // UPDATE Instructor
+else if (preg_match('/instructor\/updateInstructor\/(\d+)/', $uri, $matches)) {
+    if (isset($_SESSION['user'])) {
         $id = $matches[1];
-        require_once '../App/Controllers/InstructorController.php';
-        $controller = new InstructorController();
-        $controller->getInstructorById($id);
-    }
-} else if ($uri == '/instructor/getInstructor')
-{
-    if ($_SERVER['REQUEST_METHOD'] === 'GET')
-    {
-        require_once '../App/Controllers/InstructorController.php';
-        $controller = new InstructorController();
-        $controller->getAllInstructors();
-    }
-} else if ($uri == 'instructor/getInstructorName')
-{
-    if ($_SERVER['REQUEST_METHOD'] === 'GET')
-    {
-        require_once '../App/Controllers/InstructorController.php';
-        $controller = new InstructorController();
-        $controller->getInstructorName();
-    }
-} else if (preg_match('/instructor\/deleteInstructor\/(\d+)/', $uri, $matches))
-{
-    if (isset($_SESSION['user']))
-    {
-        $id = $matches[1];
-        require_once '../App/Controllers/InstructorController.php';
-        $controller = new InstructorController();
-        if ($_SERVER['REQUEST_METHOD'] === 'DELETE')
-        {
-            $controller->deleteInstructors($id);
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            loadController('InstructorController', 'updateInstructors', $id);
+        } else if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+            loadController('InstructorController', 'viewUpdateInstructor', $id);
         }
     }
+} // DELETE Instructor
+else if (preg_match('/instructor\/deleteInstructor\/(\d+)/', $uri, $matches)) {
+    if (isset($_SESSION['user'])) {
+        $id = $matches[1];
+        if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
+            loadController('InstructorController', 'deleteInstructors', $id);
+        }
+    }
+} // GET Instructor By ID
+else if (preg_match('/instructor\/getInstructor\/(\d+)/', $uri, $matches)) {
+    if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+        $id = $matches[1];
+        loadController('InstructorController', 'getInstructorById', $id);
+    }
+} // GET All Instructor Data
+else if ($uri == '/instructor/getInstructor') {
+    if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+        loadController('InstructorController', 'getAllInstructors');
+    }
+} // GET All Instructor Name
+else if ($uri == 'instructor/getInstructorName') {
+    if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+        loadController('InstructorController', 'getInstructorName');
+    }
+} // Registration
+elseif ($uri == 'registration') {
+    if (isset($_SESSION['user'])) {
+        if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+            loadController('RegistrationController', 'index');
+        }
+    } else {
+        header('Location: /login');
+        exit();
+    }
+} // Notification
+elseif ($uri == 'notification') {
+    if (isset($_SESSION['user'])) {
+        if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+            loadController('NotificationController', 'index');
+        }
+    } else {
+        header('Location: /login');
+        exit();
+    }
+} // ADD Notification
+elseif ($uri == 'notification/addNotification') {
+    if (isset($_SESSION['user'])) {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            loadController('NotificationController', 'createNotification');
+        } else if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+            loadController('NotificationController', 'viewAddNotification');
+        }
+    } else {
+        header('Location: /login');
+        exit();
+    }
+} // UPDATE Notification
+elseif (preg_match('/notification\/delete\/(\d+)/', $uri, $matches)) {
+    $id = $matches[1];
+    if (isset($_SESSION['user'])) {
+        if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
+            loadController('NotificationController', 'deleteNotification', $id);
+        }
+    } else {
+        header('Location: /login');
+        exit();
+    }
+} // GET All Notification Data
+elseif ($uri == 'notification/getNotification') {
+    if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+        loadController('NotificationController', 'getAllNotifications');
+    }
+} // User Management
+elseif ($uri == 'user') {
+    if (isset($_SESSION['user'])) {
+        if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+            loadController('UserManagementController', 'index');
+        }
+    } else {
+        header('Location: /login');
+        exit();
+    }
+} // Logout
+elseif ($uri == 'logout') {
+    session_destroy();
+    header('Location: /');
+    exit();
 }
