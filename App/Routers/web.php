@@ -380,6 +380,47 @@ elseif ($uri == 'user') {
         header('Location: /login');
         exit();
     }
+} // CREATE Users
+else if ($uri == 'user/create'){
+    if (isset($_SESSION['user'])){
+        if ($_SERVER['REQUEST_METHOD'] === 'POST'){
+            loadController('UserManagementController', 'creteUsers');
+        } else if ($_SERVER['REQUEST_METHOD' === 'GET']){
+            loadController('UserManagementController', 'viewAddAdmin');
+        }
+    } else {
+        header('Location: /login');
+        exit();
+    }
+} // GET All Users
+else if ($uri == 'user/getUsers') {
+    if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+        loadController('UserManagementController', 'getAllUsers');
+    }
+} // GET Users By ID
+else if (preg_match('/user\/getUsers\/(\d+)/', $uri, $matches)) {
+    $id = $matches[1];
+    if ($_SERVER['REQUEST_METHOD'] === 'GET'){
+        loadController('UserManagementController', 'getUserById', $id);
+    }
+} // UPDATE Users
+else if (preg_match('/user\/updateUsers\/(\d+)/', $uri, $matches)) {
+    $id = $matches[1];
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        loadController('UserManagementController', 'updateUsers', $id);
+    }
+} // UPDATE Admin
+else if (preg_match('/user\/updateAdmin\/(\d+)/', $uri, $matches)) {
+    $id = $matches[1];
+    if ($_SERVER['REQUEST_METHOD'] === 'GET'){
+        loadController('UserManagementController', 'updateAdmin', $id);
+    }
+} // DELETE Users
+else if (preg_match('/user\/delete\/(\d+)/', $uri, $matches)) {
+    $id = $matches[1];
+    if ($_SERVER['REQUEST_METHOD'] === 'DELETE'){
+        loadController('UserManagementController', 'deleteUsers', $id);
+    }
 } // Logout
 elseif ($uri == 'logout') {
     session_destroy();
