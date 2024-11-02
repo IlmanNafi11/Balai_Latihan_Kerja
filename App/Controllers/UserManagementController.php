@@ -36,21 +36,43 @@ class UserManagementController
 
     public function createUsers()
     {
-        $data = json_decode(file_get_contents("php://input"), true);
-        $users = [
-            "name" => $data['name'],
-            "email" => $data['email'],
-            "password" => $data['password'],
-            "phone" => $data['phone'],
-            "tanggal_lahir" => $data['tanggal_lahir'],
-            "jenis_kelamin" => $data['jenis_kelamin'],
-            "alamat" => $data['alamat'],
-            "role" => $data['role']
-        ];
-        if (empty($data)){
-            return ['success' => false, 'message' => 'Data Kosong'];
+        $name = $_POST['name'];
+        $email = $_POST['email'];
+        $phone = $_POST['phone'];
+        $password = $_POST['password'];
+        $tanggal_lahir = $_POST['tanggal_lahir'];
+        $jenis_kelamin = $_POST['jenis_kelamin'];
+        $alamat = $_POST['alamat'];
+        $pas_foto = $_FILES['pas_foto'];
+
+        if (empty($name) || empty($email) || empty($phone) || empty($pas_foto)) {
+            echo json_encode(['success' => false, 'message' => 'Pastikan semua data telah diisi.']);
+            return;
+        }
+
+        if ($pas_foto['error'] === UPLOAD_ERR_OK) {
+            $uploadDirectory = 'Uploads/profiles/';
+            $fileName = uniqid() . '-' . basename($pas_foto['name']);
+            $filePath = $uploadDirectory . $fileName;
+
+            if (move_uploaded_file($pas_foto['tmp_name'], $filePath)) {
+                $users = [
+                    "name" => $name,
+                    "email" => $email,
+                    "password" => $password,
+                    "phone" => $phone,
+                    "tanggal_lahir" => $tanggal_lahir,
+                    "jenis_kelamin" => $jenis_kelamin,
+                    "alamat" => $alamat,
+                    "role" => 'admin',
+                    "foto_path" => $filePath
+                ];
+                echo json_encode($this->model->createUsers($users));
+            } else {
+                echo json_encode(['success' => false, 'message' => 'Gagal dalam memindahkan directory penyimpanan foto']);
+            }
         } else {
-            echo json_encode($this->model->createUsers());
+            echo json_encode(['success' => false, 'message' => $pas_foto['error']]);
         }
     }
 
@@ -75,7 +97,7 @@ class UserManagementController
         $address = $data['address'];
         $tanggal_lahir = $data['tanggal_lahir'];
         $password = $data['password'];
-        if (empty($name) && empty($phone) && empty($address) && empty($tanggal_lahir) && empty($password)){
+        if (empty($name) && empty($phone) && empty($address) && empty($tanggal_lahir) && empty($password)) {
             return ['success' => false, 'message' => 'Data tidak lengkap'];
         } else {
             echo json_encode($this->model->updateAdmin($id, $name, $phone, $address, $password, $tanggal_lahir));
