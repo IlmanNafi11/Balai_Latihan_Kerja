@@ -15,7 +15,7 @@
         crossorigin="anonymous">
 
     <!--    Custom Css-->
-    <link rel="stylesheet" href="../../../Public/Asset/css/style.css">
+    <link rel="stylesheet" href="/Asset/css/style.css">
 
     <!-- Font -->
     <link
@@ -34,7 +34,7 @@
     <!-- ROOT Container -->
     <div class="container-fluid main-root-container m-0 p-0 w-100 h-100">
         <!-- Navbar -->
-        <?php require_once '../Layout/navbar.php' ?>
+        <?php require_once '../App/Views/Layout/navbar.php' ?>
         <!-- Container Content -->
         <div class="container-fluid container-content d-flex flex-column">
             <!-- Breadcrumb -->
@@ -113,7 +113,7 @@
         crossorigin="anonymous"></script>
 
     <!-- Custom Js-->
-    <script src="../../../Public/Asset/js/script.js"></script>
+    <script src="/Asset/js/script.js"></script>
 
 </body>
 
