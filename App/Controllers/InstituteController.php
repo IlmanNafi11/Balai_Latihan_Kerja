@@ -50,13 +50,13 @@ class InstituteController
             'thn_berdiri' => $data['thn_berdiri'],
             'tipe' => $data['tipe'],
             'kepemilikan' => $data['kepemilikan'],
+            'status_beroperasi' => $data['status_beroperasi'],
             'no_tlp' => $data['no_tlp'],
             'no_fax' => $data['no_fax'],
             'email' => $data['email'],
             'website' => $data['website'],
             'deskripsi' => $data['deskripsi']
         ];
-
         $result = $this->model->updateInstitute($institute);
         echo json_encode($result);
     }
