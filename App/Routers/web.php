@@ -384,8 +384,8 @@ elseif ($uri == 'user') {
 else if ($uri == 'user/create'){
     if (isset($_SESSION['user'])){
         if ($_SERVER['REQUEST_METHOD'] === 'POST'){
-            loadController('UserManagementController', 'creteUsers');
-        } else if ($_SERVER['REQUEST_METHOD' === 'GET']){
+            loadController('UserManagementController', 'createUsers');
+        } else if ($_SERVER['REQUEST_METHOD'] === 'GET'){
             loadController('UserManagementController', 'viewAddAdmin');
         }
     } else {
