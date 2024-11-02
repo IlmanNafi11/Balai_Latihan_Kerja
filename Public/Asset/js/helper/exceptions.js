@@ -26,15 +26,15 @@ export function questionAlert(title, message, confirmText, onConfirm, onCancel) 
         });
 }
 
-export function successAlert(successMessage, response) {
+export function successAlert(successMessage, redirectUri, autoRedirect = true) {
     swalWithBootstrapButtons.fire({
         title: "Sukses!",
         text: successMessage,
         icon: "success"
     })
         .then((result) => {
-            if (result.isConfirmed) {
-                window.location.href = response;
+            if (result.isConfirmed && autoRedirect) {
+                window.location.href = redirectUri;
             }
         });
 }
@@ -47,10 +47,10 @@ export function errorAlert(errorMessage) {
     });
 }
 
-export function cancelAlert() {
+export function cancelAlert(message) {
     swalWithBootstrapButtons.fire({
         title: "Dibatalkan",
-        text: "Data anda aman :)",
+        text: message,
         icon: "error"
     });
 }
