@@ -25,7 +25,7 @@
 <div class="slider-navigation d-flex flex-column m-0 align-items-center" id="slider-navigation">
     <div class="slider-image-profile-container d-flex flex-column align-items-center row-gap-3 w-100 h-auto">
         <div class="avatar slider-img-avatar overflow-hidden">
-            <img class="avatar-img object-fit-cover" src="/Asset/images/me.jpg" alt="user_profile">
+            <a href="/profile"><img class="avatar-img object-fit-cover" src="/Asset/images/me.jpg" alt="user_profile"></a>
         </div>
         <div class="slider-subtitle-profile-container d-flex flex-column align-items-center">
             <h6>Ilman Nafian</h6>
