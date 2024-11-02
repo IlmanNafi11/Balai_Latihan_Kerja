@@ -46,19 +46,20 @@ class UserManagementModel
 
     public function createUsers($data = [])
     {
-        $query = "INSERT INTO users (nama, email, password, tlp, tanggal_lahir, jenis_kelamin, alamat, role) VALUES (:name, :email, :password, :phone, :tanggal_lahir, :jenis_kelamin, :alamat, :role)";
+        $query = "INSERT INTO users (nama, email, password, tlp, tanggal_lahir, jenis_kelamin, alamat, role, profile_picture) VALUES (:name, :email, :password, :phone, :tanggal_lahir, :jenis_kelamin, :alamat, :role, :profile_picture)";
         $stmt = $this->connection->prepare($query);
         try {
-            $stmt->bindParam(':name', $data['nama']);
+            $stmt->bindParam(':name', $data['name']);
             $stmt->bindParam(':email', $data['email']);
             $stmt->bindParam(':password', $data['password']);
-            $stmt->bindParam(':phone', $data['tlp']);
+            $stmt->bindParam(':phone', $data['phone']);
             $stmt->bindParam(':tanggal_lahir', $data['tanggal_lahir']);
             $stmt->bindParam(':jenis_kelamin', $data['jenis_kelamin']);
             $stmt->bindParam(':alamat', $data['alamat']);
             $stmt->bindParam(':role', $data['role']);
+            $stmt->bindParam(':profile_picture', $data['foto_path']);
             $stmt->execute();
-            return ['success' => true, 'message' => 'Data user berhasil disimpan'];
+            return ['success' => true, 'message' => 'Data user berhasil disimpan', 'redirect_url' => '/user'];
         } catch (PDOException $e) {
             return ['success' => false, 'message' => $e->getMessage()];
         }
