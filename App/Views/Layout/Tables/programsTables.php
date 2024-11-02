@@ -1,7 +1,9 @@
 <div class="tables tables-program-container px-0 m-0">
     <!-- Button add data -->
     <div class="button-add-data-container">
-        <button onclick="getAddView('programs/addPrograms')" class="btn btn-primary">+ Tambah Data</button>
+        <a href="programs/addPrograms">
+            <button class="btn btn-primary">+ Tambah Data</button>
+        </a>
     </div>
     <!-- Table -->
     <div class="table-responsive-sm table-responsive-md">
