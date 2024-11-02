@@ -421,8 +421,17 @@ else if (preg_match('/user\/delete\/(\d+)/', $uri, $matches)) {
     if ($_SERVER['REQUEST_METHOD'] === 'DELETE'){
         loadController('UserManagementController', 'deleteUsers', $id);
     }
+} else if ($uri == 'profile') {
+    if ($_SESSION['user']) {
+        if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+            loadController('ProfileController', 'index');
+        } else if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+        }
+    }
 } // Logout
 elseif ($uri == 'logout') {
+    session_unset();
     session_destroy();
     header('Location: /');
     exit();
