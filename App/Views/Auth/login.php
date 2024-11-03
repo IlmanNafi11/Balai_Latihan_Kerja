@@ -69,7 +69,10 @@
 <!-- AXIOS -->
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
-<script src="/Asset/js/auth/login.js"></script>
+<!-- SweetAlert -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script type="module" src="/Asset/js/auth/login.js"></script>
 
 </body>
 </html>
