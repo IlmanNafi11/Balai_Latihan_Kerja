@@ -19,6 +19,7 @@ class LoginAuthModel
 
         if ($user) {
             if ($password == $user['password']) {
+                unset($user['password']);
                 return $user;
             } else {
                 return false;
