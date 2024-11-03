@@ -1,5 +1,4 @@
 <?php
-require_once '../App/Config/Database.php';
 require_once '../App/Models/ProgramModel.php';
 
 class ProgramController
