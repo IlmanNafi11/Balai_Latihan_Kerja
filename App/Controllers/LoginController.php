@@ -1,16 +1,18 @@
 <?php
-require_once '../App/Config/Database.php';
 require_once '../App/Models/LoginAuthModel.php';
+;
 
 class LoginController
 {
     private $loginModel;
+    private $jwtService;
 
     function __construct()
     {
         $database = new Database();
         $db = $database->getConnection();
         $this->loginModel = new LoginAuthModel($db);
+        $this->jwtService = new ServiceToken();
     }
 
     public function index()
@@ -31,12 +33,17 @@ class LoginController
         }
 
         $user = $this->loginModel->login($email, $password);
-
         if ($user) {
-            $_SESSION['user'] = $user;
-            echo json_encode(['status' => 'success', 'message' => 'Login berhasil', 'redirect_url' => '/dashboard']);
+            $userID = $user['id'];
+            $userName = $user['nama'];
+            $userRole = $user['role'];
+            $payload = ['userID' => $userID, 'userName' => $userName, 'role' => $userRole];
+            $token = $this->jwtService->createToken($payload);
+            $_SESSION['userID'] = $userID;
+            $_SESSION['token'] = $token;
+
+            echo json_encode(['status' => 'success', 'message' => 'Login berhasil', 'redirect_url' => '/dashboard', 'token' => $token]);
         } else {
-            // Login gagal
             echo json_encode(['status' => 'error', 'message' => 'Email atau password salah']);
         }
     }
