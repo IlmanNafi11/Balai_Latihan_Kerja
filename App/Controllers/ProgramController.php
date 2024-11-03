@@ -38,4 +38,9 @@ class ProgramController
         echo json_encode($this->model->getProgramById($id));
     }
 
+    public function getProgramsByDepartment($id)
+    {
+        echo json_encode($this->model->getProgramsByDepartment($id));
+    }
+
 }
