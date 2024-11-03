@@ -40,4 +40,22 @@ class ProgramModel
             return ['success' => false, 'message' => $e->getMessage()];
         }
     }
+
+    public function getProgramsByDepartment($id)
+    {
+        $query = "SELECT programs.id, programs.nama, programs.deskripsi FROM programs JOIN departments ON programs.department_id = departments.id WHERE departments.id = :department_id";
+        $stmt = $this->connection->prepare($query);
+        $stmt->bindParam(":department_id", $id);
+        try {
+            $stmt->execute();
+            $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            if ($data){
+                return['success' => true, 'isEmpty' => false, 'programs' => $data];
+            } else {
+                return ['success' => true, 'isEmpty' => true, 'message' => 'Data Tidak ditemukan'];
+            }
+        } catch (PDOException $e) {
+            return ['success' => false, 'message' => $e->getMessage()];
+        }
+    }
 }
