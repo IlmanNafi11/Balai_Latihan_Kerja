@@ -560,9 +560,7 @@ if (str_starts_with($uri, 'api/v1/public/')) {
         session_destroy();
         header('Location: /');
         exit();
-    }
-    else
-    {
+    } else {
         http_response_code(404);
         exit();
     }
@@ -575,46 +573,53 @@ function handleApiRequest(string $uri)
     if ($endPoint == 'dashboards') {
 
     } // GET All Institute Data
-    else if ($endPoint == 'institutes'){
-        authenticate();
-        if($_SERVER['REQUEST_METHOD'] == 'GET'){
-            loadController('InstituteController', 'getAllInstitute');
+    else if ($endPoint == 'institutes') {
+        if ($users = authenticate()) {
+            if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+                loadController('InstituteController', 'getAllInstitute');
+            }
         }
     } // GET All Departments Data
-    else if ($endPoint == 'departments'){
-        authenticate();
-        if($_SERVER['REQUEST_METHOD'] == 'GET'){
-            loadController('DepartmentsController', 'getAllDepartments');
+    else if ($endPoint == 'departments') {
+        if ($users = authenticate()) {
+            if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+                loadController('DepartmentsController', 'getAllDepartments');
+            }
         }
     } // GET All Programs by Department id
-    else if (preg_match('/departments\/(\d+)\/programs$/', $endPoint, $matches)){
-        authenticate();
-        if($_SERVER['REQUEST_METHOD'] == 'GET'){
-            loadController('ProgramController', 'getProgramsByDepartment', $matches[1]);
+    else if (preg_match('/departments\/(\d+)\/programs$/', $endPoint, $matches)) {
+        if ($users = authenticate()) {
+            if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+                loadController('ProgramController', 'getProgramsByDepartment', $matches[1]);
+            }
         }
     } // GET All Programs Detail
     else if (preg_match('/programs\/(\d+)$/', $endPoint, $matches)) {
-        authenticate();
-        if($_SERVER['REQUEST_METHOD'] == 'GET'){
-            loadController('ProgramController', 'getProgramsById', $matches[1]);
+        if ($users = authenticate()) {
+            if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+                loadController('ProgramController', 'getProgramsById', $matches[1]);
+            }
         }
     } // GET All Requirements By Programs Id
     else if (preg_match('/programs\/(\d+)\/requirements$/', $endPoint, $matches)) {
-        authenticate();
-        if($_SERVER['REQUEST_METHOD'] == 'GET'){
-            loadController('RequirementsController', 'getRequirementsByProgram', $matches[1]);
+        if ($users = authenticate()) {
+            if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+                loadController('RequirementsController', 'getRequirementsByProgram', $matches[1]);
+            }
         }
     } // GET All Notifications
     else if ($endPoint == 'notifications') {
-        authenticate();
-        if($_SERVER['REQUEST_METHOD'] == 'GET'){
-            loadController('NotificationController', 'getAllNotifications');
+        if ($users = authenticate()) {
+            if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+                loadController('NotificationController', 'getAllNotifications');
+            }
         }
     } // GET Users Data By id
     else if (preg_match('/users\/(\d+)$/', $uri, $matches)) {
-        authenticate();
-        if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-            loadController('ProfileController', 'getUsersById', $matches[1]);
+        if ($users = authenticate()) {
+            if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+                loadController('ProfileController', 'getUsersById', $matches[1]);
+            }
         }
     }
 }
