@@ -43,7 +43,7 @@ class ProgramModel
 
     public function getProgramsByDepartment($id)
     {
-        $query = "SELECT programs.id, programs.nama, programs.deskripsi FROM programs JOIN departments ON programs.department_id = departments.id WHERE departments.id = :department_id";
+        $query = "SELECT programs.*, buildings.nama AS building_name, departments.nama AS department_name, instructors.nama AS instructor_name, instructors.no_tlp AS instructors_contact, instructors.alamat AS instructors_address FROM programs LEFT JOIN buildings ON programs.building_id = buildings.id LEFT JOIN departments ON programs.department_id = departments.id LEFT JOIN instructors ON programs.instructor_id = instructors.id WHERE departments.id = :department_id";
         $stmt = $this->connection->prepare($query);
         $stmt->bindParam(":department_id", $id);
         try {
