@@ -543,12 +543,13 @@ if (str_starts_with($uri, 'api/v1/public/')) {
             header('Location: /login');
             exit();
         }
-    } else if ($uri == 'profile') {
+    } else if (preg_match('/profile\/(\d+)/', $uri, $matches)) {
         if ($_SESSION['userID']) {
+            $id = $matches[1];
             if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                 loadController('ProfileController', 'index');
-            } else if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
+            } else if ($_SERVER['REQUEST_METHOD'] === 'PUT') {
+                loadController('ProfileController', 'updateProfile', $id);
             }
         } else {
             header('Location: /login');
