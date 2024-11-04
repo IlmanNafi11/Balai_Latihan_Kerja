@@ -33,9 +33,9 @@ class ProgramController
         return json_encode($this->model->getAllProgram());
     }
 
-    public function getProgramById($id)
+    public function getProgramsById($id)
     {
-        echo json_encode($this->model->getProgramById($id));
+        echo json_encode($this->model->getProgramsById($id));
     }
 
     public function getProgramsByDepartment($id)
