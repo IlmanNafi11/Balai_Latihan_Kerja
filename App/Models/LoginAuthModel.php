@@ -22,10 +22,11 @@ class LoginAuthModel
                 unset($user['password']);
                 return $user;
             } else {
-                return false;
+                return (['status' => false, 'message' => 'Password salah']);
+
             }
         } else {
-            return false;
+            return (['status' => false, 'message' => 'Email tidak terdaftar']);
         }
     }
 }
