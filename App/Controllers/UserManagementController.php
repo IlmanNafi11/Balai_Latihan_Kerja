@@ -1,6 +1,5 @@
 <?php
-require_once '../App/Config/Database.php';
-require_once '../App/Models/UserManagementModel.php';
+require_once '../App/Models/UserModel.php';
 
 class UserManagementController
 {
@@ -10,7 +9,7 @@ class UserManagementController
     {
         $database = new Database();
         $db = $database->getConnection();
-        $this->model = new UserManagementModel($db);
+        $this->model = new UserModel($db);
     }
 
     public function index()
