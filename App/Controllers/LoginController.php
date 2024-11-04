@@ -28,23 +28,27 @@ class LoginController
         $password = $input['password'];
 
         if (empty($email) || empty($password)) {
+            http_response_code(400);
             echo json_encode(['status' => 'error', 'message' => 'Email atau password tidak boleh kosong']);
             return;
         }
 
         $user = $this->loginModel->login($email, $password);
-        if ($user) {
-            $userID = $user['id'];
-            $userName = $user['nama'];
-            $userRole = $user['role'];
-            $payload = ['userID' => $userID, 'userName' => $userName, 'role' => $userRole];
-            $token = $this->jwtService->createToken($payload);
-            $_SESSION['userID'] = $userID;
-            $_SESSION['token'] = $token;
 
-            echo json_encode(['status' => 'success', 'message' => 'Login berhasil', 'redirect_url' => '/dashboard', 'token' => $token]);
+        if (isset($user['status']) && !$user['status']) {
+            http_response_code(401);
+            echo json_encode($user);
         } else {
-            echo json_encode(['status' => 'error', 'message' => 'Email atau password salah']);
+            $userID = $user['id'];
+            $userEmail = $user['email'];
+            $userRole = $user['role'];
+            $token = $this->jwtService->createToken($userID, $userEmail, $userRole);
+            if ($token) {
+                $_SESSION['userID'] = $userID;
+                $_SESSION['token'] = $token;
+                http_response_code(200);
+                echo json_encode(['status' => 'success', 'message' => 'Login berhasil', 'redirect_url' => '/dashboard', 'token' => $token]);
+            }
         }
     }
 }
