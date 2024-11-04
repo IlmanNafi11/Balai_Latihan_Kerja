@@ -47,7 +47,8 @@
             <!-- Hero -->
             <div class="hero-container-section h-auto d-flex flex-column align-items-center py-4 rounded row-gap-3">
                 <div class="avatar avatar-profile-admin position-relative">
-                    <img class="avatar-img w-100 h-100" src="../../../Public/Asset/images/me.jpg" alt="user@email.com">
+                    <img class="avatar-img w-100 h-100" src="<?php
+                    echo $profile ?? null?>" alt="user@email.com">
                     <div class="changes-foto-profile-container position-absolute">
                         <div class="avatar avatar-camera-change">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="white" width="16" height="16"
@@ -61,8 +62,8 @@
                     </div>
                 </div>
                 <div class="subtitle-admin-profile d-flex flex-column">
-                    <span>Fitri Meydayani</span>
-                    <small>Administrator</small>
+                    <span><?php echo $users['users']['nama'] ?? "Undefined"; ?></span>
+                    <small><?php echo $users['users']['role'] ?? "Undefined"; ?></small>
                 </div>
             </div>
 
@@ -73,30 +74,38 @@
                         <div class="input-nama-admin">
                             <label for="nama-admin" class="form-label">Nama</label>
                             <input type="text" name="nama-admin" id="nama-admin" class="form-control" placeholder="Nama"
-                                value="Fitri Meydayani" required>
+                                value="<?php echo $users['users']['nama'] ?? "Undefined"; ?>">
+                            <div class="valid-feedback"></div>
+                            <div class="invalid-feedback"></div>
                         </div>
                         <div class="input-no-hp-admin">
                             <label for="no-hp-admin" class="form-label">Nomor Telepon</label>
                             <input type="number" name="no-hp-admin" id="no-hp-admin" class="form-control"
-                                placeholder="Nomor Telepon" value="085234232134" required>
+                                placeholder="Nomor Telepon" value="<?php echo $users['users']['tlp'] ?? "Undefined"; ?>">
+                            <div class="valid-feedback"></div>
+                            <div class="invalid-feedback"></div>
                         </div>
                     </div>
                     <div class="container-form-input flex-grow-1 d-flex flex-column column-gap-4 row-gap-3">
                         <div class="input-email-admin">
                             <label for="email-admin" class="form-label">Email</label>
                             <input type="email" name="email-admin" id="email-admin" class="form-control"
-                                placeholder="Email" value="fitri@gmail.com" required>
+                                placeholder="Email" value="<?php echo $users['users']['email'] ?? "Undefined"; ?>">
+                            <div class="valid-feedback"></div>
+                            <div class="invalid-feedback"></div>
                         </div>
                         <div class="input-alamat-admin">
                             <label for="alamat-admin" class="form-label">Alamat</label>
                             <input type="text" name="alamat-admin" id="alamat-admin" class="form-control"
-                                placeholder="Alamat" value="Nganjuk, Nganjuk, Jawa Timur" required>
+                                placeholder="Alamat" value="<?php echo $users['users']['alamat'] ?? "Undefined"; ?>">
+                            <div class="valid-feedback"></div>
+                            <div class="invalid-feedback"></div>
                         </div>
                     </div>
                 </div>
                 <div class="button-action-container-form my-3 d-flex w-100 h-auto justify-content-end column-gap-2">
-                    <a href="#"><button class="btn btn-primary">Perbarui</button></a>
-                    <a href="#"><button class="btn btn-danger" type="button">Batal</button></a>
+                    <button class="btn btn-primary" id="perbarui-profile">Perbarui</button>
+                    <button class="btn btn-danger" type="button" onclick="history.back()">Batal</button>
                 </div>
             </form>
         </div>
@@ -114,6 +123,15 @@
 
     <!-- Custom Js-->
     <script src="/Asset/js/script.js"></script>
+
+    <!-- AXIOS -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <!-- SweetAlert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- Logic Handler -->
+    <script type="module" src="/Asset/js/profiles/updateProfiles.js"></script>
 
 </body>
 
