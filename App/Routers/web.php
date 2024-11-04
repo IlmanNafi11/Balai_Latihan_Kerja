@@ -584,13 +584,25 @@ function handleApiRequest(string $uri)
     else if ($endPoint == 'departments'){
         authenticate();
         if($_SERVER['REQUEST_METHOD'] == 'GET'){
-            loadController('DepartmentController', 'getAllDepartments');
+            loadController('DepartmentsController', 'getAllDepartments');
         }
     } // GET All Programs by Department id
-    else if (preg_match('/departments\/(\d+)\/programs/', $endPoint, $matches)){
+    else if (preg_match('/departments\/(\d+)\/programs$/', $endPoint, $matches)){
         authenticate();
         if($_SERVER['REQUEST_METHOD'] == 'GET'){
             loadController('ProgramController', 'getProgramsByDepartment', $matches[1]);
+        }
+    } // GET All Programs Detail
+    else if (preg_match('/programs\/(\d+)$/', $endPoint, $matches)) {
+        authenticate();
+        if($_SERVER['REQUEST_METHOD'] == 'GET'){
+            loadController('ProgramController', 'getProgramsById', $matches[1]);
+        }
+    } // GET All Requirements By Programs Id
+    else if (preg_match('/programs\/(\d+)\/requirements$/', $endPoint, $matches)) {
+        authenticate();
+        if($_SERVER['REQUEST_METHOD'] == 'GET'){
+            loadController('RequirementsController', 'getRequirementsByProgram', $matches[1]);
         }
     } // GET All Notifications
     else if ($endPoint == 'notifications') {
@@ -599,7 +611,7 @@ function handleApiRequest(string $uri)
             loadController('NotificationController', 'getAllNotifications');
         }
     } // GET Users Data By id
-    else if (preg_match('/users\/(\d+)/', $uri, $matches)) {
+    else if (preg_match('/users\/(\d+)$/', $uri, $matches)) {
         authenticate();
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             loadController('ProfileController', 'getUsersById', $matches[1]);
