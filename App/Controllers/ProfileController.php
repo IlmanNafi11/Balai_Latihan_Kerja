@@ -9,14 +9,13 @@ class ProfileController
         $database = new Database();
         $db = $database->getConnection();
         $this->model = new UserModel($db);
-
     }
 
     public function index()
     {
         $id = $_SESSION['userID'];
         $users = $this->model->getUsersById($id);
-        $profile = "/Public/" . htmlspecialchars($users['users']['profile_picture']);
+        $profile ="/".$users['users']['profile_picture'];
         require_once "../App/Views/Profiles/profile.php";
     }
 
@@ -32,6 +31,7 @@ class ProfileController
         $no_tlp = $data['phone'];;
         $address = $data['address'];
         if (!empty($name) && !empty($no_tlp) && !empty($address)) {
+            $_SESSION['name'] = $name;
             echo json_encode($this->model->updateAdmin($id, $name, $no_tlp, $address));
         } else {
             echo json_encode(['status' => false, 'message' => 'Data tidak lengkap']);

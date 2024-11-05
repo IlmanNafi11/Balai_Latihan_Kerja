@@ -47,7 +47,7 @@
             <!-- Hero -->
             <div class="hero-container-section h-auto d-flex flex-column align-items-center py-4 rounded row-gap-3">
                 <div class="avatar avatar-profile-admin position-relative">
-                    <img class="avatar-img w-100 h-100" src="<?php
+                    <img class="avatar-img w-100 h-100" src="<?php $users ?? null;
                     echo $profile ?? null?>" alt="user@email.com">
                     <div class="changes-foto-profile-container position-absolute">
                         <div class="avatar avatar-camera-change">

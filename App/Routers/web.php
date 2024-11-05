@@ -543,7 +543,8 @@ if (str_starts_with($uri, 'api/v1/public/')) {
             header('Location: /login');
             exit();
         }
-    } else if (preg_match('/profile\/(\d+)/', $uri, $matches)) {
+    } // View and UPDATE Profile
+    else if (preg_match('/profile\/(\d+)/', $uri, $matches)) {
         if ($_SESSION['userID']) {
             $id = $matches[1];
             if ($_SERVER['REQUEST_METHOD'] === 'GET') {
@@ -555,7 +556,18 @@ if (str_starts_with($uri, 'api/v1/public/')) {
             header('Location: /login');
             exit();
         }
-    } // Logout
+    } else if (preg_match('/profile\/(\d+)\/images/', $uri, $matches)) {
+        if ($_SESSION['userID']) {
+            $id = $matches[1];
+            if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+                loadController('ProfileController', 'getProfileImages', $id);
+            }
+        } else {
+            header('Location: /login');
+            exit();
+        }
+    }
+    // Logout
     elseif ($uri == 'logout') {
         session_unset();
         session_destroy();

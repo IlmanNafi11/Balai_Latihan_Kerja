@@ -11,7 +11,7 @@ class ServiceToken
         $this->secret = $_ENV['JWT_SECRET'];
     }
 
-    public function createToken($userid, $email, $role)
+    public function createToken($userid, $email, $role, $username)
     {
         $issuedAt = time();
         $expired = $issuedAt + 3600;
@@ -22,7 +22,8 @@ class ServiceToken
             "users" => [
                 'id' => $userid,
                 'email' => $email,
-                'role' => $role
+                'role' => $role,
+                'username' => $username
             ]
         ];
 

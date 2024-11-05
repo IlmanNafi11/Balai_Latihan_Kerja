@@ -1,6 +1,5 @@
 <?php
 require_once '../App/Models/LoginAuthModel.php';
-;
 
 class LoginController
 {
@@ -42,10 +41,14 @@ class LoginController
             $userID = $user['id'];
             $userEmail = $user['email'];
             $userRole = $user['role'];
-            $token = $this->jwtService->createToken($userID, $userEmail, $userRole);
+            $username = $user['nama'];
+            $token = $this->jwtService->createToken($userID, $userEmail, $userRole, $username);
             if ($token) {
                 $_SESSION['userID'] = $userID;
+                $_SESSION['name'] = $username;
+                $_SESSION['role'] = $userRole;
                 $_SESSION['token'] = $token;
+                $_SESSION['path_profile'] = "/". $user['profile_picture'];
                 http_response_code(200);
                 echo json_encode(['status' => 'success', 'message' => 'Login berhasil', 'redirect_url' => '/dashboard', 'token' => $token]);
             }

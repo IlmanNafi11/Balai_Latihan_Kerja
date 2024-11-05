@@ -11,7 +11,7 @@
 
     <div class="sidebar-navigations d-flex column-gap-3 h-100 align-items-center">
         <div class="avatar">
-            <img class="avatar-img w-100 h-100" src="/Asset/images/me.jpg" alt="user-profile">
+            <img class="avatar-img w-100 h-100" src="<?php echo $_SESSION["path_profile"] ?? null ?>" alt="user-profile">
         </div>
         <div class="hamburger-menu d-flex flex-column justify-content-evenly p-0 m-0 h-100" id="hamburger-menu">
             <span class="hamburger-line"></span>
@@ -25,11 +25,11 @@
 <div class="slider-navigation d-flex flex-column m-0 align-items-center" id="slider-navigation">
     <div class="slider-image-profile-container d-flex flex-column align-items-center row-gap-3 w-100 h-auto">
         <div class="avatar slider-img-avatar overflow-hidden">
-            <a href="/profile/<?php echo $id ?? null ?>"><img class="avatar-img object-fit-cover" src="/Asset/images/me.jpg" alt="user_profile"></a>
+            <a href="/profile/<?php echo $_SESSION['userID'] ?? null ?>"><img class="avatar-img object-fit-cover" src="<?php echo $_SESSION["path_profile"] ?? null ?>" alt="user_profile"></a>
         </div>
         <div class="slider-subtitle-profile-container d-flex flex-column align-items-center">
-            <h6>Ilman Nafian</h6>
-            <span>Administrator</span>
+            <h6><?php echo $_SESSION['name'] ?? null ?></h6>
+            <span><?php echo $_SESSION['role'] ?? null ?></span>
         </div>
     </div>
     <hr>
