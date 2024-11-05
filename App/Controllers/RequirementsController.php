@@ -1,5 +1,6 @@
 <?php
 require_once '../App/Models/RequirementsModel.php';
+
 class RequirementsController
 {
     private $model;
@@ -14,5 +15,14 @@ class RequirementsController
     public function getRequirementsByProgram($id)
     {
         echo json_encode($this->model->getRequirementsByProgram($id));
+    }
+
+    public function createRequirements($programId, $requirements = [])
+    {
+        $result = [];
+        foreach ($requirements as $requirement) {
+            $result = $this->model->createRequirements($programId, $requirement);
+        }
+        return $result;
     }
 }
