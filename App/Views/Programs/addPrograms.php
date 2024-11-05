@@ -167,7 +167,7 @@
                 </div>
             </div>
             <div
-                    class="button-action-container-form mb-3 d-flex w-100 h-auto justify-content-end column-gap-2">
+                    class="button-action-container-form my-3 d-flex w-100 h-auto justify-content-end column-gap-2">
                 <button class="btn btn-primary" id="btn-simpan" type="button">Simpan</button>
                 <a href="/programs">
                     <button class="btn btn-danger" type="button">Batal</button>
