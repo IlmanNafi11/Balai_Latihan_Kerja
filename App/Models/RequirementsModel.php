@@ -26,4 +26,18 @@ class RequirementsModel
             return ['success' => false, 'message' => $e->getMessage()];
         }
     }
+
+    public function createRequirements($programId, $requirement)
+    {
+        $query = "INSERT INTO requirements (program_id, requirement) VALUES (:program_id, :requirement)";
+        $stm = $this->connection->prepare($query);
+        try {
+            $stm->bindParam(':program_id', $programId);
+            $stm->bindParam(':requirement', $requirement);
+            $stm->execute();
+            return ['success' => true, 'isEmpty' => false, 'message' => 'Reuirement berhasil disimpan'];
+        } catch (PDOException $e) {
+            return ['success' => false, 'message' => $e->getMessage()];
+        }
+    }
 }
