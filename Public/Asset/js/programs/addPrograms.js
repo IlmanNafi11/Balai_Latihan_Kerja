@@ -53,7 +53,7 @@ blurValidate(jmlPeserta, "Jumlah Peserta", validJml, invalidJml, null, regexNum,
 blurValidate(standarProgram, "Bagus!", validStandart, invalidStandart, null, regexString, 6);
 blurValidate(deskripsi, "Bagus!", validDeskripsi, invalidDeskripsi, null, regexComb, 255);
 
-function validateInput() {
+function validateInputPersyaratan() {
     const inputs = document.querySelectorAll('input[name="persyaratan-program"]');
     let hasValue = false;
     let allFilled = true;
@@ -126,10 +126,56 @@ btnTambah.addEventListener("click", () => {
         newContainer.remove();
     });
 });
+
 btnSimpan.addEventListener('click', (e) => {
     e.preventDefault();
-    validateInput();
-    console.log(validateInput());
+    let requirements = [];
+    let allFilled = validateInputPersyaratan();
+
+    let isValid = true;
+    isValid = onSaveValidate(namaProgram, "Nama Program", validName, invalidName, null, regexString, 50) && isValid;
+    isValid = onSaveValidate(namaKejuruan, "Nama Kejuruan", validKejuruan, invalidKejuruan, "default", null, 50) && isValid;
+    isValid = onSaveValidate(namaInstruktor, "Nama Instruktor", validInstructor, invalidInstructor, "default", null, 50) && isValid;
+    isValid = onSaveValidate(statusPendaftaran, "Status Pendaftaran", validStatus, invalidStatus, "status", null, 10) && isValid;
+    isValid = onSaveValidate(namaGedung, "Nama Gedung", validGedung, invalidGedung, "default", null, 50) && isValid;
+    isValid = onSaveValidate(jmlPeserta, "Jumlah Peserta", validJml, invalidJml, null, regexNum, 5) && isValid;
+    isValid = onSaveValidate(standarProgram, "Bagus!", validStandart, invalidStandart, null, regexString, 6) && isValid;
+    isValid = onSaveValidate(deskripsi, "Bagus!", validDeskripsi, invalidDeskripsi, null, regexComb, 255) && isValid;
+
+    if (isValid && allFilled) {
+        const inputs = document.querySelectorAll('input[name="persyaratan-program"]');
+        inputs.forEach(input => {
+            requirements.push(input.value)
+        });
+        questionAlert('Simpan Data?', 'Pastikan semua data telah diisi dengan benar!', "Ya, Simpan", () => {
+            axios.post('/programs/addPrograms', {
+                'name': namaProgram.value,
+                'status_register': statusPendaftaran.value,
+                'start_date': tglMulaiPendfataran.value,
+                'end_date': tglAkhirPendfataran.value,
+                'standar': standarProgram.value,
+                'participant': jmlPeserta.value,
+                'description': deskripsi.value,
+                'instructor_id': namaInstruktor.value,
+                'building_id': namaGedung.value,
+                'department_id': namaKejuruan.value,
+                'requirements': requirements
+            })
+                .then(response => {
+                    console.log(response);
+                    if (response.data.success) {
+                        successAlert("Data berhasil disimpan", response.data.redirect_url);
+                    } else {
+                        errorAlert(response.data.message);
+                    }
+                })
+                .catch(error => {
+                    console.log(error);
+                    errorAlert("Terjadi kesalahan saat menyimpan data: " + error.message);
+                })
+        });
+    }
+
 });
 
 
@@ -205,9 +251,5 @@ function createOptions(data, element, selectedID, defaultContent) {
     if (selectedID) {
         element.selected = selectedID;
     }
-}
-
-function tambahPersyaratan() {
-
 }
 
