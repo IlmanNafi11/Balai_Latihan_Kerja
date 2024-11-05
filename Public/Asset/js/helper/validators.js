@@ -3,7 +3,6 @@ export function onSaveValidate(element, message, validFeedback, invalidFeedback,
     element.classList.remove('is-invalid', 'is-valid');
     if (element.tagName.toLowerCase() === 'select') {
         if (element.value === invalidOptions) {
-            console.log("masuk");
             element.classList.add('is-invalid');
             invalidFeedback.textContent = `${message} Tidak boleh kosong!`;
             return false;
