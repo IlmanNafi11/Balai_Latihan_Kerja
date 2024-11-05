@@ -76,4 +76,36 @@ class ProgramModel
             return ['success' => false, 'message' => $e->getMessage()];
         }
     }
+
+    public function createProgram($data = [])
+    {
+        require_once '../App/Controllers/RequirementsController.php';
+        $query = "INSERT INTO programs (nama, status_pendaftaran, tgl_mulai_pendaftaran, tgl_akhir_pendaftaran, standar, jml_peserta, deskripsi, instructor_id, building_id, department_id) VALUES (:name, :status_pendaftaran, :tgl_mulai, :tgl_akhir, :standar, :jml_peserta, :deskripsi, :instructor_id, :building_id, :department_id)";
+        $stmt = $this->connection->prepare($query);
+        try {
+            $stmt->bindParam(":name", $data['nama']);
+            $stmt->bindParam(":status_pendaftaran", $data['status_pendaftaran']);
+            $stmt->bindParam(":tgl_mulai", $data['tgl_mulai_pendaftaran']);
+            $stmt->bindParam(":tgl_akhir", $data['tgl_akhir_pendaftaran']);
+            $stmt->bindParam(":standar", $data['standar']);
+            $stmt->bindParam(":jml_peserta", $data['jml_peserta']);
+            $stmt->bindParam(":deskripsi", $data['deskripsi']);
+            $stmt->bindParam(":instructor_id", $data['instructor_id']);
+            $stmt->bindParam(":building_id", $data['building_id']);
+            $stmt->bindParam(":department_id", $data['department_id']);
+            $stmt->execute();
+            $programId = $this->connection->lastInsertId();
+
+            $requirementsController = new RequirementsController();
+            $insertRequirements = $requirementsController->createRequirements($programId, $data['requirements']);
+            if ($insertRequirements['success']) {
+                return ['success' => true, 'message' => 'Data berhasil disimpan', 'redirect_url' => '/programs'];
+            } else {
+                return ['success' => false, 'message' => $insertRequirements['message']];
+            }
+        } catch (PDOException|Exception $e) {
+            error_log($e->getMessage());
+            return ['success' => false, 'message' => $e->getMessage()];
+        }
+    }
 }
