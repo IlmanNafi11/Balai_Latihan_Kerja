@@ -12,6 +12,42 @@ class RequirementsController
         $this->model = new RequirementsModel($db);
     }
 
+    public function updateRequirements($requirements = [])
+    {
+        $updateResult = ['success' => false];
+        foreach ($requirements as $requirement) {
+            try {
+                $idRequirements = $requirement['id'];
+                $requirementDesc = $requirement['requirement'];
+                $updateResult = $this->model->updateRequirements($idRequirements, $requirementDesc);
+            } catch (PDOException $e) {
+                error_log($e->getMessage());
+            }
+
+        }
+        return $updateResult;
+    }
+
+    public function addNewRequirements($requirements = [], $id)
+    {
+        $insertResult = ['success' => false];
+        foreach ($requirements as $requirement) {
+            $insertResult = $this->model->createRequirements($id, $requirement);
+        }
+        return $insertResult;
+    }
+
+    public function deleteRequirements($requirements = [])
+    {
+        $deleteResult = ['success' => false];
+        foreach ($requirements as $requirement) {
+            $deleteResult = $this->model->deleteRequirements($requirement);
+        }
+        return $deleteResult;
+    }
+
+
+
     public function getRequirementsByProgram($id)
     {
         echo json_encode($this->model->getRequirementsByProgram($id));
