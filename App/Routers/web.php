@@ -174,7 +174,7 @@ if (str_starts_with($uri, 'api/v1/public/')) {
     else if ($uri == 'programs/addPrograms') {
         if (isset($_SESSION['userID'])) {
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
+                loadController('ProgramController', 'createPrograms');
             } else if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                 loadController('ProgramController', 'viewAddProgram');
             }
@@ -186,8 +186,8 @@ if (str_starts_with($uri, 'api/v1/public/')) {
     else if (preg_match('/programs\/updatePrograms\/(\d+)/', $uri, $matches)) {
         if (isset($_SESSION['userID'])) {
             $id = $matches[1];
-            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
+            if ($_SERVER['REQUEST_METHOD'] === 'PUT') {
+                loadController('ProgramController', 'updatePrograms', $id);
             } else if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                 loadController('ProgramController', 'viewUpdateProgram', $id);
             }
@@ -195,12 +195,12 @@ if (str_starts_with($uri, 'api/v1/public/')) {
             header('location: /login');
             exit();
         }
-    } // GET Program By ID
+    } // GET Program By ID for Update
     else if (preg_match('/programs\/getProgram\/(\d+)/', $uri, $matches)) {
         if (isset($_SESSION['userID'])) {
-            if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                 $id = $matches[1];
-                loadController('ProgramController', 'getProgramById', $id);
+            if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+                loadController('ProgramController', 'getProgramsByIdForUpdate', $id);
             }
         } else {
             header('location: /login');
