@@ -133,4 +133,17 @@ class ProgramModel
             return ['success' => false, 'message' => $e->getLine() + error_log($e->getMessage())];
         }
     }
+
+    public function deletePrograms($id)
+    {
+        $query = "DELETE FROM programs WHERE id = :id";
+        $stmt = $this->connection->prepare($query);
+        try {
+            $stmt->bindParam(":id", $id);
+            $stmt->execute();
+            return ['success' => true, 'message' => 'Data berhasil dihapus', 'redirect_url' => '/programs'];
+        } catch (PDOException $e) {
+            return ['success' => false, 'message' => $e->getMessage()];
+        }
+    }
 }
