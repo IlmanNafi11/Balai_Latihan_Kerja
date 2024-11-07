@@ -88,7 +88,7 @@
                         </div>
                         <div class="input-gedung">
                             <label for="gedung" class="form-label">Gedung</label>
-                            <select name="gedung" id="gedung" class="form-select">
+                            <select name="gedung" id="nama-gedung" class="form-select">
                                 <option value="Status" selected disabled>Pilih Gedung</option>
                                 <option value="Gedung Kuli Merdeka">Gedung Kuli Merdeka</option>
                                 <option value="Gedung Juang 45">Gedung Juang 45</option>
@@ -149,13 +149,15 @@
                                     </svg>
                                     Tambah Persyaratan
                                 </button>
+                                <div class="valid-feedback" id="valid-feedback-email"></div>
+                                <div class="invalid-feedback" id="invalid-feedback-email"></div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div
                         class="button-action-container-form my-3 d-flex w-100 h-auto justify-content-end column-gap-2">
-                    <button class="btn btn-primary" id="btn-simpan">Simpan</button>
+                    <button class="btn btn-primary" id="btn-perbarui" type="button">Perbarui</button>
                     <a href="/programs">
                         <button class="btn btn-danger" type="button">Batal</button>
                     </a>
@@ -184,7 +186,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <!-- Logic Handler -->
-    <script src="/Asset/js//programs/updatePrograms.js"></script>
+    <script type="module" src="/Asset/js//programs/updatePrograms.js"></script>
 
 </body>
 
