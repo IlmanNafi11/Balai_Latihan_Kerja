@@ -168,4 +168,9 @@ class ProgramController
             echo json_encode(['success' => false, 'message' => 'Data Kosong']);
         }
     }
+
+    public function deletePrograms($id)
+    {
+        echo json_encode($this->model->deletePrograms($id));
+    }
 }
