@@ -11,14 +11,14 @@ class RequirementsModel
 
     public function getRequirementsByProgram($id)
     {
-        $query  = "SELECT requirement FROM requirements WHERE program_id = :id";
+        $query  = "SELECT * FROM requirements WHERE program_id = :id";
         $stm = $this->connection->prepare($query);
         try {
             $stm->bindParam(':id', $id);
             $stm->execute();
             $data = $stm->fetchAll(PDO::FETCH_ASSOC);
             if (empty($data)) {
-                return ['success' => true, 'isEmpty' => true, 'message' => 'Data tidak ditemukan'];
+                return ['success' => true, 'isEmpty' => true, 'message' => 'Data requirements tidak ditemukan'];
             } else {
                 return ['success' => true, 'isEmpty' => false, 'requirements' => $data];
             }
@@ -37,6 +37,33 @@ class RequirementsModel
             $stm->execute();
             return ['success' => true, 'isEmpty' => false, 'message' => 'Reuirement berhasil disimpan'];
         } catch (PDOException $e) {
+            return ['success' => false, 'message' => $e->getMessage()];
+        }
+    }
+
+    public function updateRequirements($requirementId, $requirement)
+    {
+        $query = "UPDATE requirements SET requirement = :requirement WHERE  id = :id";
+        $stm = $this->connection->prepare($query);
+        try {
+            $stm->bindParam(':id', $requirementId );
+            $stm->bindParam(':requirement', $requirement );
+            $stm->execute();
+            return ['success' => true, 'message' => 'Requirements Berhasil diperbarui'];
+        } catch (PDOException $e){
+            return ['success' => false, 'message' => $e->getMessage()];
+        }
+    }
+
+    public function deleteRequirements($id)
+    {
+        $query = "DELETE FROM requirements WHERE id = :id";
+        $stm = $this->connection->prepare($query);
+        try {
+            $stm->bindParam(':id', $id);
+            $stm->execute();
+            return ['success' => true, 'message' => 'Requirements Berhasil dihapus'];
+        } catch (PDOException $e){
             return ['success' => false, 'message' => $e->getMessage()];
         }
     }
