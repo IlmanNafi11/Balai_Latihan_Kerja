@@ -206,6 +206,16 @@ if (str_starts_with($uri, 'api/v1/public/')) {
             header('location: /login');
             exit();
         }
+    } else if (preg_match('/programs\/(\d+)/', $uri, $matches)) {
+        if (isset($_SESSION['userID'])) {
+            $id = $matches[1];
+            if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
+                loadController('ProgramController', 'deletePrograms', $id);
+            }
+        } else {
+            header('location: /login');
+            exit();
+        }
     } // Building
     elseif ($uri == 'building') {
         if (isset($_SESSION['userID'])) {
