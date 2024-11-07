@@ -25,16 +25,18 @@ class ProgramModel
         }
     }
 
-    public function getProgramById($id) // Notes
+    public function getProgramByIdForUpdate($id)
     {
-        $query = "SELECT programs.*, buildings.nama AS building_name, instructors.nama AS instructor_name, departments.nama AS department_name FROM programs JOIN buildings ON programs.building_id = buildings.id JOIN instructors ON programs.instructor_id = instructors.id JOIN departments ON programs.department_id = departments.id WHERE programs.id = :id ORDER BY programs.id ASC";
+        $query = "SELECT * FROM programs WHERE id = :id";
         $stmt = $this->connection->prepare($query);
         try {
             $stmt->bindParam(":id", $id);
-            if ($stmt->execute()) {
-                return ['success' => true, 'dataByID' => $stmt->fetch(PDO::FETCH_ASSOC)];
+            $stmt->execute();
+            $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            if (!empty($data)) {
+                return ['success' => true, 'isEmpty' => false, 'programs' => $data];
             } else {
-                return ['success' => false, 'message' => 'Data Tidak ditemukan'];
+                return ['success' => true, 'isEmpty' => true, 'message' => 'Data Tidak ditemukan'];
             }
         } catch (PDOException $e) {
             return ['success' => false, 'message' => $e->getMessage()];
@@ -43,8 +45,8 @@ class ProgramModel
 
     public function getProgramsByDepartment($id)
     {
-        $query  = "SELECT id, nama, deskripsi FROM programs WHERE department_id = :id";
-        $stmt   = $this->connection->prepare($query);
+        $query = "SELECT id, nama, deskripsi FROM programs WHERE department_id = :id";
+        $stmt = $this->connection->prepare($query);
         try {
             $stmt->bindParam(":id", $id);
             $stmt->execute();
@@ -67,8 +69,8 @@ class ProgramModel
         try {
             $stmt->execute();
             $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            if ($data){
-                return['success' => true, 'isEmpty' => false, 'programs' => $data];
+            if ($data) {
+                return ['success' => true, 'isEmpty' => false, 'programs' => $data];
             } else {
                 return ['success' => true, 'isEmpty' => true, 'message' => 'Data Tidak ditemukan'];
             }
@@ -106,6 +108,29 @@ class ProgramModel
         } catch (PDOException|Exception $e) {
             error_log($e->getMessage());
             return ['success' => false, 'message' => $e->getMessage()];
+        }
+    }
+
+    public function updatePrograms($data = [])
+    {
+        $query = "UPDATE programs SET nama = :name, status_pendaftaran = :status_register, tgl_mulai_pendaftaran = :start_date, tgl_akhir_pendaftaran = :end_date, standar = :standar, jml_peserta = :participants, deskripsi = :descriptions, instructor_id = :instructor_id, building_id = :building_id, department_id = :department_id WHERE id = :id";
+        $stmt = $this->connection->prepare($query);
+        try {
+            $stmt->bindParam(":name", $data['nama']);
+            $stmt->bindParam(":status_register", $data['status_pendaftaran']);
+            $stmt->bindParam(":start_date", $data['tgl_mulai_pendaftaran']);
+            $stmt->bindParam(":end_date", $data['tgl_akhir_pendaftaran']);
+            $stmt->bindParam(":standar", $data['standar']);
+            $stmt->bindParam(":participants", $data['jml_peserta']);
+            $stmt->bindParam(":descriptions", $data['deskripsi']);
+            $stmt->bindParam(":instructor_id", $data['instructor_id']);
+            $stmt->bindParam(":building_id", $data['building_id']);
+            $stmt->bindParam(":department_id", $data['department_id']);
+            $stmt->bindParam(":id", $data['id']);
+            $stmt->execute();
+            return ['success' => true, 'message' => 'Data berhasil diupdate', 'redirect_url' => '/programs'];
+        } catch (PDOException $e) {
+            return ['success' => false, 'message' => $e->getLine() + error_log($e->getMessage())];
         }
     }
 }
