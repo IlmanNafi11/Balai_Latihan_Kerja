@@ -576,8 +576,19 @@ if (str_starts_with($uri, 'api/v1/public/')) {
             header('Location: /login');
             exit();
         }
-    }
-    // Logout
+    } else if ($uri == 'password-reset/request') {
+        if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+            loadController('ResetPasswordController', 'index');
+        }
+    } else if ($uri == 'password-reset/verify') {
+        if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+            loadController('ResetPasswordController', 'viewOtp');
+        }
+    } else if ($uri == 'password-reset/new') {
+        if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+            loadController('ResetPasswordController', 'viewResetPassword');
+        }
+    }// Logout
     elseif ($uri == 'logout') {
         session_unset();
         session_destroy();
