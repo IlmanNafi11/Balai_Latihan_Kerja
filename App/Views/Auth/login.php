@@ -45,7 +45,7 @@
                         <div class="invalid-feedback" id="invalid-feedback-password"></div>
                     </div>
                     <div class="forgot-pass-field mb-4">
-                        <small><a href="" class="text-decoration-none label-reference-credensial">Lupa kata
+                        <small><a href="/password-reset/request" class="text-decoration-none label-reference-credensial">Lupa kata
                                 sandi?</a></small>
                     </div>
                 </div>
