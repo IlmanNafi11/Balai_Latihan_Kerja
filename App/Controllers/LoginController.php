@@ -42,7 +42,22 @@ class LoginController
             $userEmail = $user['email'];
             $userRole = $user['role'];
             $username = $user['nama'];
-            $token = $this->jwtService->createToken($userID, $userEmail, $userRole, $username);
+
+            $issuedAt = time();
+            $expired = $issuedAt + 3600;
+
+            $payload = [
+                'iat' => $issuedAt,
+                'exp' => $expired,
+                "users" => [
+                    'id' => $userID,
+                    'email' => $userEmail,
+                    'role' => $userRole,
+                    'username' => $username
+                ]
+            ];
+
+            $token = $this->jwtService->createToken($payload);
             if ($token) {
                 $_SESSION['userID'] = $userID;
                 $_SESSION['name'] = $username;
