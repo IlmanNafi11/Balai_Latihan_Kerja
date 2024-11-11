@@ -54,3 +54,11 @@ export function cancelAlert(message) {
         icon: "error"
     });
 }
+
+export function warningAlert(warningMessage) {
+    swalWithBootstrapButtons.fire({
+        title: "Peringatan!",
+        text: warningMessage,
+        icon: "warning"
+    })
+}
