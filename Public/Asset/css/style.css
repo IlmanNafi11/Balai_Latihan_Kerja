@@ -118,6 +118,21 @@ body
     font-size: 0.7rem;
 }
 
+.otp-reSend-button
+{
+    cursor: default;
+}
+
+.otp-reSend-button.enabled
+{
+    cursor: pointer;
+}
+
+#back-button:hover
+{
+    cursor: pointer;
+}
+
 
 /*
     Top Navbar
