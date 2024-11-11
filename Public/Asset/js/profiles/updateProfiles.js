@@ -44,7 +44,7 @@ document.getElementById('perbarui-profile').addEventListener('click', (e) => {
            })
                .then(response => {
                    if (response.data.success) {
-                       successAlert("Profil Berhasil diperbarui!", "/dashboard")
+                       successAlert("Profil Berhasil diperbarui!", response.data.redirect);
                    } else {
                        errorAlert("Profil Gagal diperbarui!")
                    }
