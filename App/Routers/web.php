@@ -593,6 +593,10 @@ if (str_starts_with($uri, 'api/v1/public/')) {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             loadController('ResetPasswordController', 'resendOtp');
         }
+    } else if ($uri == 'password-reset/reset-step') {
+        if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+            loadController('ResetPasswordController', 'resetStep');
+        }
     }// Logout
     elseif ($uri == 'logout') {
         session_unset();
