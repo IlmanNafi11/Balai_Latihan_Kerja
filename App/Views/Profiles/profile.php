@@ -90,7 +90,7 @@
                         <div class="input-email-admin">
                             <label for="email-admin" class="form-label">Email</label>
                             <input type="email" name="email-admin" id="email-admin" class="form-control"
-                                placeholder="Email" value="<?php echo $users['users']['email'] ?? "Undefined"; ?>">
+                                placeholder="Email" value="<?php echo $users['users']['email'] ?? "Undefined"; ?>" disabled>
                             <div class="valid-feedback"></div>
                             <div class="invalid-feedback"></div>
                         </div>
