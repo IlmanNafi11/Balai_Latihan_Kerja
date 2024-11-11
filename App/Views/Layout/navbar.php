@@ -10,9 +10,12 @@
     </div>
 
     <div class="sidebar-navigations d-flex column-gap-3 h-100 align-items-center">
-        <div class="avatar">
-            <img class="avatar-img w-100 h-100" src="<?php echo $_SESSION["path_profile"] ?? null ?>" alt="user-profile">
-        </div>
+        <a href="/profile/<?php echo $_SESSION['userID'] ?? null ?>">
+            <div class="avatar">
+                <img class="avatar-img w-100 h-100" src="http://<?= $_SERVER['HTTP_HOST']."/" . $_SESSION["path_profile"] ?? null ?>" alt="user-profile">
+            </div>
+        </a>
+
         <div class="hamburger-menu d-flex flex-column justify-content-evenly p-0 m-0 h-100" id="hamburger-menu">
             <span class="hamburger-line"></span>
             <span class="hamburger-line"></span>
@@ -24,9 +27,12 @@
 <!-- Slider Navbar -->
 <div class="slider-navigation d-flex flex-column m-0 align-items-center" id="slider-navigation">
     <div class="slider-image-profile-container d-flex flex-column align-items-center row-gap-3 w-100 h-auto">
-        <div class="avatar slider-img-avatar overflow-hidden">
-            <a href="/profile/<?php echo $_SESSION['userID'] ?? null ?>"><img class="avatar-img object-fit-cover" src="<?php echo $_SESSION["path_profile"] ?? null ?>" alt="user_profile"></a>
-        </div>
+        <a href="/profile/<?php echo $_SESSION['userID'] ?? null ?>">
+            <div class="avatar slider-img-avatar overflow-hidden">
+                <img class="avatar-img object-fit-cover" src="http://<?= $_SERVER['HTTP_HOST']."/" . $_SESSION["path_profile"] ?? null ?>" alt="user_profile">
+            </div>
+        </a>
+
         <div class="slider-subtitle-profile-container d-flex flex-column align-items-center">
             <h6><?php echo $_SESSION['name'] ?? null ?></h6>
             <span><?php echo $_SESSION['role'] ?? null ?></span>
