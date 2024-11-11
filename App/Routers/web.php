@@ -586,6 +586,12 @@ if (str_starts_with($uri, 'api/v1/public/')) {
     } else if ($uri == 'password-reset/new') {
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             loadController('ResetPasswordController', 'viewResetPassword');
+        } else if ($_SERVER['REQUEST_METHOD'] === 'PUT') {
+            loadController('ResetPasswordController', 'resetPassword');
+        }
+    } else if ($uri == 'password-reset/resend'){
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            loadController('ResetPasswordController', 'resendOtp');
         }
     }// Logout
     elseif ($uri == 'logout') {
