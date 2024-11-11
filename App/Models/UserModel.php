@@ -80,15 +80,23 @@ class UserModel
         }
     }
 
-    public function updateAdmin($id, $name, $phone, $address)
+    public function updateAdmin($id, $name, $phone, $address, $profile_picture = null)
     {
-        $query = "UPDATE users SET nama = :name, tlp = :phone, alamat = :address WHERE id = :id";
+        $query = "UPDATE users SET nama = :name, tlp = :phone, alamat = :address";
+        if ($profile_picture) {
+            $query .= ", profile_picture = :path_profile";
+        }
+        $query .= " WHERE id = :id";
+
         $stmt = $this->connection->prepare($query);
         try {
             $stmt->bindParam(':id', $id);
             $stmt->bindParam(':name', $name);
             $stmt->bindParam(':phone', $phone);
             $stmt->bindParam(':address', $address);
+            if ($profile_picture) {
+                $stmt->bindParam(':path_profile', $profile_picture);
+            }
             $stmt->execute();
             return ['success' => true, 'message' => 'Data admin berhasil diperbarui', 'redirect' => '/profile/' . $id];
         } catch (PDOException $e) {
