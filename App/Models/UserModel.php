@@ -90,7 +90,7 @@ class UserModel
             $stmt->bindParam(':phone', $phone);
             $stmt->bindParam(':address', $address);
             $stmt->execute();
-            return ['success' => true, 'message' => 'Data admin berhasil diperbarui'];
+            return ['success' => true, 'message' => 'Data admin berhasil diperbarui', 'redirect' => '/profile/' . $id];
         } catch (PDOException $e) {
             return ['success' => false, 'message' => $e->getMessage()];
         }
@@ -103,7 +103,7 @@ class UserModel
         try {
             $stmt->bindParam(':id', $id);
             $stmt->execute();
-            return ['success' => true, 'message' => 'Data user berhasil dihapus'];
+            return ['success' => true, 'message' => 'Data user berhasil dihapus', 'redirect' => '/user'];
         } catch (PDOException $e) {
             return ['success' => false, 'message' => $e->getMessage()];
         }
