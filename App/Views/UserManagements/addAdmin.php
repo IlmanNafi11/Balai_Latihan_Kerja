@@ -107,10 +107,10 @@
                         <label for="fileInput" class="form-label">Pas Foto</label>
                         <div class="upload-area w-100 m-0 p-3 flex-grow-1 d-flex flex-column align-items-center justify-content-center"
                              id="upload-area">
-                            <img src="/Asset/images/upload_icons.png" alt="upload icon"/>
-                            <p>Upload file</p>
-                            <small>*jpg, png</small>
-                            <input type="file" id="fileInput" accept=".jpg,.jpeg,.png"/>
+                            <img src="/Asset/images/upload_icons.png" alt="upload icon" id="uploadIcon"/>
+                            <p id="uploadText">Upload file</p>
+                            <small id="formatText">*jpg, png</small>
+                            <input type="file" id="fileInput" accept=".jpg,.jpeg,.png" style="display: none"/>
                         </div>
                         <div class="valid-feedback" id="valid-feedback"></div>
                         <div class="invalid-feedback" id="invalid-feedback"></div>
@@ -148,7 +148,7 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <!-- Logic Handler -->
-<script type="module" src="/Asset/js/usersManagement/usersManagement.js"></script>
+<script type="module" src="/Asset/js/usersManagement/addAdmin.js"></script>
 
 </body>
 
