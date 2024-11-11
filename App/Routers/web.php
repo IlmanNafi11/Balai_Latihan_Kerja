@@ -538,7 +538,7 @@ if (str_starts_with($uri, 'api/v1/public/')) {
             }
         }
     } // DELETE Users
-    else if (preg_match('/user\/delete\/(\d+)/', $uri, $matches)) {
+    else if (preg_match('/user\/(\d+)/', $uri, $matches)) {
         if (isset($_SESSION['userID'])) {
             $id = $matches[1];
             if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
