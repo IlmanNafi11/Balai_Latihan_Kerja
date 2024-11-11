@@ -198,7 +198,7 @@ if (str_starts_with($uri, 'api/v1/public/')) {
     } // GET Program By ID for Update
     else if (preg_match('/programs\/getProgram\/(\d+)/', $uri, $matches)) {
         if (isset($_SESSION['userID'])) {
-                $id = $matches[1];
+            $id = $matches[1];
             if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                 loadController('ProgramController', 'getProgramsByIdForUpdate', $id);
             }
@@ -492,15 +492,10 @@ if (str_starts_with($uri, 'api/v1/public/')) {
         }
     } // CREATE Users
     else if ($uri == 'user/create') {
-        if (isset($_SESSION['userID'])) {
-            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-                loadController('UserManagementController', 'createUsers');
-            } else if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-                loadController('UserManagementController', 'viewAddAdmin');
-            }
-        } else {
-            header('Location: /login');
-            exit();
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            loadController('UserManagementController', 'createUsers');
+        } else if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+            loadController('UserManagementController', 'viewAddAdmin');
         }
     } // GET All Users
     else if ($uri == 'user/getUsers') {
@@ -579,10 +574,14 @@ if (str_starts_with($uri, 'api/v1/public/')) {
     } else if ($uri == 'password-reset/request') {
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             loadController('ResetPasswordController', 'index');
+        } else if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            loadController('ResetPasswordController', 'sendOtp');
         }
     } else if ($uri == 'password-reset/verify') {
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             loadController('ResetPasswordController', 'viewOtp');
+        } else if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            loadController('ResetPasswordController', 'verifyOtp');
         }
     } else if ($uri == 'password-reset/new') {
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
