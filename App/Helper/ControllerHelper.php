@@ -7,3 +7,8 @@ function loadController($controller, $method, $params = []) {
     }
     call_user_func_array([$controllerInstance, $method], $params);
 }
+
+function generateOtp()
+{
+    return str_pad(random_int(0, 999999), 6, '0', STR_PAD_LEFT);
+}
