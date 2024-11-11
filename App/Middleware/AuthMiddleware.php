@@ -3,29 +3,32 @@
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 
-function authenticate()
+function authenticate($token = null)
 {
     $secretKey = $_ENV['JWT_SECRET'];
     $headers = apache_request_headers();
-    $authHeader = $headers['Authorization'];
-
-    if (!$authHeader) {
-        http_response_code(401);
-        echo json_encode(['status' => 'error', 'message' => 'Token tidak ditemukan']);
-        return false;
-    }
-
-    if (preg_match('/Bearer\s(\S+)/', $authHeader, $matches)) {
-        $jwt = $matches[1];
+    if ($token != null) {
         try {
-            $decoded = JWT::decode($jwt, new Key($secretKey, 'HS256'));
-            $userId = $decoded->users->id;
-            return $userId;
+            return JWT::decode($token, new Key($secretKey, 'HS256'));
         } catch (Exception $e) {
-            http_response_code(401);
-            echo json_encode(['status' => 'error', 'message' => "Token tidak valid: " . $e->getMessage()]);
-            return false;
+            http_response_code(408);
+            return ['success' => false, 'message' => "Token tidak valid atau kadaluarsa"];
         }
+
+    } else if (isset($headers['Authorization'])) {
+        $authHeader = $headers['Authorization'];
+        if (preg_match('/Bearer\s(\S+)/', $authHeader, $matches)) {
+            $jwt = $matches[1];
+            try {
+                return JWT::decode($jwt, new Key($secretKey, 'HS256'));
+            } catch (Exception $e) {
+                http_response_code(408);
+                return ['success' => false, 'message' => "Token tidak valid atau kadaluarsa"];
+            }
+        }
+    } else {
+        http_response_code(401);
+        return ['success' => false, 'message' => 'Token tidak ditemukan'];
     }
 }
 
