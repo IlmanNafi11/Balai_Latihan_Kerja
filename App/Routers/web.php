@@ -206,7 +206,8 @@ if (str_starts_with($uri, 'api/v1/public/')) {
             header('location: /login');
             exit();
         }
-    } else if (preg_match('/programs\/(\d+)/', $uri, $matches)) {
+    } // Delete Programs
+    else if (preg_match('/programs\/(\d+)/', $uri, $matches)) {
         if (isset($_SESSION['userID'])) {
             $id = $matches[1];
             if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
@@ -528,14 +529,6 @@ if (str_starts_with($uri, 'api/v1/public/')) {
         } else {
             header('Location: /login');
             exit();
-        }
-    } // UPDATE Admin
-    else if (preg_match('/user\/updateAdmin\/(\d+)/', $uri, $matches)) {
-        if (isset($_SESSION['userID'])) {
-            $id = $matches[1];
-            if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-                loadController('UserManagementController', 'updateAdmin', $id);
-            }
         }
     } // DELETE Users
     else if (preg_match('/user\/(\d+)/', $uri, $matches)) {

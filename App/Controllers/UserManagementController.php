@@ -43,6 +43,7 @@ class UserManagementController
         $jenis_kelamin = $_POST['jenis_kelamin'];
         $alamat = $_POST['alamat'];
         $pas_foto = $_FILES['pas_foto'];
+        $role = $_POST['role'] ?? 'admin';
 
         if (empty($name) || empty($email) || empty($phone) || empty($pas_foto)) {
             echo json_encode(['success' => false, 'message' => 'Pastikan semua data telah diisi.']);
@@ -63,7 +64,7 @@ class UserManagementController
                     "tanggal_lahir" => $tanggal_lahir,
                     "jenis_kelamin" => $jenis_kelamin,
                     "alamat" => $alamat,
-                    "role" => 'admin',
+                    "role" => $role,
                     "foto_path" => $filePath
                 ];
                 echo json_encode($this->model->createUsers($users));
@@ -85,21 +86,6 @@ class UserManagementController
             return ['success' => false, 'message' => 'Data Tidak Lengkap'];
         } else {
             echo json_encode($this->model->updateUsers($id, $name, $phone, $address));
-        }
-    }
-
-    public function updateAdmin($id)
-    {
-        $data = json_decode(file_get_contents("php://input"), true);
-        $name = $data['name'];
-        $phone = $data['phone'];
-        $address = $data['address'];
-        $tanggal_lahir = $data['tanggal_lahir'];
-        $password = $data['password'];
-        if (empty($name) && empty($phone) && empty($address) && empty($tanggal_lahir) && empty($password)) {
-            return ['success' => false, 'message' => 'Data tidak lengkap'];
-        } else {
-            echo json_encode($this->model->updateAdmin($id, $name, $phone, $address, $password, $tanggal_lahir));
         }
     }
 
