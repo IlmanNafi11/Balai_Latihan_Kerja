@@ -26,16 +26,37 @@ class ProfileController
 
     public function updateProfile($id)
     {
-        $data = json_decode(file_get_contents("php://input"), true);
-        $name = $data['name'];
-        $no_tlp = $data['phone'];;
-        $address = $data['address'];
-        if (!empty($name) && !empty($no_tlp) && !empty($address)) {
-            $_SESSION['name'] = $name;
-            echo json_encode($this->model->updateAdmin($id, $name, $no_tlp, $address));
-        } else {
-            echo json_encode(['status' => false, 'message' => 'Data tidak lengkap']);
+        $name = $_POST['name'] ?? null;
+        $phone = $_POST['phone'] ?? null;
+        $address = $_POST['address'] ?? null;
+        $pas_foto = $_FILES['profile_picture'] ?? null;
+
+        if (empty($name) || empty($phone) || empty($address)) {
+            echo json_encode(['success' => false, 'message' => 'Data tidak lengkap!']);
+            return;
         }
 
+        if ($pas_foto && $pas_foto['error'] === UPLOAD_ERR_OK) {
+            $allowedTypes = ['image/jpeg', 'image/png'];
+            if (!in_array($pas_foto['type'], $allowedTypes)) {
+                echo json_encode(['success' => false, 'message' => 'Format foto tidak didukung!']);
+                return;
+            }
+
+            $uploadDirectory = 'Uploads/profiles/';
+            $fileName = uniqid() . '-' . basename($pas_foto['name']);
+            $filePath = $uploadDirectory . $fileName;
+
+            if (move_uploaded_file($pas_foto['tmp_name'], $filePath)) {
+                $_SESSION['name'] = $name;
+                $_SESSION['userID'] = $id;
+                $_SESSION["path_profile"] = $filePath;
+                echo json_encode($this->model->updateAdmin($id, $name, $phone, $address, $filePath));
+            } else {
+                echo json_encode(['success' => false, 'message' => 'Gagal memindahkan foto profil']);
+            }
+        } else {
+            echo json_encode($this->model->updateAdmin($id, $name, $phone, $address, null));
+        }
     }
 }
