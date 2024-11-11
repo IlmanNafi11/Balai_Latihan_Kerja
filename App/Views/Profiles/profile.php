@@ -48,7 +48,7 @@
             <div class="hero-container-section h-auto d-flex flex-column align-items-center py-4 rounded row-gap-3">
                 <div class="avatar avatar-profile-admin position-relative">
                     <img class="avatar-img w-100 h-100" src="<?php $users ?? null;
-                    echo $profile ?? null?>" alt="user@email.com">
+                    echo $profile ?? null?>" alt="profile-picture">
                     <div class="changes-foto-profile-container position-absolute">
                         <div class="avatar avatar-camera-change">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="white" width="16" height="16"
@@ -58,6 +58,7 @@
                                 <path
                                     d="M8 11a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5m0 1a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7M3 6.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0" />
                             </svg>
+                            <input type="file" id="fileInput" accept=".jpg,.jpeg,.png" style="display: none;" />
                         </div>
                     </div>
                 </div>
