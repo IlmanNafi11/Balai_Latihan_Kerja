@@ -44,8 +44,8 @@
                         <input type="email" name="email" class="form-control" placeholder="Email"
                                id="input-email">
                         <label for="email" id="email-label" class="form-label">Email</label>
-                        <div class="valid-feedback"></div>
-                        <div class="invalid-feedback"></div>
+                        <div class="valid-feedback" id="valid-email-feedback"></div>
+                        <div class="invalid-feedback" id="invalid-email-feedback"></div>
                     </div>
                 </div>
                 <div class="send-btn-container w-100 d-flex justify-content-center">
