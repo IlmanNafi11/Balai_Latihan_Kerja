@@ -108,4 +108,73 @@ class UserModel
             return ['success' => false, 'message' => $e->getMessage()];
         }
     }
+
+    public function validateEmailUser($email)
+    {
+        $query = "SELECT * FROM users WHERE email = :email";
+        $stmt = $this->connection->prepare($query);
+        try {
+            $stmt->bindParam(':email', $email);
+            $stmt->execute();
+            $data = $stmt->fetch(PDO::FETCH_ASSOC);
+            if (empty($data)) {
+                return ['success' => true, 'isEmpty' => true, 'message' => 'Email tidak terdaftar'];
+            } else {
+                return ['success' => true, 'isEmpty' => false, 'message' => 'Email terdaftar', 'users' => $data];
+            }
+        } catch (PDOException $e) {
+            return ['success' => false, 'message' => $e->getMessage()];
+        }
+    }
+
+    public function insertOtp($user_id, $email, $otp, $expired)
+    {
+        $query = "INSERT INTO password_resets (user_id, email, otp_code, expires_at) VALUES (:user_id, :email, :otp, :expired)";
+        $stmt = $this->connection->prepare($query);
+        try {
+            $stmt->bindParam(':user_id', $user_id);
+            $stmt->bindParam(':email', $email);
+            $stmt->bindParam(':otp', $otp);
+            $stmt->bindParam(':expired', $expired);
+            $stmt->execute();
+            return ['success' => true, 'message' => 'Kode OTP Berhasil disimpan di database'];
+        } catch (PDOException $e) {
+            return ['success' => false, 'message' => $e->getMessage()];
+        }
+    }
+
+    public function getOtp($id)
+    {
+        $query = "SELECT otp_code, expires_at FROM password_resets WHERE user_id = :id ORDER BY expires_at DESC LIMIT 1";
+        $stmt = $this->connection->prepare($query);
+        try {
+            $stmt->bindParam(':id', $id);
+            $stmt->execute();
+            $data = $stmt->fetch(PDO::FETCH_ASSOC);
+            if (empty($data)) {
+                http_response_code(401);
+                return ['success' => true, 'isEmpty' => true, 'message' => 'Email tidak terdaftar'];
+            } else {
+                return ['success' => true, 'isEmpty' => false, 'message' => 'Email terdaftar', 'users' => $data];
+            }
+        } catch (PDOException $e) {
+            http_response_code(500);
+            return ['success' => false, 'message' => $e->getMessage()];
+        }
+    }
+
+    public function updatePassword($password, $id)
+    {
+        $query = "UPDATE users SET password = :password WHERE id = :id";
+        $stmt = $this->connection->prepare($query);
+        try {
+            $stmt->bindParam(':password', $password);
+            $stmt->bindParam(':id', $id);
+            $stmt->execute();
+            return ['success' => true, 'message' => 'Password berhasil diperbarui', 'redirect' => '/login'];
+        } catch (PDOException $e) {
+            http_response_code(500);
+            return ['success' => false, 'message' => 'Password gagal diperbarui' . $e->getMessage()];
+    }
+    }
 }
