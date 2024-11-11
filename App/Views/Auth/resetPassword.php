@@ -42,23 +42,14 @@
                 <div class="input-field-container w-100 p-0 m-0 d-flex flex-column row-gap-3">
                     <div class="password-field form-floating w-100 mb-2">
                         <input type="password" name="password" class="form-control" placeholder="Kata Sandi"
-                               id="input-password">
+                               id="input-new-password">
                         <label for="password" id="password-label" class="form-label">Kata Sandi</label>
-                        <div class="valid-feedback"></div>
-                        <div class="invalid-feedback"></div>
-                    </div>
-                    <div class="repassword-field form-floating w-100 mb-2">
-                        <input type="password" name="repassword" class="form-control" placeholder="Ulangi Kata sandi"
-                               id="input-repassword">
-                        <label for="repassword" id="repassword-label" class="form-label">Ulangi Kata sandi</label>
-                        <div class="valid-feedback"></div>
-                        <div class="invalid-feedback"></div>
+                        <div class="valid-feedback" id="valid-new-password"></div>
+                        <div class="invalid-feedback" id="invalid-new-password"></div>
                     </div>
                 </div>
                 <div class="reset-password-btn-container w-100 d-flex justify-content-center">
-                    <a href="#">
-                        <button type="button" class="btn btn-reset btn-credensial" name="reset" id="btn-reset">Tetapkan Kata Sandi</button>
-                    </a>
+                    <button type="button" class="btn btn-reset btn-credensial" name="reset" id="btn-reset">Perbarui</button>
                 </div>
             </form>
         </div>
@@ -76,7 +67,7 @@
 <!-- SweetAlert -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-<script type="module" src="/Asset/js/auth/login.js"></script>
+<script type="module" src="/Asset/js/auth/resetPassword.js"></script>
 
 </body>
 </html>
