@@ -46,6 +46,9 @@ blurValidate(jenisKelamin, "Input Jenis Kelamin", validJenisKelamin, invalidJeni
 blurValidate(alamat, "Input Alamat", validAlamat, invalidAlamat, null, regexAlamat, 100);
 let validFoto = false;
 
+const today = new Date().toISOString().split('T')[0];
+ttl.max = today;
+
 uploadArea.addEventListener('click', function () {
     pasFoto.click();
 });
