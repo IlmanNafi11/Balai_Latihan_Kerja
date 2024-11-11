@@ -27,7 +27,7 @@
             <!-- Back Button -->
             <div class="back-button-container mb-3">
                 <div>
-                    <a href="/password-reset/verify" class="text-decoration-none">
+                    <a class="text-decoration-none" id="back-button">
                         <img width="18" height="18" src="https://img.icons8.com/ios/50/back--v1.png" alt="back--v1"/>
                         <small class="title-back-button small-subtitle">Kembali</small>
                     </a>
@@ -43,7 +43,7 @@
                     <div class="password-field form-floating w-100 mb-2">
                         <input type="password" name="password" class="form-control" placeholder="Kata Sandi"
                                id="input-new-password">
-                        <label for="password" id="password-label" class="form-label">Kata Sandi</label>
+                        <label for="password" id="password-label" class="form-label">Kata Sandi Baru</label>
                         <div class="valid-feedback" id="valid-new-password"></div>
                         <div class="invalid-feedback" id="invalid-new-password"></div>
                     </div>
