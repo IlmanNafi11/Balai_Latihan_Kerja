@@ -35,7 +35,8 @@
             <!-- Title -->
             <div class="title-container mb-4 d-flex flex-column row-gap-3">
                 <h3 class="m-0">Lupa Kata Sandi?</h3>
-                <small class="subtitle-container">Jangan khawatir, masukkan email Anda di bawah ini untuk memulihkan kata sandi Anda.</small>
+                <small class="subtitle-container">Jangan khawatir, masukkan email Anda di bawah ini untuk memulihkan
+                    kata sandi Anda.</small>
             </div>
             <form class="form-email-sender d-flex flex-column h-100 row-gap-4">
                 <div class="input-field-container w-100 p-0 m-0 d-flex flex-column row-gap-3">
@@ -48,9 +49,9 @@
                     </div>
                 </div>
                 <div class="send-btn-container w-100 d-flex justify-content-center">
-                    <a href="/password-reset/verify">
-                        <button type="button" class="btn btn-send btn-credensial" name="send" id="btn-send-otp">Selanjutnya</button>
-                    </a>
+                    <button type="button" class="btn btn-send btn-credensial" name="send" id="btn-send-otp">
+                        Selanjutnya
+                    </button>
                 </div>
             </form>
         </div>
@@ -68,7 +69,7 @@
 <!-- SweetAlert -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-<script type="module" src="/Asset/js/auth/login.js"></script>
+<script type="module" src="/Asset/js/auth/resetPassword.js"></script>
 
 </body>
 </html>
