@@ -75,4 +75,9 @@ class DepartmentsController
     {
         echo json_encode($this->departmentModel->deleteDepartment($id));
     }
+
+    public function getMostProgramsInDepartment()
+    {
+        echo json_encode($this->departmentModel->getMostProgramsInDepartment());
+    }
 }

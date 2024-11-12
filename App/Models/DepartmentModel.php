@@ -22,6 +22,7 @@ class DepartmentModel
                 return ['success' => true, 'isEmpty' => false, 'departments' => $data];
             }
         } catch (PDOException $e) {
+            http_response_code(500);
             return ['success' => false, 'message' => $e->getMessage()];
         }
 
@@ -41,6 +42,7 @@ class DepartmentModel
                 return ['success' => true, 'isEmpty' => false, 'department' => $data];
             }
         } catch (PDOException $e) {
+            http_response_code(500);
             return ['success' => false, 'message' => $e->getMessage()];
         }
     }
@@ -58,6 +60,7 @@ class DepartmentModel
                 return ['success' => true, 'isEmpty' => false, 'departments' => $data];
             }
         } catch (PDOException $e) {
+            http_response_code(500);
             return ['success' => false, 'message' => $e->getMessage()];
         }
     }
@@ -73,6 +76,7 @@ class DepartmentModel
             $stmt->execute();
             return ['success' => true, 'message' => 'Data berhasil ditambahkan', 'redirect_url' => '/department'];
         } catch (PDOException $e) {
+            http_response_code(500);
             return ['success' => false, 'message' => $e->getMessage()];
         }
     }
@@ -88,6 +92,7 @@ class DepartmentModel
             $stmt->execute();
             return ['success' => true, 'message' => 'Data berhasil diperbarui', 'redirect_url' => '/department'];
         } catch (PDOException $e) {
+            http_response_code(500);
             return ['success' => false, 'message' => $e->getMessage()];
         }
     }
@@ -101,6 +106,25 @@ class DepartmentModel
             $stmt->execute();
             return ['success' => true, 'message' => 'Data berhasil dihapus', 'redirect_url' => '/department'];
         } catch (PDOException $e) {
+            http_response_code(500);
+            return ['success' => false, 'message' => $e->getMessage()];
+        }
+    }
+
+    public function getMostProgramsInDepartment()
+    {
+        $query = "SELECT departments.nama AS department_name, COUNT(programs.id) AS total_programs FROM departments JOIN programs ON departments.id = programs.department_id GROUP BY departments.id ORDER BY total_programs DESC LIMIT 5";
+        $stmt = $this->connection->prepare($query);
+        try {
+            $stmt->execute();
+            $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            if (empty($data)) {
+                return ['success' => true, 'isEmpty' => true, 'message' => 'Data Kosong'];
+            } else {
+                return ['success' => true, 'isEmpty' => false, 'data' => $data];
+            }
+        } catch (PDOException $e) {
+            http_response_code(500);
             return ['success' => false, 'message' => $e->getMessage()];
         }
     }
