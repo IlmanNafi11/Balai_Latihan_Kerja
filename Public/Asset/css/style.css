@@ -427,6 +427,10 @@ body
     right: 5px;
 }
 
+/*
+    Chart
+*/
+
 .chart-container
 {
     width: auto;
@@ -456,6 +460,18 @@ body
     border-width: 1px 0px 1px 1px;
     border-style: solid;
     border-color: rgba(224, 221, 221, 0.93);
+}
+
+/*
+    Sweet Alert
+*/
+
+.swal2-actions {
+    margin-top: 10px;
+}
+
+.swal2-confirm, .swal2-cancel {
+    margin: 0 5px;
 }
 
 /*
