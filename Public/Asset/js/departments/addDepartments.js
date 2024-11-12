@@ -1,5 +1,5 @@
 import {errorAlert, questionAlert, successAlert} from "../helper/exceptions.js";
-import {blurValidate, onSaveValidate} from "../helper/validators.js";
+import {blurValidate, onSaveValidate, validateFile} from "../helper/validators.js";
 
 const name = document.getElementById('nama-kejuruan');
 const description = document.getElementById('deskripsi-kejuruan');
@@ -8,10 +8,57 @@ const validName = name.nextElementSibling;
 const invalidName = validName.nextElementSibling;
 const validDescription = description.nextElementSibling;
 const invalidDescription = validDescription.nextElementSibling;
+const inputFoto = document.getElementById('fileInput');
+const uploadArea = document.getElementById('upload-area');
+const uploadIcon = document.getElementById('uploadIcon');
+const uploadText = document.getElementById('uploadText');
+const formatText = document.getElementById('formatText');
+const validFoto = uploadArea.nextElementSibling;
+const invalidFoto = validFoto.nextElementSibling;
+const allowedTypes = ['image/jpeg', 'image/png'];
+const maxFileSize = 2 * 1024 * 1024;
 const regexName = /^[a-zA-Z ]+$/;
 const regexDesc = /^[a-zA-Z0-9 .,]+$/;
 let instituteId = null;
+let file = null;
 
+uploadArea.addEventListener('click', function () {
+    inputFoto.click();
+});
+
+inputFoto.addEventListener('change', () => {
+    file = inputFoto.files[0];
+    if (validateFile(file, "Foto", validFoto, invalidFoto, allowedTypes, maxFileSize, uploadArea)) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            let previewImg = document.getElementById('previewImg');
+            if (!previewImg) {
+                previewImg = document.createElement('img');
+                previewImg.id = 'previewImg';
+                previewImg.classList.add('preview-img');
+                uploadArea.appendChild(previewImg);
+            }
+
+            previewImg.src = e.target.result;
+            previewImg.style.display = 'block';
+            uploadIcon.style.display = 'none';
+            uploadText.style.display = 'none';
+            formatText.style.display = 'none';
+        };
+        reader.readAsDataURL(file);
+
+    } else {
+        inputFoto.value = "";
+        let previewImg = document.getElementById('previewImg');
+        if (previewImg) {
+            previewImg.style.display = 'none';
+        }
+
+        uploadIcon.style.display = 'block';
+        uploadText.style.display = 'block';
+        formatText.style.display = 'block';
+    }
+});
 axios.get('/institute/getInstituteId')
     .then(response => {
         if (response.data.success && !response.data.isEmpty) {
@@ -30,16 +77,21 @@ blurValidate(description, "Deskripsi Kejuruan", validDescription, invalidDescrip
 
 btnSimpan.addEventListener('click', (e) => {
     e.preventDefault();
-
     let isValid = true;
     isValid = onSaveValidate(name, "Nama Kejuruan", validName, invalidName, null, regexName, 50) && isValid;
     isValid = onSaveValidate(description, "Deskripsi Kejuruan", validDescription, invalidDescription, null, regexDesc, 255) && isValid;
+    isValid = validateFile(file, "Foto", validFoto, invalidFoto, allowedTypes, maxFileSize, uploadArea) && isValid;
     if (isValid) {
         questionAlert("Simpan data?", "Pastikan semua data telah diisi dengan benar!", "Ya, Simpan", () => {
-            axios.post(`/department/addDepartment`, {
-                'name': name.value,
-                'description': description.value,
-                'instituteID': instituteId,
+            const formData = new FormData();
+            formData.append('name', name.value.trim());
+            formData.append('description', description.value.trim());
+            formData.append('instituteId', instituteId);
+            formData.append('image', file);
+            axios.post(`/department/addDepartment`, formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
             })
                 .then(response => {
                     if (response.data.success) {
