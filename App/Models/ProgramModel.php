@@ -146,4 +146,22 @@ class ProgramModel
             return ['success' => false, 'message' => $e->getMessage()];
         }
     }
+
+    public function getFavoritePrograms()
+    {
+        $query = "SELECT programs.nama AS program_name, COUNT(registrations.id) AS total_registrations FROM registrations JOIN programs ON registrations.program_id = programs.id WHERE registrations.registration_year = YEAR(NOW()) GROUP BY programs.id ORDER BY total_registrations DESC LIMIT 5";
+        $stmt = $this->connection->prepare($query);
+        try {
+            $stmt->execute();
+            $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            if (empty($data)) {
+                return ['success' => true, 'isEmpty' => true, 'message' => 'Data Kosong'];
+            } else {
+                return ['success' => true, 'isEmpty' => false, 'data' => $data];
+            }
+        } catch (PDOException $e) {
+            http_response_code(500);
+            return ['success' => false, 'message' => $e->getMessage()];
+        }
+    }
 }

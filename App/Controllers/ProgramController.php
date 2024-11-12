@@ -173,4 +173,9 @@ class ProgramController
     {
         echo json_encode($this->model->deletePrograms($id));
     }
+
+    public function getFavoritePrograms()
+    {
+        echo json_encode($this->model->getFavoritePrograms());
+    }
 }
