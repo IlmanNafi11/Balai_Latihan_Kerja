@@ -45,17 +45,31 @@ class DepartmentsController
 
     public function createDepartment()
     {
-        $data = json_decode(file_get_contents("php://input"), true);
-        $name = $data['name'];
-        $description = $data['description'];
-        $instituteID = $data['instituteID'];
+        $name = $_POST['name'];
+        $description = $_POST['description'];
+        $instituteID = $_POST['instituteId'];
+        $image = $_FILES['image'];
 
-        if (!empty($name) && !empty($description) && !empty($instituteID)) {
-            $result = $this->departmentModel->createDepartment($name, $description, $instituteID);
-            echo json_encode($result);
-        } else {
+        if (empty($name) && empty($description) && empty($instituteID) && empty($image)) {
             echo json_encode(['success' => false, 'message' => 'Data Tidak Lengkap']);
+            return;
         }
+
+        if ($image['error'] === UPLOAD_ERR_OK) {
+            $uploadDirectory = 'Uploads/departments/';
+            $fileName = uniqid() . '-' . basename($image['name']);
+            $filePath = $uploadDirectory . $fileName;
+
+            if (move_uploaded_file($image['tmp_name'], $filePath)) {
+                echo json_encode($this->departmentModel->createDepartment($name, $description, $instituteID, $filePath));
+            } else {
+                echo json_encode(['success' => false, 'message' => 'Gagal dalam memindahkan directory penyimpanan foto']);
+            }
+        } else {
+            echo json_encode(['success' => false, 'message' => $image['error']]);
+        }
+
+
     }
 
     public function updateDepartment($id)
