@@ -5,7 +5,7 @@
             <img src="/Asset/images/logo-blk.png" alt="logo BLK">
         </div>
         <div class="navbar-title-container">
-            <span>Balai Latihan Kerja</span>
+            <span class="text-white">Balai Latihan Kerja</span>
         </div>
     </div>
 
