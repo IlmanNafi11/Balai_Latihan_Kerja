@@ -582,7 +582,7 @@ if (str_starts_with($uri, 'api/v1/public/')) {
         } else if ($_SERVER['REQUEST_METHOD'] === 'PUT') {
             loadController('ResetPasswordController', 'resetPassword');
         }
-    } else if ($uri == 'password-reset/resend'){
+    } else if ($uri == 'password-reset/resend') {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             loadController('ResetPasswordController', 'resendOtp');
         }
@@ -590,7 +590,7 @@ if (str_starts_with($uri, 'api/v1/public/')) {
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             loadController('ResetPasswordController', 'resetStep');
         }
-    }// Logout
+    } // Logout
     elseif ($uri == 'logout') {
         session_unset();
         session_destroy();
@@ -655,6 +655,46 @@ function handleApiRequest(string $uri)
         if ($users = authenticate()) {
             if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                 loadController('ProfileController', 'getUsersById', $matches[1]);
+            }
+        }
+    } else if ($endPoint == 'programs/favorite') {
+        $token = $_SESSION['token'] ?? null;
+        $auth = authenticate($token);
+        if (is_array($auth)) {
+            echo json_encode($auth);
+        } else {
+            if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+                loadController('ProgramController', 'getFavoritePrograms');
+            }
+        }
+    } else if ($endPoint == 'registrations/per-year') {
+        $token = $_SESSION['token'] ?? null;
+        $auth = authenticate($token);
+        if (is_array($auth)) {
+            echo json_encode($auth);
+        } else {
+            if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+                loadController('RegistrationController', 'getRegistrationsSummary');
+            }
+        }
+    } else if ($endPoint == 'departments/most-programs') {
+        $token = $_SESSION['token'] ?? null;
+        $auth = authenticate($token);
+        if (is_array($auth)) {
+            echo json_encode($auth);
+        } else {
+            if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+                loadController('DepartmentsController', 'getMostProgramsInDepartment');
+            }
+        }
+    } else if ($endPoint == 'dashboard/summary') {
+        $token = $_SESSION['token'] ?? null;
+        $auth = authenticate($token);
+        if (is_array($auth)) {
+            echo json_encode($auth);
+        } else {
+            if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+                loadController('DashboardController', 'getSummary');
             }
         }
     }
