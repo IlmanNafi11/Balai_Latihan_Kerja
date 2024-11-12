@@ -65,14 +65,15 @@ class DepartmentModel
         }
     }
 
-    public function createDepartment($nama, $deskripsi, $instituteID)
+    public function createDepartment($nama, $deskripsi, $instituteID, $imagePath)
     {
-        $query = "INSERT INTO departments (nama, deskripsi, institute_id) VALUES (:nama, :deskripsi, :institusi_id)";
+        $query = "INSERT INTO departments (nama, deskripsi, institute_id, image_path) VALUES (:nama, :deskripsi, :institusi_id, :image_path)";
         $stmt = $this->connection->prepare($query);
         try {
             $stmt->bindParam(":nama", $nama);
             $stmt->bindParam(":deskripsi", $deskripsi);
             $stmt->bindParam(":institusi_id", $instituteID);
+            $stmt->bindParam(":image_path", $imagePath);
             $stmt->execute();
             return ['success' => true, 'message' => 'Data berhasil ditambahkan', 'redirect_url' => '/department'];
         } catch (PDOException $e) {
