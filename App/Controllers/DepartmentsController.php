@@ -74,15 +74,29 @@ class DepartmentsController
 
     public function updateDepartment($id)
     {
-        $data = json_decode(file_get_contents("php://input"), true);
-        $name = $data['name'];
-        $description = $data['description'];
-        if (!empty($name) && !empty($description)) {
-            $result = $this->departmentModel->updateDepartment($id, $name, $description);
-            echo json_encode($result);
-        } else {
+        $name = $_POST['name'];
+        $description = $_POST['description'];
+        $image = $_FILES['image'] ?? null;
+
+        if (empty($name) && empty($description) && empty($instituteID) && empty($image)) {
             echo json_encode(['success' => false, 'message' => 'Data Tidak Lengkap']);
+            return;
         }
+
+        $imagePath = null;
+        if ($image && $image['error'] === UPLOAD_ERR_OK) {
+            $uploadDirectory = 'Uploads/departments/';
+            $fileName = uniqid() . '-' . basename($image['name']);
+            $filePath = $uploadDirectory . $fileName;
+
+            if (move_uploaded_file($image['tmp_name'], $filePath)) {
+                $imagePath = $filePath;
+            } else {
+                echo json_encode(['success' => false, 'message' => 'Gagal dalam memindahkan directory penyimpanan foto']);
+                return;
+            }
+        }
+        echo json_encode($this->departmentModel->updateDepartment($id, $name, $description, $imagePath));
     }
 
     public function deleteDepartment($id)
