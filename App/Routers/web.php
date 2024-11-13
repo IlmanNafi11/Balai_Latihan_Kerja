@@ -6,10 +6,10 @@ require_once '../App/Middleware/AuthMiddleware.php';
 
 session_start();
 
-$uri = trim($_SERVER['REQUEST_URI'], '/');
+$url = parse_url($_SERVER['REQUEST_URI']);
+$uri = trim($url['path'], '/');
 
 if (str_starts_with($uri, 'api/v1/public/')) {
-    // Tangani permintaan API
     handleApiRequest($uri);
 } else {
     // Login
@@ -84,7 +84,7 @@ if (str_starts_with($uri, 'api/v1/public/')) {
             exit();
         }
     } // Department
-    elseif ($uri == 'department') {
+    elseif ($uri == 'department') { // verifed
         if (isset($_SESSION['userID'])) {
             if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                 loadController('DepartmentsController', 'index');
@@ -94,7 +94,7 @@ if (str_starts_with($uri, 'api/v1/public/')) {
             exit();
         }
     } // ADD Department
-    else if ($uri == 'department/addDepartment') {
+    else if ($uri == 'department/add') {
         if (isset($_SESSION['userID'])) {
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 loadController('DepartmentsController', 'createDepartment');
@@ -106,7 +106,7 @@ if (str_starts_with($uri, 'api/v1/public/')) {
             exit();
         }
     } // UPDATE Department
-    elseif (preg_match('/department\/updateDepartment\/(\d+)/', $uri, $matches)) {
+    else if (preg_match('/department\/update\/(\d+)$/', $uri, $matches)) { // verifed
         if (isset($_SESSION['userID'])) {
             $id = $matches[1];
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -119,7 +119,7 @@ if (str_starts_with($uri, 'api/v1/public/')) {
             exit();
         }
     } // DELETE Department
-    elseif (preg_match('/department\/delete\/(\d+)/', $uri, $matches)) {
+    elseif (preg_match('/department\/delete\/(\d+)$/', $uri, $matches)) { // verifed
         if (isset($_SESSION['userID'])) {
             $id = $matches[1];
             if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
@@ -140,7 +140,7 @@ if (str_starts_with($uri, 'api/v1/public/')) {
             exit();
         }
     } // GET Department By ID
-    elseif (preg_match('/department\/getDepartment\/(\d+)/', $uri, $matches)) {
+    else if (preg_match('/department\/(\d+)\/data$/', $uri, $matches)) { // verifed
         if (isset($_SESSION['userID'])) {
             if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                 $id = $matches[1];
@@ -155,6 +155,16 @@ if (str_starts_with($uri, 'api/v1/public/')) {
         if ($_SESSION['userID']) {
             if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                 loadController('DepartmentsController', 'getDepartmentName');
+            }
+        } else {
+            header('location: /login');
+            exit();
+        }
+    }
+    else if ($uri == 'search-departments') {
+        if ($_SESSION['userID']) {
+            if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+                loadController('DepartmentsController', 'searchDepartments');
             }
         } else {
             header('location: /login');

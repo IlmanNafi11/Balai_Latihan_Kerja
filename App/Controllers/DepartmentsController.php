@@ -14,7 +14,6 @@ class DepartmentsController
 
     public function index()
     {
-        $department = $this->departmentModel->getAllDepartment();
         require_once '../App/Views/Departments/departments.php';
     }
 
@@ -108,4 +107,13 @@ class DepartmentsController
     {
         echo json_encode($this->departmentModel->getMostProgramsInDepartment());
     }
+
+    public function searchDepartments()
+    {
+        $name = $_GET['search'] ?? '';
+
+        $departments = $this->departmentModel->searchDepartment($name);
+        echo json_encode($departments);
+    }
+
 }

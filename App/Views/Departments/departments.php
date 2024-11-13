@@ -30,7 +30,7 @@
 </head>
 
 <body>
-<div class="container-fluid main-root-container m-0 p-0 w-100 h-100">
+<div class="container-fluid main-root-container m-0 p-0 w-100 vh-100">
 
     <?php require_once '../App/Views/Layout/navbar.php' ?>
 
@@ -45,27 +45,6 @@
 
         <?php require_once '../App/Views/Layout/Tables/departmentsTables.php' ?>
 
-        <!-- Noted : tambahkan kondisional untuk melacak jumlah minimum data kemunculan pagination -->
-        <!-- Pagination -->
-        <div class="pagination-container d-flex justify-content-center">
-            <nav aria-label="Page navigation example">
-                <ul class="pagination">
-                    <li class="page-item">
-                        <a class="page-link" href="#" aria-label="Previous">
-                            <span aria-hidden="true">&laquo;</span>
-                        </a>
-                    </li>
-                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item">
-                        <a class="page-link" href="#" aria-label="Next">
-                            <span aria-hidden="true">&raquo;</span>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
-        </div>
     </div>
 </div>
 

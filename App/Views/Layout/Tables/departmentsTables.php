@@ -1,43 +1,30 @@
-<div class="tables tables-department-container px-0 m-0">
-    <!-- Button add data -->
-    <div class="button-add-data-container">
-        <a href="/department/addDepartment"><i class="fa fa-angle-left"></i>
-            <button class="btn btn-primary">+ Tambah Data</button>
-        </a>
+<div class="tables tables-department-container px-0 m-0 d-flex flex-column row-gap-3 h-100">
+
+    <div class="tables-topbar d-flex justify-content-between row-gap-3 w-100 flex-shrink-1">
+        <div class="button-add-data-container flex-grow-1">
+            <a href="/department/add"><i class="fa fa-angle-left"></i>
+                <button class="btn btn-primary">+ Tambah Data</button>
+            </a>
+        </div>
+        <div class="search-bar-container flex-shrink-1 position-relative">
+            <img src="/Asset/images/search-bar-icons.png" alt="search-bar-icons" class="position-absolute icons-searchbar">
+            <input id="searchInput" oninput="searchDepartments()" type="text" class="search-bar form-control ps-5" placeholder="Cari Kejuruan...">
+        </div>
     </div>
+
     <!-- Table -->
-    <div class="table-responsive-sm table-responsive-md">
+    <div class="table-responsive-sm table-responsive-md table-container overflow-y-auto flex-grow-1" id="tableContainer">
         <table class="table table-hover align-middle">
             <thead>
-            <tr>
-                <td>No</td>
-                <td>Nama</td>
+            <tr class="position-sticky top-0">
+                <td class="number-table-column">No</td>
+                <td class="name-table-column">Nama</td>
                 <td>Deskripsi</td>
-                <td>Aksi</td>
+                <td class="action-table-column">Aksi</td>
             </tr>
             </thead>
             <tbody>
-            <?php if (!empty($department) && !$department['isEmpty']) {
-                $no = 1;
-                foreach ($department['departments'] as $row): ?>
-                    <tr id="row-<?php echo $row['id'] ?>">
-                        <td><?= $no ?></td>
-                        <td><?= $row['nama'] ?></td>
-                        <td><?= $row['deskripsi'] ?></td>
-                        <td>
-                            <a href="/department/updateDepartment/<?= $row['id'] ?>">
-                                <button class="btn btn-warning">Ubah</button>
-                            </a>
-                            <button onclick="deleteDepartments(<?= $row['id'] ?>)" class="btn btn-danger">Hapus</button>
-                        </td>
-                    </tr>
-                    <?php $no++;
-                endforeach;
-            } else { ?>
-                <tr>
-                    <td colspan="4" class="text-center">Data tidak ditemukan</td>
-                </tr>
-            <?php } ?>
+                <!-- Data -->
             </tbody>
         </table>
     </div>
