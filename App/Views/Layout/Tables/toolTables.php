@@ -1,67 +1,33 @@
 <div class="tables tables-program-container px-0 m-0">
-    <!-- Button add data -->
-    <div class="button-add-data-container">
-        <a href="/tools/addTool">
-            <button class="btn btn-primary">+ Tambah Data</button>
-        </a>
+    <div class="tables-topbar d-flex justify-content-between row-gap-3 w-100 flex-shrink-1">
+        <div class="button-add-data-container">
+            <a href="/tools/add">
+                <button class="btn btn-primary">+ Tambah Data</button>
+            </a>
+        </div>
+        <div class="search-bar-container flex-shrink-1 position-relative">
+            <img src="/Asset/images/search-bar-icons.png" alt="search-bar-icons"
+                 class="position-absolute icons-searchbar">
+            <input id="searchInput" oninput="searchTools()" type="text" class="search-bar form-control ps-5"
+                   placeholder="Cari Alat...">
+        </div>
     </div>
+
     <!-- Table -->
-    <div class="table-responsive-sm table-responsive-md">
+    <div class="table-responsive-sm table-responsive-md table-container overflow-y-auto flex-grow-1"
+         id="tableContainer">
         <table class="table table-hover align-middle">
             <thead>
             <tr>
-                <td>No</td>
-                <td>Nama</td>
+                <td class="number-table-column">No</td>
+                <td class="name-table-column">Nama</td>
                 <td>Tipe</td>
                 <td>Deskripsi</td>
-                <td>Aksi</td>
+                <td class="action-table-column">Aksi</td>
             </tr>
             </thead>
             <tbody>
-            <?php if (!empty($tools) && !$tools['isEmpty']) {
-                $no = 1;
-                foreach ($tools['tools'] as $tool):
-                    ?>
-                    <tr id="row-<?php echo $tool['id'] ?>">
-                        <td><?php echo $no ?></td>
-                        <td><?php echo $tool['nama'] ?></td>
-                        <td><?php echo $tool['tipe'] ?></td>
-                        <td><?php echo $tool['deskripsi'] ?></td>
-                        <td class="d-flex row-gap-2 column-gap-2 flex-wrap">
-                            <a href="/tools/updateTools/<?php echo $tool['id'] ?>">
-                                <button
-                                        class="btn btn-warning d-flex align-items-center column-gap-1">
-                                    <svg
-                                            xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                            fill="currentColor"
-                                            class="bi bi-pencil-square" viewBox="0 0 16 16">
-                                        <path
-                                                d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
-                                        <path fill-rule="evenodd"
-                                              d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
-                                    </svg>
-                                    Ubah
-                                </button>
-                            </a>
-                            <button onclick="deleteTools(<?php echo $tool['id'] ?>)"
-                                    class="btn btn-danger d-flex align-items-center column-gap-1">
-                                <svg
-                                        xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                        class="bi bi-trash3" viewBox="0 0 16 16">
-                                    <path
-                                            d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47M8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5"/>
-                                </svg>
-                                Hapus
-                            </button>
-                        </td>
-                    </tr>
-                    <?php $no++;
-                endforeach;
-            } else { ?>
-                <tr>
-                    <td colspan="6" class="text-center">Data Kosong</td>
-                </tr>
-            <?php } ?>
+            <!-- Data -->
             </tbody>
         </table>
     </div>

@@ -17,11 +17,13 @@ class ToolsModel
             $stmt->execute();
             $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
             if (empty($data)) {
-                return ['success' => true, 'isEmpty' => true, 'message' => 'Data Kosong'];
+                return ['success' => true, 'isEmpty' => true, 'message' => 'Data Kosong', 'tools' => []];
             } else {
+                http_response_code(200);
                 return ['success' => true, 'isEmpty' => false, 'tools' => $data];
             }
         } catch (PDOException $e) {
+            http_response_code(500);
             return ['success' => false, 'message' => 'Terjadi Kesalahan : ' . $e->getMessage()];
         }
     }
@@ -35,11 +37,14 @@ class ToolsModel
             $stmt->execute();
             $data = $stmt->fetch(PDO::FETCH_ASSOC);
             if (empty($data)) {
+                http_response_code(204);
                 return ['success' => true, 'isEmpty' => true, 'message' => 'Data Tidak ditemukan'];
             } else {
+                http_response_code(200);
                 return ['success' => true, 'isEmpty' => false, 'tools' => $data];
             }
         } catch (PDOException $e) {
+            http_response_code(500);
             return ['success' => false, 'message' => 'Terjadi Kesalahan: ' . $e->getMessage()];
         }
     }
@@ -52,11 +57,14 @@ class ToolsModel
             $stmt->execute();
             $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
             if (empty($data)) {
+                http_response_code(204);
                 return ['success' => true, 'isEmpty' => true, 'message' => 'Data Kosong'];
             } else {
+                http_response_code(200);
                 return ['success' => true, 'isEmpty' => false, 'tools' => $data];
             }
         } catch (PDOException $e) {
+            http_response_code(500);
             return ['success' => false, 'message' => 'Terjadi Kesalahan : ' . $e->getMessage()];
         }
 
@@ -71,8 +79,10 @@ class ToolsModel
             $stmt->bindParam(":description", $description);
             $stmt->bindParam(":type", $type);
             $stmt->execute();
-            return ['success' => true, 'message' => 'Data Berhasil Disimpan', 'redirect_url' => '/tools'];
+            http_response_code(200);
+            return ['success' => true, 'message' => 'Data Berhasil Disimpan', 'redirect' => '/tools'];
         } catch (PDOException $e) {
+            http_response_code(500);
             return ['success' => false, 'message' => 'Terjadi Kesalahan : ' . $e->getMessage()];
         }
     }
@@ -87,8 +97,10 @@ class ToolsModel
             $stmt->bindParam(":description", $description);
             $stmt->bindParam(":type", $type);
             $stmt->execute();
-            return ['success' => true, 'message' => 'Data Berhasil Diperbarui', 'redirect_url' => '/tools'];
+            http_response_code(200);
+            return ['success' => true, 'message' => 'Data Berhasil Diperbarui', 'redirect' => '/tools'];
         } catch (PDOException $e) {
+            http_response_code(500);
             return ['success' => false, 'message' => 'Terjadi Kesalahan : ' . $e->getMessage()];
         }
     }
@@ -100,9 +112,33 @@ class ToolsModel
         try {
             $stmt->bindParam(":id", $id);
             $stmt->execute();
-            return ['success' => true, 'message' => 'Data Berhasil Dihapus', 'redirect_url' => '/tools'];
+            http_response_code(200);
+            return ['success' => true, 'message' => 'Data Berhasil Dihapus', 'redirect' => '/tools'];
         } catch (PDOException $e) {
+            http_response_code(500);
             return ['success' => false, 'message' => 'Terjadi Kesalahan: ' . $e->getMessage()];
+        }
+    }
+
+    public function searchTools($search)
+    {
+        $query = "SELECT * FROM tools WHERE nama LIKE :search";
+        $stmt = $this->connection->prepare($query);
+        try {
+            $search = '%' . $search . '%';
+            $stmt->bindParam(":search", $search);
+            $stmt->execute();
+            $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            if (empty($data)) {
+                return ['success' => true, 'isEmpty' => true, 'message' => 'Data Kosong', 'tools' => []];
+            } else {
+                http_response_code(200);
+                return ['success' => true, 'isEmpty' => false, 'tools' => $data];
+            }
+        } catch (PDOException $e) {
+            http_response_code(500);
+            return ['success' => false, 'message' => $e->getMessage()];
         }
     }
 }

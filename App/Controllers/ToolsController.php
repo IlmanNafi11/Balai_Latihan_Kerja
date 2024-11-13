@@ -15,7 +15,6 @@ class ToolsController
 
     public function index()
     {
-        $tools = $this->model->getAllTools();
         require_once '../App/Views/ToolsManagement/tool.php';
     }
 
@@ -70,5 +69,13 @@ class ToolsController
     public function deleteTools($id)
     {
         echo json_encode($this->model->deleteTools($id));
+    }
+
+    public function searchTools()
+    {
+        $name = $_GET['search'] ?? '';
+
+        $tools = $this->model->searchTools($name);
+        echo json_encode($tools);
     }
 }

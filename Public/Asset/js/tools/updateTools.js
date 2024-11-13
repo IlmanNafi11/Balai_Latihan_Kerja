@@ -17,22 +17,18 @@ const regexDesc = /^[a-zA-Z0-9 .,]+$/;
 
 let id = sliceUri();
 
-axios.get(`/tools/getTools/${id}`)
+axios.get(`/tools/${id}/data`)
     .then(response => {
         if (response.data.success) {
             name.value = response.data.tools.nama;
             type.value = response.data.tools.tipe;
             description.value = response.data.tools.deskripsi;
         } else if (response.data.success == false) {
-            swalWithBootstrapButtons.fire({
-                title: "Gagal!", text: response.data.message, icon: "error"
-            });
+            errorAlert(response.data.message);
         }
     })
     .catch(error => {
-        swalWithBootstrapButtons.fire({
-            title: "Gagal!", text: error.message, icon: "error"
-        });
+        errorAlert(error.response.data.message);
     });
 
 blurValidate(name, "Nama Alat", validName, invalidName, null, regexComb, 50);
@@ -49,20 +45,20 @@ btnSimpan.addEventListener('click', (e) => {
 
     if (isValid) {
         questionAlert("Perbarui Data?", "Pastikan semua data telah diperbarui dengan benar!", "Ya, Perbarui", () => {
-            axios.post(`/tools/updateTools/${id}`, {
+            axios.post(`/tools/update/${id}`, {
                 'name': name.value,
                 'description': description.value,
                 'type': type.value,
             })
                 .then(response => {
                     if (response.data.success) {
-                        successAlert("Data berhasil diperbarui!", response.data.redirect_url);
+                        successAlert(response.data.message, response.data.redirect);
                     } else {
                         errorAlert(response.data.message);
                     }
                 })
                 .catch(error => {
-                    errorAlert(error.message);
+                    errorAlert(error.response.data.message);
                 });
         })
 

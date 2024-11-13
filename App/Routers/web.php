@@ -345,7 +345,7 @@ if (str_starts_with($uri, 'api/v1/public/')) {
             exit();
         }
     } // ADD Tools
-    elseif ($uri == 'tools/addTool') {
+    elseif ($uri == 'tools/add') {
         if (isset($_SESSION['userID'])) {
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 loadController('ToolsController', 'createTools');
@@ -357,7 +357,7 @@ if (str_starts_with($uri, 'api/v1/public/')) {
             exit();
         }
     } // UPDATE Tools
-    elseif (preg_match('/tools\/updateTools\/(\d+)/', $uri, $matches)) {
+    elseif (preg_match('/tools\/update\/(\d+)/', $uri, $matches)) {
         if (isset($_SESSION['userID'])) {
             $id = $matches[1];
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -381,7 +381,7 @@ if (str_starts_with($uri, 'api/v1/public/')) {
             exit();
         }
     } // GET All Tools Data
-    elseif ($uri == 'tools/getTools') {
+    elseif ($uri == 'tools/all') {
         if (isset($_SESSION['userID'])) {
             if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                 loadController('ToolsController', 'getAllTools');
@@ -391,7 +391,7 @@ if (str_starts_with($uri, 'api/v1/public/')) {
             exit();
         }
     } // GET Tools By ID
-    elseif (preg_match('/tools\/getTools\/(\d+)/', $uri, $matches)) {
+    elseif (preg_match('/tools\/(\d+)\/data$/', $uri, $matches)) {
         if (isset($_SESSION['userID'])) {
             $id = $matches[1];
             if ($_SERVER['REQUEST_METHOD'] === 'GET') {
@@ -401,8 +401,18 @@ if (str_starts_with($uri, 'api/v1/public/')) {
             header('Location: /login');
             exit();
         }
+    } // Search Tools
+    else if ($uri == 'search-tools') {
+        if ($_SESSION['userID']) {
+            if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+                loadController('ToolsController', 'searchTools');
+            }
+        } else {
+            header('location: /login');
+            exit();
+        }
     } // Instructor
-    elseif ($uri == 'instructor') {
+    else if ($uri == 'instructor') {
         if (isset($_SESSION['userID'])) {
             if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                 loadController('InstructorController', 'index');

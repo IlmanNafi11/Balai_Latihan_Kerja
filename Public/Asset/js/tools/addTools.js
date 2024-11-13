@@ -28,20 +28,20 @@ btnSimpan.addEventListener('click', (e) => {
 
     if (isValid) {
         questionAlert("Simpan Data?", "Pastikan semua data telah diisi dengan benar!", "Ya, Simpan", () => {
-            axios.post(`/tools/addTool`, {
+            axios.post(`/tools/add`, {
                 'name': name.value,
                 'description': description.value,
                 'type': type.value,
             })
                 .then(response => {
                     if (response.data.success) {
-                        successAlert("Data berhasil disimpan!", response.data.redirect_url);
+                        successAlert(response.data.message, response.data.redirect);
                     } else {
                         errorAlert(response.data.message);
                     }
                 })
                 .catch(error => {
-                    errorAlert(error.message);
+                    errorAlert(error.response.data.message);
                 });
         })
 
