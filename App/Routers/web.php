@@ -151,7 +151,7 @@ if (str_starts_with($uri, 'api/v1/public/')) {
             exit();
         }
     } // GET Department Name
-    else if ($uri == 'department/getDepartmentName') {
+    else if ($uri == 'department/department-name') {
         if ($_SESSION['userID']) {
             if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                 loadController('DepartmentsController', 'getDepartmentName');
@@ -160,7 +160,7 @@ if (str_starts_with($uri, 'api/v1/public/')) {
             header('location: /login');
             exit();
         }
-    }
+    } // Search Departments
     else if ($uri == 'search-departments') {
         if ($_SESSION['userID']) {
             if ($_SERVER['REQUEST_METHOD'] === 'GET') {
@@ -180,8 +180,18 @@ if (str_starts_with($uri, 'api/v1/public/')) {
             header('Location: /login');
             exit();
         }
+    } // Get All Programs data
+    else if ($uri == 'programs/all') {
+        if ($_SESSION['userID']) {
+            if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+                loadController('ProgramController', 'getAllPrograms');
+            }
+        } else {
+            header('location: /login');
+            exit();
+        }
     } // ADD Program
-    else if ($uri == 'programs/addPrograms') {
+    else if ($uri == 'programs/add') {
         if (isset($_SESSION['userID'])) {
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 loadController('ProgramController', 'createPrograms');
@@ -193,10 +203,10 @@ if (str_starts_with($uri, 'api/v1/public/')) {
             exit();
         }
     } // UPDATE Program
-    else if (preg_match('/programs\/updatePrograms\/(\d+)/', $uri, $matches)) {
+    else if (preg_match('/programs\/update\/(\d+)$/', $uri, $matches)) {
         if (isset($_SESSION['userID'])) {
             $id = $matches[1];
-            if ($_SERVER['REQUEST_METHOD'] === 'PUT') {
+            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 loadController('ProgramController', 'updatePrograms', $id);
             } else if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                 loadController('ProgramController', 'viewUpdateProgram', $id);
@@ -206,7 +216,7 @@ if (str_starts_with($uri, 'api/v1/public/')) {
             exit();
         }
     } // GET Program By ID for Update
-    else if (preg_match('/programs\/getProgram\/(\d+)/', $uri, $matches)) {
+    else if (preg_match('/programs\/(\d+)\/data$/', $uri, $matches)) {
         if (isset($_SESSION['userID'])) {
             $id = $matches[1];
             if ($_SERVER['REQUEST_METHOD'] === 'GET') {
@@ -222,6 +232,16 @@ if (str_starts_with($uri, 'api/v1/public/')) {
             $id = $matches[1];
             if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
                 loadController('ProgramController', 'deletePrograms', $id);
+            }
+        } else {
+            header('location: /login');
+            exit();
+        }
+    } // Search Programs
+    else if ($uri == 'search-programs') {
+        if ($_SESSION['userID']) {
+            if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+                loadController('ProgramController', 'searchPrograms');
             }
         } else {
             header('location: /login');
@@ -285,7 +305,7 @@ if (str_starts_with($uri, 'api/v1/public/')) {
             exit();
         }
     } // GET All Building Name
-    elseif ($uri == 'building/getBuildingName') {
+    elseif ($uri == 'building/building-name') {
         if (isset($_SESSION['userID'])) {
             if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                 loadController('BuildingController', 'getBuildingName');
@@ -429,7 +449,7 @@ if (str_starts_with($uri, 'api/v1/public/')) {
             exit();
         }
     } // GET All Instructor Name
-    else if ($uri == 'instructor/getInstructorName') {
+    else if ($uri == 'instructor/instructor-name') {
         if (isset($_SESSION['userID'])) {
             if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                 loadController('InstructorController', 'getInstructorName');
