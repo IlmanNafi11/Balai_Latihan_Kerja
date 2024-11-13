@@ -31,17 +31,8 @@ inputFoto.addEventListener('change', () => {
     if (validateFile(file, "Foto", validFoto, invalidFoto, allowedTypes, maxFileSize, uploadArea)) {
         const reader = new FileReader();
         reader.onload = function (e) {
-            let previewImg = document.getElementById('previewImg');
-            if (!previewImg) {
-                previewImg = document.createElement('img');
-                previewImg.id = 'previewImg';
-                previewImg.classList.add('preview-img');
-                uploadArea.appendChild(previewImg);
-            }
-
-            previewImg.src = e.target.result;
-            previewImg.style.display = 'block';
-            uploadIcon.style.display = 'none';
+            uploadIcon.src = e.target.result;
+            uploadIcon.style.display = 'block';;
             uploadText.style.display = 'none';
             formatText.style.display = 'none';
         };
@@ -49,12 +40,7 @@ inputFoto.addEventListener('change', () => {
 
     } else {
         inputFoto.value = "";
-        let previewImg = document.getElementById('previewImg');
-        if (previewImg) {
-            previewImg.style.display = 'none';
-        }
-
-        uploadIcon.style.display = 'block';
+        uploadIcon.src = "/Asset/images/upload_icons.png"
         uploadText.style.display = 'block';
         formatText.style.display = 'block';
     }
