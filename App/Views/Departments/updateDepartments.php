@@ -64,7 +64,8 @@
                 </div>
                 <div class="input-foto flex-grow-1 d-flex flex-column">
                     <label for="fileInput" class="form-label">Foto Kejuruan</label>
-                    <div class="upload-area w-100 m-0 p-3 flex-grow-1 d-flex flex-column align-items-center justify-content-center" style="height: 150px"
+                    <div class="upload-area w-100 m-0 p-3 flex-grow-1 d-flex flex-column align-items-center justify-content-center"
+                         style="height: 150px"
                          id="upload-area">
                         <img src="/Asset/images/upload_icons.png" alt="upload icon" id="uploadIcon"/>
                         <p id="uploadText">Upload file</p>
