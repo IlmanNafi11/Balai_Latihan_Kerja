@@ -30,7 +30,7 @@
 </head>
 
 <body>
-    <div class="container-fluid main-root-container m-0 p-0 w-100 h-100">
+    <div class="container-fluid main-root-container m-0 p-0 w-100 vh-100">
 
         <?php require_once '../App/Views/Layout/navbar.php' ?>
 

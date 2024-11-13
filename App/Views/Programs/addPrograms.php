@@ -15,7 +15,7 @@
           crossorigin="anonymous">
 
     <!-- CSS untuk Daterangepicker -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css"/>
 
     <!-- JavaScript Libraries -->
     <script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
@@ -87,16 +87,6 @@
                         <div class="valid-feedback" id="valid-feedback-email"></div>
                         <div class="invalid-feedback" id="invalid-feedback-email"></div>
                     </div>
-                    <div class="input-status-pendaftaran">
-                        <label for="status-pendaftaran" class="form-label">Status Pendaftaran</label>
-                        <select name="status-pendaftaran" id="status-pendaftaran" class="form-select">
-                            <option value="status" selected disabled>Pilih Status Pendaftaran</option>
-                            <option value="Dibuka">Dibuka</option>
-                            <option value="Ditutup">Ditutup</option>
-                        </select>
-                        <div class="valid-feedback" id="valid-feedback-email"></div>
-                        <div class="invalid-feedback" id="invalid-feedback-email"></div>
-                    </div>
                     <div class="input-gedung">
                         <label for="gedung" class="form-label">Gedung</label>
                         <select name="gedung" id="nama-gedung" class="form-select">
@@ -114,10 +104,32 @@
                         <div class="valid-feedback" id="valid-feedback-email"></div>
                         <div class="invalid-feedback" id="invalid-feedback-email"></div>
                     </div>
-
+                    <div class="input-foto flex-grow-1 d-flex flex-column">
+                        <label for="fileInput" class="form-label">Foto Kejuruan</label>
+                        <div class="upload-area w-100 m-0 p-3 flex-grow-1 d-flex flex-column align-items-center justify-content-center"
+                             style="height: 150px"
+                             id="upload-area">
+                            <img src="/Asset/images/upload_icons.png" alt="upload icon" id="uploadIcon"/>
+                            <p id="uploadText">Upload file</p>
+                            <small id="formatText">*jpg, png</small>
+                            <input type="file" id="fileInput" accept=".jpg,.jpeg,.png" style="display: none"/>
+                        </div>
+                        <div class="valid-feedback" id="valid-feedback"></div>
+                        <div class="invalid-feedback" id="invalid-feedback"></div>
+                    </div>
                 </div>
                 <!-- Form input 2 -->
                 <div class="container-form-input flex-grow-1 d-flex flex-column row-gap-3">
+                    <div class="input-status-pendaftaran">
+                        <label for="status-pendaftaran" class="form-label">Status Pendaftaran</label>
+                        <select name="status-pendaftaran" id="status-pendaftaran" class="form-select">
+                            <option value="status" selected disabled>Pilih Status Pendaftaran</option>
+                            <option value="Dibuka">Dibuka</option>
+                            <option value="Ditutup">Ditutup</option>
+                        </select>
+                        <div class="valid-feedback" id="valid-feedback-email"></div>
+                        <div class="invalid-feedback" id="invalid-feedback-email"></div>
+                    </div>
                     <div class="input-tanggal-mulai-pendaftaran">
                         <label for="tanggal-mulai" class="form-label">Tanggal Mulai Pendaftaran</label>
                         <input type="date" name="tanggal-mulai" id="tanggal-mulai" class="form-control">

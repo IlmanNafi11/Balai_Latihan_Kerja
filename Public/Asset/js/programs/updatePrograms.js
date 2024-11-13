@@ -1,7 +1,6 @@
 import {errorAlert, successAlert, questionAlert} from "../helper/exceptions.js";
-import {blurValidate, onSaveValidate, sliceUri} from "../helper/validators.js";
+import {blurValidate, onSaveValidate, sliceUri, validateFile} from "../helper/validators.js";
 
-// Element form
 const containerList = document.getElementById("container-persyaratan-list");
 const btnTambah = document.getElementById("btn-tambah-persyaratan");
 const btnSimpan = document.getElementById('btn-perbarui');
@@ -34,16 +33,52 @@ const invalidStandart = validStandart.nextElementSibling;
 const validDeskripsi = deskripsi.nextElementSibling;
 const invalidDeskripsi = validDeskripsi.nextElementSibling;
 const isEmptySyarat = btnTambah.nextElementSibling;
+const inputFoto = document.getElementById('fileInput');
+const uploadArea = document.getElementById('upload-area');
+const uploadIcon = document.getElementById('uploadIcon');
+const uploadText = document.getElementById('uploadText');
+const formatText = document.getElementById('formatText');
+const validFoto = uploadArea.nextElementSibling;
+const invalidFoto = validFoto.nextElementSibling;
+const allowedTypes = ['image/jpeg', 'image/png'];
+const maxFileSize = 2 * 1024 * 1024;
 const id = sliceUri();
 let deleteRequirements = [];
+let imageUrl = null;
 
 const regexString = /^[a-zA-Z ]+$/;
 const regexComb = /^[a-zA-Z0-9 .,]+$/;
 const regexNum = /^[0-9]+$/;
+let file = null;
 
 
 getDataOptions();
 configDate();
+
+uploadArea.addEventListener('click', function () {
+    inputFoto.click();
+});
+
+inputFoto.addEventListener('change', () => {
+    file = inputFoto.files[0];
+    if (validateFile(file, "Foto", validFoto, invalidFoto, allowedTypes, maxFileSize, uploadArea)) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            uploadIcon.src = e.target.result;
+            uploadIcon.style.display = 'block';
+            ;
+            uploadText.style.display = 'none';
+            formatText.style.display = 'none';
+        };
+        reader.readAsDataURL(file);
+
+    } else {
+        inputFoto.value = "";
+        uploadIcon.src = "/Asset/images/upload_icons.png"
+        uploadText.style.display = 'block';
+        formatText.style.display = 'block';
+    }
+});
 
 blurValidate(namaProgram, "Nama Program", validName, invalidName, null, regexString, 50);
 blurValidate(namaKejuruan, "Nama Kejuruan", validKejuruan, invalidKejuruan, "default", null, 50);
@@ -170,44 +205,49 @@ btnSimpan.addEventListener('click', (e) => {
     isValid = onSaveValidate(deskripsi, "Bagus!", validDeskripsi, invalidDeskripsi, null, regexComb, 255) && isValid;
 
     if (isValid && allFilled) {
-        const inputs = document.querySelectorAll('input[name="persyaratan-program"]');
-        inputs.forEach(input => {
-            let dataId = input.getAttribute("data-id");
-            if (dataId) {
-                let data = {
-                    "id" : dataId,
-                    "requirement" : input.value
-                }
-                requirements.push(data);
-
-            } else {
-                newRequirements.push(input.value);
-            }
-        });
-
-        console.table(requirements);
-        console.table(newRequirements);
-        console.table(deleteRequirements);
         questionAlert('Perbarui Data?', 'Pastikan semua data telah diisi dengan benar!', "Ya, Perbarui", () => {
-            axios.put(`/programs/updatePrograms/${id}`, {
-                'name': namaProgram.value,
-                'status_register': statusPendaftaran.value,
-                'start_date': tglMulaiPendfataran.value,
-                'end_date': tglAkhirPendfataran.value,
-                'standar': standarProgram.value,
-                'participant': jmlPeserta.value,
-                'description': deskripsi.value,
-                'instructor_id': namaInstruktor.value,
-                'building_id': namaGedung.value,
-                'department_id': namaKejuruan.value,
-                'requirements': requirements,
-                'new_requirements' : newRequirements,
-                'delete_requirements' : deleteRequirements
+            const formData = new FormData();
+            formData.append('name', namaProgram.value);
+            formData.append('status_register', statusPendaftaran.value);
+            formData.append('start_date', tglMulaiPendfataran.value);
+            formData.append('end_date', tglAkhirPendfataran.value);
+            formData.append('standar', standarProgram.value);
+            formData.append('participant', jmlPeserta.value);
+            formData.append('description', deskripsi.value);
+            formData.append('instructor_id', namaInstruktor.value);
+            formData.append('building_id', namaGedung.value);
+            formData.append('department_id', namaKejuruan.value);
+            formData.append('image', file);
+            const inputs = document.querySelectorAll('input[name="persyaratan-program"]');
+            inputs.forEach((input, index) => {
+                let dataId = input.getAttribute("data-id");
+
+                if (dataId) {
+                    let data = {
+                        "id": dataId,
+                        "requirement": input.value
+                    };
+                    requirements.push(data);
+                    formData.append(`requirements[${index}][id]`, data.id);
+                    formData.append(`requirements[${index}][requirement]`, data.requirement);
+                } else {
+                    newRequirements.push(input.value);
+                    formData.append(`newRequirements[${index}]`, input.value);
+                }
+            });
+            deleteRequirements.forEach((id, index) => {
+                formData.append(`deleteRequirements[${index}]`, id);
+            });
+
+            axios.post(`/programs/update/${id}`, formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
             })
                 .then(response => {
                     console.log(response);
                     if (response.data.success) {
-                        successAlert("Data berhasil disimpan", response.data.redirect_url);
+                        successAlert("Data berhasil disimpan", response.data.redirect);
                     } else {
                         errorAlert(response.data.message);
                     }
@@ -238,7 +278,7 @@ function configDate() {
 
 // Mengambil data untuk di tambahkan ke options element select
 function getDataOptions() {
-    axios.get(`/department/getDepartmentName`)
+    axios.get(`/department/department-name`)
         .then(response => {
             if (response.data.success) {
                 createOptions(response.data.departments, namaKejuruan, false, "Pilih Kejuruan");
@@ -250,7 +290,7 @@ function getDataOptions() {
             console.log(error.message);
         });
 
-    axios.get(`/instructor/getInstructorName`)
+    axios.get(`/instructor/instructor-name`)
         .then(response => {
             if (response.data.success) {
                 createOptions(response.data.instructors, namaInstruktor, false, "Pilih Instruktor");
@@ -262,7 +302,7 @@ function getDataOptions() {
             console.log(error.message);
         })
 
-    axios.get(`/building/getBuildingName`)
+    axios.get(`/building/building-name`)
         .then(response => {
             if (response.data.success) {
                 createOptions(response.data.buildings, namaGedung, false, "Pilih Gedung");
@@ -271,12 +311,11 @@ function getDataOptions() {
             }
         })
         .catch(error => {
-            // Handler 404
             console.log(error.message)
         })
 }
 
-axios.get(`/programs/getProgram/${id}`)
+axios.get(`/programs/${id}/data`)
     .then(response => {
         let programs = response.data.programs;
         let requirements = response.data.requirements;
@@ -293,6 +332,11 @@ axios.get(`/programs/getProgram/${id}`)
         requirements.forEach(requirement => {
             createNewInputRequirements(requirement.requirement, requirement.id);
         });
+        if (programs[0]['image_path']) {
+            imageUrl = "/" + programs[0]['image_path'];
+            uploadIcon.src = imageUrl;
+            uploadText.style.display = 'none';
+        }
     })
     .catch(error => {
         errorAlert(error.message);

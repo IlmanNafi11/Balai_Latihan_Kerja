@@ -35,7 +35,7 @@ class ProgramController
 
     public function getAllPrograms()
     {
-        return json_encode($this->model->getAllProgram());
+        echo json_encode($this->model->getAllProgram());
     }
 
     public function getProgramsByIdForUpdate($id)
@@ -50,11 +50,11 @@ class ProgramController
                 echo json_encode($programs);
             } else {
                 http_response_code(404);
-                echo $requirements;
+                echo json_encode($requirements);
             }
         } else {
             http_response_code(404);
-            echo $programs;
+            echo json_encode($programs);
         }
     }
 
@@ -70,104 +70,134 @@ class ProgramController
 
     public function createPrograms()
     {
-        $data = json_decode(file_get_contents("php://input"), true);
-        if (empty($data)) {
-            echo json_encode(['success' => false, 'message' => 'Data Kosong']);
+        $name = $_POST['name'];
+        $status_pendaftaran = $_POST['status_register'];
+        $tgl_mulai_pendaftaran = $_POST['start_date'];
+        $tgl_akhir_pendaftaran = $_POST['end_date'];
+        $standar = $_POST['standar'];
+        $jml_peserta = $_POST['participant'];
+        $deskripsi = $_POST['description'];
+        $instructor_id = $_POST['instructor_id'];
+        $building_id = $_POST['building_id'];
+        $department_id = $_POST['department_id'];
+        $image = $_FILES['image'];
+        $requirements = $_POST['array'];
+
+        if (empty($name) && empty($status_pendaftaran) && empty($tgl_mulai_pendaftaran) && empty($tgl_akhir_pendaftaran) && empty($standar) && empty($jml_peserta) && empty($deskripsi) && empty($instructor_id) && empty($building_id) && empty($department_id) && empty($image) && empty($requirements)) {
+            echo json_encode(['success' => false, 'message' => 'Data Tidak Lengkap']);
             return;
         }
 
-        $programs = [
-            'nama' => $data['name'],
-            'status_pendaftaran' => $data['status_register'],
-            'tgl_mulai_pendaftaran' => $data['start_date'],
-            'tgl_akhir_pendaftaran' => $data['end_date'],
-            'standar' => $data['standar'],
-            'jml_peserta' => $data['participant'],
-            'deskripsi' => $data['description'],
-            'instructor_id' => $data['instructor_id'],
-            'building_id' => $data['building_id'],
-            'department_id' => $data['department_id'],
-            'requirements' => $data['requirements']
-        ];
+        if ($image['error'] === UPLOAD_ERR_OK) {
+            $uploadDirectory = 'Uploads/programs/';
+            $fileName = uniqid() . '-' . basename($image['name']);
+            $filePath = $uploadDirectory . $fileName;
 
-        if (!empty($programs)) {
-            try {
-                $result = $this->model->createProgram($programs);
-                echo json_encode($result);
-            } catch (Exception $e) {
-                error_log($e->getMessage());
-                echo json_encode(['success' => false, 'message' => $e->getMessage()]);
+            if (move_uploaded_file($image['tmp_name'], $filePath)) {
+                $programs = [
+                    'name' => $name,
+                    'status_register' => $status_pendaftaran,
+                    'start_date' => $tgl_mulai_pendaftaran,
+                    'end_date' => $tgl_akhir_pendaftaran,
+                    'standar' => $standar,
+                    'jml_peserta' => $jml_peserta,
+                    'deskripsi' => $deskripsi,
+                    'instructor_id' => $instructor_id,
+                    'building_id' => $building_id,
+                    'department_id' => $department_id,
+                    'image_path' => $filePath,
+                    'requirements' => $requirements,
+                ];
+                echo json_encode($this->model->createProgram($programs));
+            } else {
+                echo json_encode(['success' => false, 'message' => 'Gagal dalam memindahkan directory penyimpanan foto']);
             }
         } else {
-            echo json_encode(['success' => false, 'message' => 'Data Kosong']);
+            echo json_encode(['success' => false, 'message' => $image['error']]);
         }
-
     }
 
     public function updatePrograms($id)
     {
         require_once '../App/Controllers/RequirementsController.php';
-        $data = json_decode(file_get_contents("php://input"), true);
-        if (empty($data)) {
-            echo json_encode(['success' => false, 'message' => 'Data Kosong']);
+
+        if (empty($_POST)) {
+            http_response_code(400);
+            echo json_encode(['success' => false, 'message' => 'Data kosong']);
             return;
         }
 
         $programs = [
             'id' => $id,
-            'nama' => $data['name'],
-            'status_pendaftaran' => $data['status_register'],
-            'tgl_mulai_pendaftaran' => $data['start_date'],
-            'tgl_akhir_pendaftaran' => $data['end_date'],
-            'standar' => $data['standar'],
-            'jml_peserta' => $data['participant'],
-            'deskripsi' => $data['description'],
-            'instructor_id' => $data['instructor_id'],
-            'building_id' => $data['building_id'],
-            'department_id' => $data['department_id'],
+            'nama' => $_POST['name'],
+            'status_pendaftaran' => $_POST['status_register'],
+            'tgl_mulai_pendaftaran' => $_POST['start_date'],
+            'tgl_akhir_pendaftaran' => $_POST['end_date'],
+            'standar' => $_POST['standar'],
+            'jml_peserta' => $_POST['participant'],
+            'deskripsi' => $_POST['description'],
+            'instructor_id' => $_POST['instructor_id'],
+            'building_id' => $_POST['building_id'],
+            'department_id' => $_POST['department_id'],
         ];
 
-        if (!empty($programs)) {
-            try {
-                $programResult = $this->model->updatePrograms($programs);
-                if ($programResult['success']) {
-                    if (!empty($data['requirements'])) {
-                        $requirementsController = new RequirementsController();
-                        $result = $requirementsController->updateRequirements($data['requirements']);
-                        if (!$result['success']) {
-                            return $this->updateResult = false;
-                        }
-                    }
+        if (isset($_FILES['image'])) {
+            $uploadDir = 'Uploads/programs/';
+            $uploadFile = $uploadDir . basename($_FILES['image']['name']);
 
-                    if (!empty($data['new_requirements'])) {
-                        $requirementsController = new RequirementsController();
-                        $result = $requirementsController->addNewRequirements($data['new_requirements'], $id);
-                        if (!$result['success']) {
-                            return $this->insertResult = false;
-                        }
-                    }
-
-                    if (!empty($data['delete_requirements'])) {
-                        $requirementsController = new RequirementsController();
-                        $result = $requirementsController->deleteRequirements($data['delete_requirements']);
-                        if (!$result['success']) {
-                            return $this->deleteResult = false;
-                        }
-                    }
-                    if ($this->updateResult && $this->insertResult && $this->deleteResult) {
-                        echo json_encode($programResult);
-                    }
-                } else {
-                    echo json_encode(['success' => false, 'message' => $programResult['message']]);
-                }
-            } catch (Exception $e) {
-                error_log($e->getMessage());
-                echo json_encode(['success' => false, 'message' => $e->getMessage()]);
+            if (move_uploaded_file($_FILES['image']['tmp_name'], $uploadFile)) {
+                $programs['image_path'] = $uploadFile;
+            } else {
+                http_response_code(500);
+                echo json_encode(['success' => false, 'message' => 'Gagal mengunggah gambar']);
+                return;
             }
-        } else {
-            echo json_encode(['success' => false, 'message' => 'Data Kosong']);
+        }
+
+        try {
+            $programResult = $this->model->updatePrograms($programs);
+
+            if ($programResult['success']) {
+                $requirementsController = new RequirementsController();
+
+                if (!empty($_POST['requirements'])) {
+                    $result = $requirementsController->updateRequirements($_POST['requirements']);
+                    if (!$result['success']) {
+                        http_response_code(500);
+                        echo json_encode(['success' => false, 'message' => 'Gagal memperbarui persyaratan']);
+                        return;
+                    }
+                }
+
+                if (!empty($_POST['newRequirements'])) {
+                    $result = $requirementsController->addNewRequirements($_POST['newRequirements'], $id);
+                    if (!$result['success']) {
+                        http_response_code(500);
+                        echo json_encode(['success' => false, 'message' => 'Gagal menambah persyaratan baru']);
+                        return;
+                    }
+                }
+
+                if (!empty($_POST['deleteRequirements'])) {
+                    $result = $requirementsController->deleteRequirements($_POST['deleteRequirements']);
+                    if (!$result['success']) {
+                        http_response_code(500);
+                        echo json_encode(['success' => false, 'message' => 'Gagal menghapus persyaratan']);
+                        return;
+                    }
+                }
+                http_response_code(200);
+                echo json_encode(['success' => true, 'message' => 'Data berhasil diperbarui', 'redirect' => '/programs']);
+            } else {
+                http_response_code(500);
+                echo json_encode(['success' => false, 'message' => $programResult['message']]);
+            }
+        } catch (Exception $e) {
+            http_response_code(500);
+            echo json_encode(['success' => false, 'message' => $e->getMessage()]);
         }
     }
+
 
     public function deletePrograms($id)
     {
@@ -177,5 +207,13 @@ class ProgramController
     public function getFavoritePrograms()
     {
         echo json_encode($this->model->getFavoritePrograms());
+    }
+
+    public function searchPrograms()
+    {
+        $name = $_GET['search'] ?? '';
+
+        $programs = $this->model->searchPrograms($name);
+        echo json_encode($programs);
     }
 }

@@ -11,18 +11,21 @@ class RequirementsModel
 
     public function getRequirementsByProgram($id)
     {
-        $query  = "SELECT * FROM requirements WHERE program_id = :id";
+        $query = "SELECT * FROM requirements WHERE program_id = :id";
         $stm = $this->connection->prepare($query);
         try {
             $stm->bindParam(':id', $id);
             $stm->execute();
             $data = $stm->fetchAll(PDO::FETCH_ASSOC);
             if (empty($data)) {
+                http_response_code(204);
                 return ['success' => true, 'isEmpty' => true, 'message' => 'Data requirements tidak ditemukan'];
             } else {
+                http_response_code(200);
                 return ['success' => true, 'isEmpty' => false, 'requirements' => $data];
             }
         } catch (PDOException $e) {
+            http_response_code(500);
             return ['success' => false, 'message' => $e->getMessage()];
         }
     }
@@ -46,11 +49,11 @@ class RequirementsModel
         $query = "UPDATE requirements SET requirement = :requirement WHERE  id = :id";
         $stm = $this->connection->prepare($query);
         try {
-            $stm->bindParam(':id', $requirementId );
-            $stm->bindParam(':requirement', $requirement );
+            $stm->bindParam(':id', $requirementId);
+            $stm->bindParam(':requirement', $requirement);
             $stm->execute();
             return ['success' => true, 'message' => 'Requirements Berhasil diperbarui'];
-        } catch (PDOException $e){
+        } catch (PDOException $e) {
             return ['success' => false, 'message' => $e->getMessage()];
         }
     }
@@ -63,7 +66,7 @@ class RequirementsModel
             $stm->bindParam(':id', $id);
             $stm->execute();
             return ['success' => true, 'message' => 'Requirements Berhasil dihapus'];
-        } catch (PDOException $e){
+        } catch (PDOException $e) {
             return ['success' => false, 'message' => $e->getMessage()];
         }
     }

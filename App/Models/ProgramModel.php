@@ -9,18 +9,22 @@ class ProgramModel
         $this->connection = $db;
     }
 
-    public function getAllProgram() // Notes
+    public function getAllProgram()
     {
         $query = "SELECT programs.*, buildings.nama AS building_name, instructors.nama AS instructor_name, departments.nama AS department_name FROM programs JOIN buildings ON programs.building_id = buildings.id JOIN instructors ON programs.instructor_id = instructors.id JOIN departments ON programs.department_id = departments.id ORDER BY programs.id ASC";
         $stmt = $this->connection->prepare($query);
         try {
-            if ($stmt->execute()) {
-                return $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $stmt->execute();
+            $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            if (!empty($data)) {
+                http_response_code(200);
+                return ['success' => true, 'isEmpty' => false, 'programs' => $data];
             } else {
-                return ['success' => false, 'message' => 'Data Kosong'];
+                http_response_code(204);
+                return ['success' => true, 'isEmpty' => true, 'message' => 'Data Kosong', 'programs' => []];
             }
-
         } catch (PDOException $e) {
+            http_response_code(500);
             return ['success' => false, 'message' => $e->getMessage()];
         }
     }
@@ -34,11 +38,14 @@ class ProgramModel
             $stmt->execute();
             $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
             if (!empty($data)) {
+                http_response_code(200);
                 return ['success' => true, 'isEmpty' => false, 'programs' => $data];
             } else {
+                http_response_code(204);
                 return ['success' => true, 'isEmpty' => true, 'message' => 'Data Tidak ditemukan'];
             }
         } catch (PDOException $e) {
+            http_response_code(500);
             return ['success' => false, 'message' => $e->getMessage()];
         }
     }
@@ -52,11 +59,14 @@ class ProgramModel
             $stmt->execute();
             $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
             if (empty($data)) {
+                http_response_code(204);
                 return ['success' => true, 'isEmpty' => true, 'message' => 'Data Tidak ditemukan'];
             } else {
+                http_response_code(200);
                 return ['success' => true, 'isEmpty' => false, 'programs' => $data];
             }
         } catch (PDOException $e) {
+            http_response_code(500);
             return ['success' => false, 'message' => $e->getMessage()];
         }
     }
@@ -70,11 +80,14 @@ class ProgramModel
             $stmt->execute();
             $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
             if ($data) {
+                http_response_code(200);
                 return ['success' => true, 'isEmpty' => false, 'programs' => $data];
             } else {
+                http_response_code(204);
                 return ['success' => true, 'isEmpty' => true, 'message' => 'Data Tidak ditemukan'];
             }
         } catch (PDOException $e) {
+            http_response_code(500);
             return ['success' => false, 'message' => $e->getMessage()];
         }
     }
@@ -82,39 +95,58 @@ class ProgramModel
     public function createProgram($data = [])
     {
         require_once '../App/Controllers/RequirementsController.php';
-        $query = "INSERT INTO programs (nama, status_pendaftaran, tgl_mulai_pendaftaran, tgl_akhir_pendaftaran, standar, jml_peserta, deskripsi, instructor_id, building_id, department_id) VALUES (:name, :status_pendaftaran, :tgl_mulai, :tgl_akhir, :standar, :jml_peserta, :deskripsi, :instructor_id, :building_id, :department_id)";
+        $query = "INSERT INTO programs (nama, status_pendaftaran, tgl_mulai_pendaftaran, tgl_akhir_pendaftaran, standar, jml_peserta, deskripsi, instructor_id, building_id, department_id, image_path) VALUES (:name, :status_pendaftaran, :tgl_mulai, :tgl_akhir, :standar, :jml_peserta, :deskripsi, :instructor_id, :building_id, :department_id, :image_path)";
         $stmt = $this->connection->prepare($query);
         try {
-            $stmt->bindParam(":name", $data['nama']);
-            $stmt->bindParam(":status_pendaftaran", $data['status_pendaftaran']);
-            $stmt->bindParam(":tgl_mulai", $data['tgl_mulai_pendaftaran']);
-            $stmt->bindParam(":tgl_akhir", $data['tgl_akhir_pendaftaran']);
+            $stmt->bindParam(":name", $data['name']);
+            $stmt->bindParam(":status_pendaftaran", $data['status_register']);
+            $stmt->bindParam(":tgl_mulai", $data['start_date']);
+            $stmt->bindParam(":tgl_akhir", $data['end_date']);
             $stmt->bindParam(":standar", $data['standar']);
             $stmt->bindParam(":jml_peserta", $data['jml_peserta']);
             $stmt->bindParam(":deskripsi", $data['deskripsi']);
             $stmt->bindParam(":instructor_id", $data['instructor_id']);
             $stmt->bindParam(":building_id", $data['building_id']);
             $stmt->bindParam(":department_id", $data['department_id']);
+            $stmt->bindParam(":image_path", $data['image_path']);
             $stmt->execute();
             $programId = $this->connection->lastInsertId();
 
             $requirementsController = new RequirementsController();
             $insertRequirements = $requirementsController->createRequirements($programId, $data['requirements']);
             if ($insertRequirements['success']) {
-                return ['success' => true, 'message' => 'Data berhasil disimpan', 'redirect_url' => '/programs'];
+                http_response_code(200);
+                return ['success' => true, 'message' => 'Data berhasil disimpan', 'redirect' => '/programs'];
             } else {
                 return ['success' => false, 'message' => $insertRequirements['message']];
             }
         } catch (PDOException|Exception $e) {
-            error_log($e->getMessage());
+            http_response_code(500);
             return ['success' => false, 'message' => $e->getMessage()];
         }
     }
 
     public function updatePrograms($data = [])
     {
-        $query = "UPDATE programs SET nama = :name, status_pendaftaran = :status_register, tgl_mulai_pendaftaran = :start_date, tgl_akhir_pendaftaran = :end_date, standar = :standar, jml_peserta = :participants, deskripsi = :descriptions, instructor_id = :instructor_id, building_id = :building_id, department_id = :department_id WHERE id = :id";
+        $query = "UPDATE programs SET 
+                nama = :name, 
+                status_pendaftaran = :status_register, 
+                tgl_mulai_pendaftaran = :start_date, 
+                tgl_akhir_pendaftaran = :end_date, 
+                standar = :standar, 
+                jml_peserta = :participants, 
+                deskripsi = :descriptions, 
+                instructor_id = :instructor_id, 
+                building_id = :building_id, 
+                department_id = :department_id";
+
+        if (isset($data['image_path'])) {
+            $query .= ", image_path = :image_path";
+        }
+
+        $query .= " WHERE id = :id";
         $stmt = $this->connection->prepare($query);
+
         try {
             $stmt->bindParam(":name", $data['nama']);
             $stmt->bindParam(":status_register", $data['status_pendaftaran']);
@@ -126,13 +158,20 @@ class ProgramModel
             $stmt->bindParam(":instructor_id", $data['instructor_id']);
             $stmt->bindParam(":building_id", $data['building_id']);
             $stmt->bindParam(":department_id", $data['department_id']);
+
+            if (isset($data['image_path'])) {
+                $stmt->bindParam(":image_path", $data['image_path']);
+            }
+
             $stmt->bindParam(":id", $data['id']);
             $stmt->execute();
-            return ['success' => true, 'message' => 'Data berhasil diupdate', 'redirect_url' => '/programs'];
+            return ['success' => true, 'message' => 'Data berhasil diupdate'];
         } catch (PDOException $e) {
-            return ['success' => false, 'message' => $e->getLine() + error_log($e->getMessage())];
+            http_response_code(500);
+            return ['success' => false, 'message' => $e->getMessage()];
         }
     }
+
 
     public function deletePrograms($id)
     {
@@ -141,8 +180,10 @@ class ProgramModel
         try {
             $stmt->bindParam(":id", $id);
             $stmt->execute();
+            http_response_code(200);
             return ['success' => true, 'message' => 'Data berhasil dihapus', 'redirect_url' => '/programs'];
         } catch (PDOException $e) {
+            http_response_code(500);
             return ['success' => false, 'message' => $e->getMessage()];
         }
     }
@@ -155,9 +196,34 @@ class ProgramModel
             $stmt->execute();
             $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
             if (empty($data)) {
+                http_response_code(204);
                 return ['success' => true, 'isEmpty' => true, 'message' => 'Data Kosong'];
             } else {
+                http_response_code(200);
                 return ['success' => true, 'isEmpty' => false, 'data' => $data];
+            }
+        } catch (PDOException $e) {
+            http_response_code(500);
+            return ['success' => false, 'message' => $e->getMessage()];
+        }
+    }
+
+    public function searchPrograms($search)
+    {
+        $query = "SELECT programs.*, buildings.nama AS building_name, instructors.nama AS instructor_name, departments.nama AS department_name FROM programs JOIN buildings ON programs.building_id = buildings.id JOIN instructors ON programs.instructor_id = instructors.id JOIN departments ON programs.department_id = departments.id WHERE programs.nama LIKE :search ORDER BY programs.id ASC";
+        $stmt = $this->connection->prepare($query);
+        try {
+            $search = '%' . $search . '%';
+            $stmt->bindParam(":search", $search);
+            $stmt->execute();
+            $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            if (empty($data)) {
+                http_response_code(204);
+                return ['success' => true, 'isEmpty' => true, 'message' => 'Data Kosong', 'programs' => []];
+            } else {
+                http_response_code(200);
+                return ['success' => true, 'isEmpty' => false, 'programs' => $data];
             }
         } catch (PDOException $e) {
             http_response_code(500);

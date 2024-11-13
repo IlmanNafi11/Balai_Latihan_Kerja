@@ -14,39 +14,45 @@ class RequirementsController
 
     public function updateRequirements($requirements = [])
     {
-        $updateResult = ['success' => false];
+        $updateResult = ['success' => true];
         foreach ($requirements as $requirement) {
-            try {
-                $idRequirements = $requirement['id'];
-                $requirementDesc = $requirement['requirement'];
-                $updateResult = $this->model->updateRequirements($idRequirements, $requirementDesc);
-            } catch (PDOException $e) {
-                error_log($e->getMessage());
-            }
+            $idRequirements = $requirement['id'];
+            $requirementDesc = $requirement['requirement'];
 
+            $result = $this->model->updateRequirements($idRequirements, $requirementDesc);
+            if (!$result['success']) {
+                $updateResult['success'] = false;
+                break;
+            }
         }
         return $updateResult;
     }
 
     public function addNewRequirements($requirements = [], $id)
     {
-        $insertResult = ['success' => false];
+        $insertResult = ['success' => true];
         foreach ($requirements as $requirement) {
-            $insertResult = $this->model->createRequirements($id, $requirement);
+            $result = $this->model->createRequirements($id, $requirement);
+            if (!$result['success']) {
+                $insertResult['success'] = false;
+                break;
+            }
         }
         return $insertResult;
     }
 
     public function deleteRequirements($requirements = [])
     {
-        $deleteResult = ['success' => false];
+        $deleteResult = ['success' => true];
         foreach ($requirements as $requirement) {
-            $deleteResult = $this->model->deleteRequirements($requirement);
+            $result = $this->model->deleteRequirements($requirement);
+            if (!$result['success']) {
+                $deleteResult['success'] = false;
+                break;
+            }
         }
         return $deleteResult;
     }
-
-
 
     public function getRequirementsByProgram($id)
     {
