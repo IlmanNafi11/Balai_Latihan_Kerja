@@ -313,8 +313,25 @@ body
 }
 
 /* 
-    Table Column Actions
+    Table
 */
+
+.number-table-column
+{
+    width: 60px;
+}
+
+.action-table-column
+{
+    width: 150px;
+}
+
+.name-table-column
+{
+    width: 20%;
+    text-wrap: wrap;
+}
+
 .table tbody tr td a{
     text-decoration: none;
 }
@@ -322,6 +339,7 @@ body
 /* 
     Form input institusi
 */
+
 .container-form-input
 {
     min-height: 100% !important;
@@ -474,6 +492,17 @@ body
     margin: 0 5px;
 }
 
+.icons-searchbar
+{
+    top: 8px;
+    left: 8px;
+}
+
+.icons-searchbar:hover
+{
+    filter: drop-shadow(1px 1px 1px #a1a1a1);
+}
+
 /*
     Media query
 */
@@ -517,6 +546,26 @@ body
     {
         width: 100%;
         height: auto;
+    }
+
+    .table-data-actions
+    {
+        flex-wrap: wrap;
+    }
+
+    .tables-topbar
+    {
+        flex-direction: column-reverse !important;
+    }
+
+    .table
+    {
+        min-width: 500px !important;
+    }
+
+    .table-container
+    {
+        overflow-x: auto !important;
     }
 }
 
