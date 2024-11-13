@@ -47,7 +47,7 @@
 
         <!-- Form -->
         <form method="post" class="d-flex flex-column h-auto form-control">
-            <div class="form-department-container container-form-input d-flex column-gap-4 row-gap-3 h-100 w-100">
+            <div class="form-department-container container-form-input d-flex flex-column column-gap-4 row-gap-3 h-100 w-100">
                 <div class="input-nama-kejuruan flex-grow-1">
                     <label for="nama-kejuruan" class="form-label">Nama</label>
                     <input type="text" name="nama-kejuruan" id="nama-kejuruan" class="form-control"
@@ -61,6 +61,18 @@
                               placeholder="Contoh : Lorem Ipsum is simply dummy text of the printing and typesetting industry."></textarea>
                     <div class="valid-feedback"></div>
                     <div class="invalid-feedback"></div>
+                </div>
+                <div class="input-foto flex-grow-1 d-flex flex-column">
+                    <label for="fileInput" class="form-label">Foto Kejuruan</label>
+                    <div class="upload-area w-100 m-0 p-3 flex-grow-1 d-flex flex-column align-items-center justify-content-center" style="height: 150px"
+                         id="upload-area">
+                        <img src="/Asset/images/upload_icons.png" alt="upload icon" id="uploadIcon"/>
+                        <p id="uploadText">Upload file</p>
+                        <small id="formatText">*jpg, png</small>
+                        <input type="file" id="fileInput" accept=".jpg,.jpeg,.png" style="display: none"/>
+                    </div>
+                    <div class="valid-feedback" id="valid-feedback"></div>
+                    <div class="invalid-feedback" id="invalid-feedback"></div>
                 </div>
             </div>
             <div class="button-action-container-form my-3 d-flex w-100 h-auto justify-content-end column-gap-2">
