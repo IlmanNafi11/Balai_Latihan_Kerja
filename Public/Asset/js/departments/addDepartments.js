@@ -32,7 +32,7 @@ inputFoto.addEventListener('change', () => {
         const reader = new FileReader();
         reader.onload = function (e) {
             uploadIcon.src = e.target.result;
-            uploadIcon.style.display = 'block';;
+            uploadIcon.style.display = 'block';
             uploadText.style.display = 'none';
             formatText.style.display = 'none';
         };
@@ -74,14 +74,14 @@ btnSimpan.addEventListener('click', (e) => {
             formData.append('description', description.value.trim());
             formData.append('instituteId', instituteId);
             formData.append('image', file);
-            axios.post(`/department/addDepartment`, formData, {
+            axios.post(`/department/add`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
             })
                 .then(response => {
                     if (response.data.success) {
-                        successAlert("Data berhasil disimpan!", response.data.redirect_url);
+                        successAlert(response.data.message, response.data.redirect_url);
                     } else if (!response.data.success) {
                         errorAlert(response.data.message);
                     }
