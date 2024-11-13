@@ -422,7 +422,7 @@ if (str_starts_with($uri, 'api/v1/public/')) {
             exit();
         }
     } // ADD Intructor
-    else if ($uri == 'instructor/addInstructor') {
+    else if ($uri == 'instructor/add') {
         if (isset($_SESSION['userID'])) {
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 loadController('InstructorController', 'createInstructors');
@@ -434,7 +434,7 @@ if (str_starts_with($uri, 'api/v1/public/')) {
             exit();
         }
     } // UPDATE Instructor
-    else if (preg_match('/instructor\/updateInstructor\/(\d+)/', $uri, $matches)) {
+    else if (preg_match('/instructor\/update\/(\d+)/', $uri, $matches)) {
         if (isset($_SESSION['userID'])) {
             $id = $matches[1];
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -447,7 +447,7 @@ if (str_starts_with($uri, 'api/v1/public/')) {
             exit();
         }
     } // DELETE Instructor
-    else if (preg_match('/instructor\/deleteInstructor\/(\d+)/', $uri, $matches)) {
+    else if (preg_match('/instructor\/delete\/(\d+)/', $uri, $matches)) {
         if (isset($_SESSION['userID'])) {
             $id = $matches[1];
             if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
@@ -458,7 +458,7 @@ if (str_starts_with($uri, 'api/v1/public/')) {
             exit();
         }
     } // GET Instructor By ID
-    else if (preg_match('/instructor\/getInstructor\/(\d+)/', $uri, $matches)) {
+    else if (preg_match('/instructor\/(\d+)\/data$/', $uri, $matches)) {
         if (isset($_SESSION['userID'])) {
             if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                 $id = $matches[1];
@@ -469,7 +469,7 @@ if (str_starts_with($uri, 'api/v1/public/')) {
             exit();
         }
     } // GET All Instructor Data
-    else if ($uri == '/instructor/getInstructor') {
+    else if ($uri == 'instructor/all') {
         if (isset($_SESSION['userID'])) {
             if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                 loadController('InstructorController', 'getAllInstructors');
@@ -486,6 +486,16 @@ if (str_starts_with($uri, 'api/v1/public/')) {
             }
         } else {
             header('Location: /login');
+            exit();
+        }
+    } // Search Instructors
+    else if ($uri == 'search-instructors') {
+        if ($_SESSION['userID']) {
+            if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+                loadController('InstructorController', 'searchInstructors');
+            }
+        } else {
+            header('location: /login');
             exit();
         }
     } // Registration

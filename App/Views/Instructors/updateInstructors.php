@@ -54,22 +54,22 @@
                         <label for="nama-instruktor" class="form-label">Nama</label>
                         <input type="text" name="nama-instruktor" id="nama-instruktor" class="form-control"
                                placeholder="Contoh: Rigen">
-                        <div class="valid-feedback" id="valid-feedback-email"></div>
-                        <div class="invalid-feedback" id="invalid-feedback-email"></div>
+                        <div class="valid-feedback"></div>
+                        <div class="invalid-feedback" ></div>
                     </div>
                     <div class="input-email-instruktor">
                         <label for="email-instruktor" class="form-label">Email</label>
                         <input type="email" name="email-instruktor" id="email-instruktor" class="form-control"
                                placeholder="Contoh: rigen@gmail.com">
-                        <div class="valid-feedback" id="valid-feedback-email"></div>
-                        <div class="invalid-feedback" id="invalid-feedback-email"></div>
+                        <div class="valid-feedback"></div>
+                        <div class="invalid-feedback"></div>
                     </div>
                     <div class="input-alamat-instruktor">
                         <label for="alamat-instruktor" class="form-label">Alamat</label>
                         <input type="text" name="alamat-instruktor" id="alamat-instruktor" class="form-control"
                                placeholder="Contoh : Nganjuk, Nganjuk, Jawa Timur">
-                        <div class="valid-feedback" id="valid-feedback-email"></div>
-                        <div class="invalid-feedback" id="invalid-feedback-email"></div>
+                        <div class="valid-feedback"></div>
+                        <div class="invalid-feedback"></div>
                     </div>
                 </div>
                 <div class="container-form-input flex-grow-1 d-flex flex-column row-gap-3">
@@ -77,19 +77,20 @@
                         <label for="no-hp-instruktor" class="form-label">Nomor Telepon</label>
                         <input type="text" name="no-hp-instruktor" id="no-hp-instruktor" class="form-control"
                                placeholder="Contoh : 08xxxxxx">
-                        <div class="valid-feedback" id="valid-feedback-email"></div>
-                        <div class="invalid-feedback" id="invalid-feedback-email"></div>
+                        <div class="valid-feedback"></div>
+                        <div class="invalid-feedback"></div>
                     </div>
-                    <div class="input-pas-foto flex-grow-1 d-flex flex-column">
+                    <div class="input-foto flex-grow-1 d-flex flex-column">
                         <label for="fileInput" class="form-label">Pas Foto</label>
-                        <div class="upload-area w-100 m-0 p-3 flex-grow-1" id="upload-area">
-                            <img src="/Asset/images/upload_icons.png" alt="upload icon"/>
-                            <p>Upload file</p>
-                            <small>*jpg, png</small>
-                            <input type="file" id="fileInput" accept=".jpg,.jpeg,.png"/>
-                            <div class="valid-feedback" id="valid-feedback-email"></div>
-                            <div class="invalid-feedback" id="invalid-feedback-email"></div>
+                        <div class="upload-area w-100 m-0 p-3 flex-grow-1 d-flex flex-column align-items-center justify-content-center" style="height: 150px"
+                             id="upload-area">
+                            <img src="/Asset/images/upload_icons.png" alt="upload icon" id="uploadIcon"/>
+                            <p id="uploadText">Upload file</p>
+                            <small id="formatText">*jpg, png</small>
+                            <input type="file" id="fileInput" accept=".jpg,.jpeg,.png" style="display: none"/>
                         </div>
+                        <div class="valid-feedback" id="valid-feedback"></div>
+                        <div class="invalid-feedback" id="invalid-feedback"></div>
                     </div>
 
                 </div>
