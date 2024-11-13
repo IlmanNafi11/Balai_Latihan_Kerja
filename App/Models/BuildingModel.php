@@ -19,7 +19,7 @@ class BuildingModel
             if ($data) {
                 return ['success' => true, 'isEmpty' => false, 'buildings' => $data];
             } else {
-                return ['success' => true, 'isEmpty' => true, 'message' => 'Data Kosong'];
+                return ['success' => true, 'isEmpty' => true, 'message' => 'Data Kosong', 'buildings' => []];
             }
         } catch (PDOException $e) {
             return ['success' => false, 'isEmpty' => true, 'message' => $e->getMessage()];
@@ -69,8 +69,10 @@ class BuildingModel
             $stmt->bindParam(":name", $name);
             $stmt->bindParam(":description", $description);
             $stmt->execute();
-            return ['success' => true, 'message' => 'Gedung berhasil ditambahkan', 'redirect_url' => '/building'];
+            http_response_code(200);
+            return ['success' => true, 'message' => 'Data berhasil disimpan', 'redirect' => '/building'];
         } catch (PDOException $e) {
+            http_response_code(500);
             return ['success' => false, 'message' => 'Terjadi kesalahan : ' . $e->getMessage()];
         }
     }
@@ -84,8 +86,10 @@ class BuildingModel
             $stmt->bindParam(":name", $name);
             $stmt->bindParam(":description", $description);
             $stmt->execute();
-            return ['success' => true, 'message' => 'Gedung berhasil diperbarui', 'redirect_url' => '/building'];
+            http_response_code(200);
+            return ['success' => true, 'message' => 'Data berhasil diperbarui', 'redirect' => '/building'];
         } catch (PDOException $e) {
+            http_response_code(500);
             return ['success' => false, 'message' => 'Terjadi kesalahan : ' . $e->getMessage()];
         }
     }
@@ -97,9 +101,33 @@ class BuildingModel
         try {
             $stmt->bindParam(":id", $id);
             $stmt->execute();
-            return ['success' => true, 'message' => 'Data Gedung berhasil dihapus', 'redirect_url' => '/building'];
+            http_response_code(200);
+            return ['success' => true, 'message' => 'Data Gedung berhasil dihapus', 'redirect' => '/building'];
         } catch (PDOException $e) {
+            http_response_code(500);
             return ['success' => false, 'message' => 'Terjadi kesalahan : ' . $e->getMessage()];
+        }
+    }
+
+    public function searchBuildings($search)
+    {
+        $query = "SELECT * FROM buildings WHERE nama LIKE :search";
+        $stmt = $this->connection->prepare($query);
+        try {
+            $search = '%' . $search . '%';
+            $stmt->bindParam(":search", $search);
+            $stmt->execute();
+            $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            if (empty($data)) {
+                return ['success' => true, 'isEmpty' => true, 'message' => 'Data Kosong', 'buildings' => []];
+            } else {
+                http_response_code(200);
+                return ['success' => true, 'isEmpty' => false, 'buildings' => $data];
+            }
+        } catch (PDOException $e) {
+            http_response_code(500);
+            return ['success' => false, 'message' => $e->getMessage()];
         }
     }
 }

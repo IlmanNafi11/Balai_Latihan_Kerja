@@ -47,7 +47,7 @@
 
         <!-- Form -->
         <form method="post" class="d-flex flex-column h-auto form-control">
-            <div class="form-building-container container-form-input d-flex column-gap-4 row-gap-3 h-100 w-100">
+            <div class="form-building-container container-form-input d-flex flex-column column-gap-4 row-gap-3 h-100 w-100">
                 <div class="input-nama-gedung flex-grow-1">
                     <label for="nama-gedung" class="form-label">Nama</label>
                     <input type="text" name="nama-gedung" id="nama-gedung" class="form-control"

@@ -1,5 +1,6 @@
 <?php
 require_once '../App/Models/BuildingModel.php';
+
 class BuildingController
 {
     private $model;
@@ -13,7 +14,6 @@ class BuildingController
 
     public function index()
     {
-        $buildings = $this->model->getAllBuilding();
         require_once '../App/Views/Building/building.php';
     }
 
@@ -74,5 +74,13 @@ class BuildingController
     public function deleteBuilding($id)
     {
         echo json_encode($this->model->deleteBuilding($id));
+    }
+
+    public function searchBuilding()
+    {
+        $name = $_GET['search'] ?? '';
+
+        $buildings = $this->model->searchBuildings($name);
+        echo json_encode($buildings);
     }
 }

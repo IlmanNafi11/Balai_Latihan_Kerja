@@ -14,7 +14,7 @@ const regexDecrp = /^[a-zA-Z0-9 ,.]+$/;
 
 let id = sliceUri();
 
-axios.get(`/building/getBuilding/${id}`)
+axios.get(`/building/${id}/data`)
     .then(response => {
         if (response.data.success && !response.data.isEmpty) {
             name.value = response.data.buildings.nama;
@@ -37,20 +37,20 @@ btnSimpan.addEventListener('click', (e) => {
     isValid = onSaveValidate(name, "Nama Gedung", validName, invalidName, null, regexName, 50) && isValid;
     isValid = onSaveValidate(description, "Deskripsi Gedung", validDescription, invalidDescription, null, regexDecrp, 255) && isValid;
     if (isValid) {
-        questionAlert("Perbarui data?", "Pastikan semua data telah diperbarui dengan benar!", "Ya, Simpan", () => {
-            axios.post(`/building/updateBuilding/${id}`, {
+        questionAlert("Perbarui data?", "Pastikan semua data telah diperbarui dengan benar!", "Ya, Perbarui", () => {
+            axios.post(`/building/update/${id}`, {
                 'name': name.value.trim(),
                 'description': description.value.trim(),
             })
                 .then(response => {
-                    if (response.data.success){
-                        successAlert("Data berhasil diperbarui!", response.data.redirect_url);
+                    if (response.data.success) {
+                        successAlert(response.data.message, response.data.redirect);
                     } else {
                         errorAlert(response.data.message);
                     }
                 })
                 .catch(error => {
-                    errorAlert(`Terjadi Kesalahan: ${error.message}`);
+                    errorAlert(error.response.data.message);
                 });
         });
     }

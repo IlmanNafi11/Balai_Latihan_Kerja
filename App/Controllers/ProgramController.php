@@ -19,7 +19,6 @@ class ProgramController
 
     public function index()
     {
-        $programs = $this->model->getAllProgram();
         require_once '../App/Views/Programs/programs.php';
     }
 

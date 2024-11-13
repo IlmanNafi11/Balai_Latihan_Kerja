@@ -258,7 +258,7 @@ if (str_starts_with($uri, 'api/v1/public/')) {
             exit();
         }
     } // ADD Building
-    elseif ($uri == 'building/addBuilding') {
+    elseif ($uri == 'building/add') {
         if (isset($_SESSION['userID'])) {
             if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                 loadController('BuildingController', 'viewAddBuilding');
@@ -270,7 +270,7 @@ if (str_starts_with($uri, 'api/v1/public/')) {
             exit();
         }
     } // UPDATE Building
-    elseif (preg_match('/building\/updateBuilding\/(\d+)/', $uri, $matches)) {
+    elseif (preg_match('/building\/update\/(\d+)/', $uri, $matches)) {
         if (isset($_SESSION['userID'])) {
             $id = $matches[1];
             if ($_SERVER['REQUEST_METHOD'] === 'GET') {
@@ -294,7 +294,7 @@ if (str_starts_with($uri, 'api/v1/public/')) {
             exit();
         }
     } // GET Building By ID
-    elseif (preg_match('/building\/getBuilding\/(\d+)/', $uri, $matches)) {
+    elseif (preg_match('/building\/(\d+)\/data$/', $uri, $matches)) {
         if (isset($_SESSION['userID'])) {
             $id = $matches[1];
             if ($_SERVER['REQUEST_METHOD'] === 'GET') {
@@ -312,6 +312,26 @@ if (str_starts_with($uri, 'api/v1/public/')) {
             }
         } else {
             header('Location: /login');
+            exit();
+        }
+    } // GET All Building Data
+    else if ($uri == 'building/all') {
+        if ($_SESSION['userID']) {
+            if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+                loadController('BuildingController', 'getAllBuilding');
+            }
+        } else {
+            header('location: /login');
+            exit();
+        }
+    } // Search Buildings
+    else if ($uri == 'search-buildings') {
+        if ($_SESSION['userID']) {
+            if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+                loadController('BuildingController', 'searchBuilding');
+            }
+        } else {
+            header('location: /login');
             exit();
         }
     } // Tools

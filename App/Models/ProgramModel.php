@@ -219,7 +219,6 @@ class ProgramModel
             $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
             if (empty($data)) {
-                http_response_code(204);
                 return ['success' => true, 'isEmpty' => true, 'message' => 'Data Kosong', 'programs' => []];
             } else {
                 http_response_code(200);

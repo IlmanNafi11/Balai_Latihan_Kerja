@@ -23,19 +23,19 @@ btnSimpan.addEventListener('click', (e) => {
     isValid = onSaveValidate(description, "Deskripsi Gedung", validDescription, invalidDescription, null, regexDecrp, 255) && isValid;
     if (isValid) {
         questionAlert("Simpan data?", "Pastikan semua data telah diisi dengan benar!", "Ya, Simpan", () => {
-            axios.post('/building/addBuilding', {
+            axios.post('/building/add', {
                 'name': name.value.trim(),
                 'description': description.value.trim(),
             })
                 .then(response => {
-                    if (response.data.success){
-                        successAlert("Data berhasil disimpan!", response.data.redirect_url);
+                    if (response.data.success) {
+                        successAlert(response.data.message, response.data.redirect);
                     } else {
                         errorAlert(response.data.message);
                     }
                 })
                 .catch(error => {
-                    errorAlert(`Terjadi Kesalahan: ${error.message}`);
+                    errorAlert(error.response.data.message);
                 });
         });
     }
