@@ -36,7 +36,7 @@
         <!-- Navbar -->
         <?php require_once '../App/Views/Layout/navbar.php' ?>
         <!-- Container Content -->
-        <div class="container-fluid container-content d-flex flex-column">
+        <div class="container-fluid container-content content-management-user d-flex flex-column">
             <!-- Breadcrumb -->
             <nav aria-label="breadcrumb" class="breadcrumb-content">
                 <ol class="breadcrumb">

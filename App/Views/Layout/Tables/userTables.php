@@ -36,7 +36,7 @@
     </div>
 
     <div class="container-table-pengguna main-container-table px-0 m-0 d-flex flex-column row-gap-3 overflow-y-hidden" id="main-container-table-pengguna">
-        <div class="tables-topbar d-flex justify-content-between align-items-center row-gap-3 w-100 pt-2 pe-2">
+        <div class="tables-topbar tables-topbar-pengguna d-flex justify-content-between align-items-center row-gap-3 w-100 pt-2 pe-2">
             <span class="table-title">Daftar Pengguna</span>
             <div class="search-bar-container flex-shrink-1 position-relative">
                 <img src="/Asset/images/search-bar-icons.png" alt="search-bar-icons"

@@ -577,6 +577,26 @@ body
     {
         overflow-x: auto !important;
     }
+
+    .container-table-admin
+    {
+        display: none !important;
+    }
+
+    .tables-topbar-pengguna
+    {
+        align-items: start !important;
+    }
+
+    .main-container-table
+    {
+        flex-basis: 100% !important;
+    }
+
+    .content-management-user
+    {
+        height: 100%;
+    }
 }
 
 @media screen and (max-width: 932px) and (orientation: landscape)
@@ -603,6 +623,26 @@ body
     {
         width: 100%;
         height: auto;
+    }
+
+    .container-table-admin
+    {
+        display: none !important;
+    }
+
+    .tables-topbar-pengguna
+    {
+        align-items: start !important;
+    }
+
+    .main-container-table
+    {
+        flex-basis: 100% !important;
+    }
+
+    .content-management-user
+    {
+        height: 100%;
     }
 }
 
