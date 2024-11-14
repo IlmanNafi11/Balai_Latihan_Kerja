@@ -194,7 +194,7 @@ class ResetPasswordController
                     ];
                     $token = $this->service->createToken($payloadJwt);
                     setcookie('token', $token, time() + 3600, '/', '', true, true);
-                    echo json_encode(['success' => true, 'message' => 'Kode OTP Valid', 'redirect_url' => '/password-reset/new']);
+                    echo json_encode(['success' => true, 'message' => 'Kode OTP Valid', 'redirect_url' => '/password-reset/new', 'token' => $token]);
                 } else {
                     http_response_code(400);
                     echo json_encode(['success' => false, 'message' => 'Kode OTP tidak valid!']);
