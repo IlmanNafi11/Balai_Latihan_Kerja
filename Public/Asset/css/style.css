@@ -332,6 +332,11 @@ body
     text-wrap: wrap;
 }
 
+.target-notification-table-column
+{
+    width: 10%;
+}
+
 .table tbody tr td a{
     text-decoration: none;
 }

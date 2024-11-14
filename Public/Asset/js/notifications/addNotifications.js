@@ -14,14 +14,12 @@ btnSimpan.addEventListener('click', e => {
     let isValid = onSaveValidate(message, "Pesan Notifikasi", validMessage, invalidMessage, null, regex, 255);
     if (isValid) {
         questionAlert("Simpan Data?", "Pastikan semua data telah diisi dengan benar!", "Ya, Simpan", () => {
-            axios.post(`/notification/addNotification`, {
+            axios.post(`/notification/add`, {
                 'message': message.value,
             })
                 .then(response => {
                     if (response.data.success) {
-                        successAlert("Data berhasil disimpan!", response.data.redirect_url);
-                    } else {
-                        errorAlert(response.data.message);
+                        successAlert(response.data.message, response.data.redirect);
                     }
                 })
                 .catch(error => {

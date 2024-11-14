@@ -14,7 +14,6 @@ class NotificationController
 
     public function index()
     {
-        $notifications = $this->model->getAllNotification();
         require_once "../App/Views/Notifications/notifications.php";
     }
 
@@ -48,5 +47,11 @@ class NotificationController
     public function deleteNotification($id)
     {
         echo json_encode($this->model->deleteNotification($id));
+    }
+
+    public function searchNotifications()
+    {
+        $name = $_GET['search'] ?? '';
+        echo json_encode($this->model->searchNotifications($name));
     }
 }

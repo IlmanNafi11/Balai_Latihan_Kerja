@@ -519,7 +519,7 @@ if (str_starts_with($uri, 'api/v1/public/')) {
             exit();
         }
     } // ADD Notification
-    elseif ($uri == 'notification/addNotification') {
+    elseif ($uri == 'notification/add') {
         if (isset($_SESSION['userID'])) {
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 loadController('NotificationController', 'createNotification');
@@ -530,7 +530,7 @@ if (str_starts_with($uri, 'api/v1/public/')) {
             header('Location: /login');
             exit();
         }
-    } // UPDATE Notification
+    } // DELETE Notification
     elseif (preg_match('/notification\/delete\/(\d+)/', $uri, $matches)) {
         $id = $matches[1];
         if (isset($_SESSION['userID'])) {
@@ -542,13 +542,23 @@ if (str_starts_with($uri, 'api/v1/public/')) {
             exit();
         }
     } // GET All Notification Data
-    elseif ($uri == 'notification/getNotification') {
+    elseif ($uri == 'notification/all') {
         if (isset($_SESSION['userID'])) {
             if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                 loadController('NotificationController', 'getAllNotifications');
             }
         } else {
             header('Location: /login');
+            exit();
+        }
+    } // Search Notifications
+    else if ($uri == 'search-notifications') {
+        if ($_SESSION['userID']) {
+            if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+                loadController('NotificationController', 'searchNotifications');
+            }
+        } else {
+            header('location: /login');
             exit();
         }
     } // User Management
