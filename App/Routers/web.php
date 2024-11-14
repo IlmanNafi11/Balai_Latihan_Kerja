@@ -571,25 +571,15 @@ if (str_starts_with($uri, 'api/v1/public/')) {
             header('Location: /login');
             exit();
         }
-    } // CREATE Users
-    else if ($uri == 'user/create') {
+    } // Add Admin
+    else if ($uri == 'user/admin/add') {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             loadController('UserManagementController', 'createUsers');
         } else if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             loadController('UserManagementController', 'viewAddAdmin');
         }
-    } // GET All Users
-    else if ($uri == 'user/getUsers') {
-        if (isset($_SESSION['userID'])) {
-            if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-                loadController('UserManagementController', 'getAllUsers');
-            }
-        } else {
-            header('Location: /login');
-            exit();
-        }
     } // GET Users By ID
-    else if (preg_match('/user\/getUsers\/(\d+)/', $uri, $matches)) {
+    else if (preg_match('/user\/getUsers\/(\d+)/', $uri, $matches)) { // Noted
         if (isset($_SESSION['userID'])) {
             $id = $matches[1];
             if ($_SERVER['REQUEST_METHOD'] === 'GET') {
@@ -599,8 +589,8 @@ if (str_starts_with($uri, 'api/v1/public/')) {
             header('Location: /login');
             exit();
         }
-    } // UPDATE Users
-    else if (preg_match('/user\/updateUsers\/(\d+)/', $uri, $matches)) {
+    } // UPDATE Users (Public)
+    else if (preg_match('/user\/updateUsers\/(\d+)/', $uri, $matches)) { // Noted
         if (isset($_SESSION['userID'])) {
             $id = $matches[1];
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -621,8 +611,8 @@ if (str_starts_with($uri, 'api/v1/public/')) {
             header('Location: /login');
             exit();
         }
-    } // View and UPDATE Profile
-    else if (preg_match('/profile\/(\d+)/', $uri, $matches)) {
+    } // Profile Admin
+    else if (preg_match('/profile\/admin\/(\d+)/', $uri, $matches)) {
         if ($_SESSION['userID']) {
             $id = $matches[1];
             if ($_SERVER['REQUEST_METHOD'] === 'GET') {
@@ -634,39 +624,74 @@ if (str_starts_with($uri, 'api/v1/public/')) {
             header('Location: /login');
             exit();
         }
-    } else if (preg_match('/profile\/(\d+)\/images/', $uri, $matches)) {
+    } // Get Admin Data
+    else if ($uri == 'user/admin') {
         if ($_SESSION['userID']) {
-            $id = $matches[1];
             if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-                loadController('ProfileController', 'getProfileImages', $id);
+                loadController('UserManagementController', 'getAdminUsers');
             }
         } else {
-            header('Location: /login');
+            header('location: /login');
             exit();
         }
-    } else if ($uri == 'password-reset/request') {
+    } // Get Pengguna Data
+    else if ($uri == 'user/pengguna') {
+        if ($_SESSION['userID']) {
+            if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+                loadController('UserManagementController', 'getPenggunaUsers');
+            }
+        } else {
+            header('location: /login');
+            exit();
+        }
+    } // Search Admin
+    else if ($uri == 'search-admin-users') {
+        if ($_SESSION['userID']) {
+            if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+                loadController('UserManagementController', 'searchAdminUsers');
+            }
+        } else {
+            header('location: /login');
+            exit();
+        }
+    } // Search Pengguna
+    else if ($uri == 'search-pengguna-users') {
+        if ($_SESSION['userID']) {
+            if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+                loadController('UserManagementController', 'searchPenggunaUsers');
+            }
+        } else {
+            header('location: /login');
+            exit();
+        }
+    } // Request reset password
+    else if ($uri == 'password-reset/request') {
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             loadController('ResetPasswordController', 'index');
         } else if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             loadController('ResetPasswordController', 'sendOtp');
         }
-    } else if ($uri == 'password-reset/verify') {
+    } // Verify OTP
+    else if ($uri == 'password-reset/verify') {
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             loadController('ResetPasswordController', 'viewOtp');
         } else if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             loadController('ResetPasswordController', 'verifyOtp');
         }
-    } else if ($uri == 'password-reset/new') {
+    } // Reset password
+    else if ($uri == 'password-reset/new') {
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             loadController('ResetPasswordController', 'viewResetPassword');
         } else if ($_SERVER['REQUEST_METHOD'] === 'PUT') {
             loadController('ResetPasswordController', 'resetPassword');
         }
-    } else if ($uri == 'password-reset/resend') {
+    } // Resend OTP
+    else if ($uri == 'password-reset/resend') {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             loadController('ResetPasswordController', 'resendOtp');
         }
-    } else if ($uri == 'password-reset/reset-step') {
+    } // Reset Step Reset Password
+    else if ($uri == 'password-reset/reset-step') {
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             loadController('ResetPasswordController', 'resetStep');
         }
@@ -737,7 +762,8 @@ function handleApiRequest(string $uri)
                 loadController('ProfileController', 'getUsersById', $matches[1]);
             }
         }
-    } else if ($endPoint == 'programs/favorite') {
+    } // Get Programs Favorite
+    else if ($endPoint == 'programs/favorite') {
         $token = $_SESSION['token'] ?? null;
         $auth = authenticate($token);
         if (is_array($auth)) {
@@ -747,7 +773,8 @@ function handleApiRequest(string $uri)
                 loadController('ProgramController', 'getFavoritePrograms');
             }
         }
-    } else if ($endPoint == 'registrations/per-year') {
+    } // GET Registration Trafic per Year
+    else if ($endPoint == 'registrations/per-year') {
         $token = $_SESSION['token'] ?? null;
         $auth = authenticate($token);
         if (is_array($auth)) {
@@ -757,7 +784,8 @@ function handleApiRequest(string $uri)
                 loadController('RegistrationController', 'getRegistrationsSummary');
             }
         }
-    } else if ($endPoint == 'departments/most-programs') {
+    } // GET Departments with the most programs
+    else if ($endPoint == 'departments/most-programs') {
         $token = $_SESSION['token'] ?? null;
         $auth = authenticate($token);
         if (is_array($auth)) {
@@ -767,7 +795,8 @@ function handleApiRequest(string $uri)
                 loadController('DepartmentsController', 'getMostProgramsInDepartment');
             }
         }
-    } else if ($endPoint == 'dashboard/summary') {
+    } // Dashboard Summary
+    else if ($endPoint == 'dashboard/summary') {
         $token = $_SESSION['token'] ?? null;
         $auth = authenticate($token);
         if (is_array($auth)) {
@@ -775,6 +804,17 @@ function handleApiRequest(string $uri)
         } else {
             if ($_SERVER['REQUEST_METHOD'] == 'GET') {
                 loadController('DashboardController', 'getSummary');
+            }
+        }
+    } // Registers Users
+    else if ($endPoint == 'user/registrations') {
+        $token = $_SESSION['token'] ?? null;
+        $auth = authenticate($token);
+        if (is_array($auth)) {
+            echo json_encode($auth);
+        } else {
+            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                loadController('UserManagementController', 'createUsers');
             }
         }
     }

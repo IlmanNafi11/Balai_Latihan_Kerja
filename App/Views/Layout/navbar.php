@@ -10,7 +10,7 @@
     </div>
 
     <div class="sidebar-navigations d-flex column-gap-3 h-100 align-items-center">
-        <a href="/profile/<?php echo $_SESSION['userID'] ?? null ?>">
+        <a href="/profile/admin/<?php echo $_SESSION['userID'] ?? null ?>">
             <div class="avatar">
                 <img class="avatar-img w-100 h-100" src="http://<?= $_SERVER['HTTP_HOST']."/" . $_SESSION["path_profile"] ?? null ?>" alt="user-profile">
             </div>
@@ -27,7 +27,7 @@
 <!-- Slider Navbar -->
 <div class="slider-navigation d-flex flex-column m-0 align-items-center" id="slider-navigation">
     <div class="slider-image-profile-container d-flex flex-column align-items-center row-gap-3 w-100 h-auto">
-        <a href="/profile/<?php echo $_SESSION['userID'] ?? null ?>">
+        <a href="/profile/admin/<?php echo $_SESSION['userID'] ?? null ?>">
             <div class="avatar slider-img-avatar overflow-hidden">
                 <img class="avatar-img object-fit-cover" src="http://<?= $_SERVER['HTTP_HOST']."/" . $_SESSION["path_profile"] ?? null ?>" alt="user_profile">
             </div>

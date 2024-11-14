@@ -1,5 +1,5 @@
-import {successAlert, errorAlert, questionAlert} from "../helper/exceptions.js";
-import {blurValidate, onSaveValidate} from "../helper/validators.js";
+import {successAlert, errorAlert, questionAlert, warningAlert} from "../helper/exceptions.js";
+import {blurValidate, onSaveValidate, validateFile} from "../helper/validators.js";
 
 const name = document.getElementById('nama-admin');
 const phone = document.getElementById('no-hp-admin');
@@ -36,6 +36,8 @@ const regexPassword = /^[a-zA-Z0-9]+$/;
 const regexAlamat = /^[a-zA-Z0-9 ,.]+$/;
 const regexNoTlp = /^08[0-9]+$/;
 const regexEmail = /^[\w.-]+@[a-zA-Z\d.-]+\.[a-zA-Z]{2,}$/;
+const allowedTypes = ['image/jpeg', 'image/png'];
+const maxFileSize = 2 * 1024 * 1024;
 
 blurValidate(name, "Input Nama Admin", validName, invalidName, null, regexNama, 50);
 blurValidate(phone, "Input Nomor Telephon", validPhone, invalidPhone, null, regexNoTlp, 13);
@@ -55,42 +57,30 @@ uploadArea.addEventListener('click', function () {
 
 pasFoto.addEventListener('change', () => {
     const file = pasFoto.files[0];
-    const allowedTypes = ['image/jpeg', 'image/png'];
-    const maxFileSize = 2 * 1024 * 1024;
-    uploadArea.classList.remove('is-valid', 'is-invalid')
-    if (file && allowedTypes.includes(file.type) && file.size <= maxFileSize) {
-        uploadArea.classList.add('is-valid');
-        validPasFoto.textContent = "Pas Foto valid";
-        validFoto = true;
+    if (validateFile(file, "Pas Foto", validPasFoto, invalidPasFoto, allowedTypes, maxFileSize, uploadArea)) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            uploadIcon.src = e.target.result;
+            uploadIcon.style.display = 'block';
+            uploadText.style.display = 'none';
+            formatText.style.display = 'none';
+            validFoto = true;
+        };
+        reader.readAsDataURL(file);
+
     } else {
         pasFoto.value = "";
-        uploadArea.classList.add('is-invalid');
-        invalidPasFoto.textContent = "Pas foto tidak valid atau terlalu besar (maksimal 2MB)";
+        uploadIcon.src = "/Asset/images/upload_icons.png"
+        uploadText.style.display = 'block';
+        formatText.style.display = 'block';
+        validFoto = false;
     }
-
-    const reader = new FileReader();
-    reader.onload = function (e) {
-        // Buat elemen gambar baru untuk pratinjau
-        let previewImg = document.getElementById('previewImg');
-        if (!previewImg) {
-            previewImg = document.createElement('img');
-            previewImg.id = 'previewImg';
-            previewImg.classList.add('preview-img');
-            uploadArea.appendChild(previewImg);
-        }
-
-        previewImg.src = e.target.result;
-        previewImg.style.display = 'block';
-        uploadIcon.style.display = 'none';
-        uploadText.style.display = 'none';
-        formatText.style.display = 'none';
-    };
-    reader.readAsDataURL(file);
 });
 
 document.getElementById('btn-simpan').addEventListener('click', (e) => {
     e.preventDefault();
     let isValid = true;
+    const file = pasFoto.files[0];
     isValid = onSaveValidate(name, "Input Nama Admin", validName, invalidName, null, regexNama, 50) && isValid;
     isValid = onSaveValidate(phone, "Input Nomor Telephon", validPhone, invalidPhone, null, regexNoTlp, 13) && isValid;
     isValid = onSaveValidate(email, "Input Email", validEmail, invalidEmail, null, regexEmail, 70) && isValid;
@@ -98,12 +88,11 @@ document.getElementById('btn-simpan').addEventListener('click', (e) => {
     isValid = onSaveValidate(ttl, "Input Tanggal Lahir", validTtl, invalidTtl, null, null, 12) && isValid;
     isValid = onSaveValidate(jenisKelamin, "Input Jenis Kelamin", validJenisKelamin, invalidJenisKelamin, 'default', null, 10) && isValid;
     isValid = onSaveValidate(alamat, "Input Alamat", validAlamat, invalidAlamat, null, regexAlamat, 100) && isValid;
+    isValid = validateFile(file, "Pas Foto", validPasFoto, invalidPasFoto, allowedTypes, maxFileSize, uploadArea) && isValid;
 
-    const file = pasFoto.files[0];
-
-    if (validFoto && isValid && file) {
+    if (isValid) {
         questionAlert("Simpan Data?", "Pastikan semua data telah diisi dengan benar", "Ya, Simpan", () => {
-
+            const file = pasFoto.files[0];
             const formData = new FormData();
             formData.append('name', name.value.trim());
             formData.append('email', email.value.trim());
@@ -114,23 +103,24 @@ document.getElementById('btn-simpan').addEventListener('click', (e) => {
             formData.append('alamat', alamat.value.trim());
             formData.append('pas_foto', file);
 
-            axios.post('/user/create', formData, {
+            axios.post('/user/admin/add', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
             })
                 .then(response => {
                     if (response.data.success) {
-                        successAlert("Data berhasil disimpan!", response.data.redirect_url);
-                    } else {
-                        errorAlert(response.data.message);
+                        successAlert(response.data.message, response.data.redirect);
+                    } else if (!response.data.isEmpty) {
+                        warningAlert(response.data.message);
+                        email.classList.remove('is-valid');
+                        email.classList.add('is-invalid');
+                        invalidEmail.textContent = "Silahkan gunakan email yang lain!";
                     }
                 })
                 .catch(error => {
                     errorAlert(error.response);
                 })
         });
-    } else {
-        errorAlert('Pastikan form dan pas foto diisi dengan benar')
     }
 });

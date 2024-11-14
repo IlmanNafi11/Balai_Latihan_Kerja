@@ -54,35 +54,35 @@
                         <label for="nama-admin" class="form-label">Nama</label>
                         <input type="text" name="nama-admin" id="nama-admin" class="form-control"
                                placeholder="Contoh: Rigen">
-                        <div class="valid-feedback" id="valid-feedback"></div>
-                        <div class="invalid-feedback" id="invalid-feedback"></div>
+                        <div class="valid-feedback"></div>
+                        <div class="invalid-feedback"></div>
                     </div>
                     <div class="input-no-hp-admin">
                         <label for="no-hp-admin" class="form-label">Nomor Telepon</label>
                         <input type="text" name="no-hp-admin" id="no-hp-admin" class="form-control"
                                placeholder="Contoh : 08xxxxxx">
-                        <div class="valid-feedback" id="valid-feedback"></div>
-                        <div class="invalid-feedback" id="invalid-feedback"></div>
+                        <div class="valid-feedback"></div>
+                        <div class="invalid-feedback"></div>
                     </div>
                     <div class="input-email-admin">
                         <label for="email-admin" class="form-label">Email</label>
                         <input type="email" name="email-admin" id="email-admin" class="form-control"
                                placeholder="Contoh: rigen@gmail.com">
-                        <div class="valid-feedback" id="valid-feedback"></div>
-                        <div class="invalid-feedback" id="invalid-feedback"></div>
+                        <div class="valid-feedback"></div>
+                        <div class="invalid-feedback"></div>
                     </div>
                     <div class="input-kata-sandi-admin">
                         <label for="kata-sandi-admin" class="form-label">Kata Sandi</label>
                         <input type="password" name="kata-sandi-admin" id="kata-sandi-admin" class="form-control"
                                placeholder="Contoh: rigen12345">
-                        <div class="valid-feedback" id="valid-feedback"></div>
-                        <div class="invalid-feedback" id="invalid-feedback"></div>
+                        <div class="valid-feedback"></div>
+                        <div class="invalid-feedback"></div>
                     </div>
                     <div class="input-tanggal-lahir-admin">
                         <label for="tanggal-lahir-admin" class="form-label">Tanggal Lahir</label>
                         <input type="date" name="tanggal-lahir-admin" id="tanggal-lahir-admin" class="form-control">
-                        <div class="valid-feedback" id="valid-feedback"></div>
-                        <div class="invalid-feedback" id="invalid-feedback"></div>
+                        <div class="valid-feedback"></div>
+                        <div class="invalid-feedback"></div>
                     </div>
                 </div>
                 <div class="container-form-input flex-grow-1 d-flex flex-column row-gap-3">
@@ -93,15 +93,15 @@
                             <option value="laki-laki">Laki-Laki</option>
                             <option value="perempuan">Perempuan</option>
                         </select>
-                        <div class="valid-feedback" id="valid-feedback"></div>
-                        <div class="invalid-feedback" id="invalid-feedback"></div>
+                        <div class="valid-feedback"></div>
+                        <div class="invalid-feedback"></div>
                     </div>
                     <div class="input-alamat-admin">
                         <label for="alamat-admin" class="form-label">Alamat</label>
                         <input type="text" name="alamat-admin" id="alamat-admin" class="form-control"
                                placeholder="Contoh : Nganjuk, Nganjuk, Jawa Timur">
-                        <div class="valid-feedback" id="valid-feedback"></div>
-                        <div class="invalid-feedback" id="invalid-feedback"></div>
+                        <div class="valid-feedback"></div>
+                        <div class="invalid-feedback"></div>
                     </div>
                     <div class="input-pas-foto flex-grow-1 d-flex flex-column">
                         <label for="fileInput" class="form-label">Pas Foto</label>
@@ -112,8 +112,8 @@
                             <small id="formatText">*jpg, png</small>
                             <input type="file" id="fileInput" accept=".jpg,.jpeg,.png" style="display: none"/>
                         </div>
-                        <div class="valid-feedback" id="valid-feedback"></div>
-                        <div class="invalid-feedback" id="invalid-feedback"></div>
+                        <div class="valid-feedback"></div>
+                        <div class="invalid-feedback"></div>
                     </div>
 
                 </div>

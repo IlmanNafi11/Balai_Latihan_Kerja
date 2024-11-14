@@ -1,25 +1,28 @@
 <?php
+
 class UserModel
 {
     private $connection;
+
     public function __construct($db)
     {
         $this->connection = $db;
     }
 
-    public function getAllUsers()
+    public function cekEmail($email)
     {
-        $query = "SELECT * FROM users";
+        $query = "SELECT email FROM users WHERE email = :email";
         $stmt = $this->connection->prepare($query);
         try {
+            $stmt->bindParam(':email', $email);
             $stmt->execute();
-            $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            if (empty($data)) {
-                return ['success' => true, 'isEmpty' => true, 'message' => 'Data kosong'];
-            } else {
-                return ['success' => true, 'isEmpty' => false, 'users' => $data];
-            }
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
+            if ($result) {
+                return ['isEmpty' => false, 'success' => false, 'message' => 'Email sudah terdaftar'];
+            } else {
+                return ['isEmpty' => true, 'success' => true, 'message' => 'Email belum terdaftar'];
+            }
         } catch (PDOException $e) {
             return ['success' => false, 'message' => $e->getMessage()];
         }
@@ -58,7 +61,7 @@ class UserModel
             $stmt->bindParam(':role', $data['role']);
             $stmt->bindParam(':profile_picture', $data['foto_path']);
             $stmt->execute();
-            return ['success' => true, 'message' => 'Data user berhasil disimpan', 'redirect_url' => '/user'];
+            return ['success' => true, 'message' => 'Registrasi Berhasil', 'redirect' => '/user'];
         } catch (PDOException $e) {
             return ['success' => false, 'message' => $e->getMessage()];
         }
@@ -98,7 +101,7 @@ class UserModel
                 $stmt->bindParam(':path_profile', $profile_picture);
             }
             $stmt->execute();
-            return ['success' => true, 'message' => 'Data admin berhasil diperbarui', 'redirect' => '/profile/' . $id];
+            return ['success' => true, 'message' => 'Data admin berhasil diperbarui', 'redirect' => '/profile/admin/' . $id];
         } catch (PDOException $e) {
             return ['success' => false, 'message' => $e->getMessage()];
         }
@@ -183,6 +186,49 @@ class UserModel
         } catch (PDOException $e) {
             http_response_code(500);
             return ['success' => false, 'message' => 'Password gagal diperbarui' . $e->getMessage()];
+        }
     }
+
+    public function getUsersByRole($role)
+    {
+        $query = "SELECT * FROM users WHERE role IN ($role)";
+        $stmt = $this->connection->prepare($query);
+        try {
+            $stmt->execute();
+            $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            if (empty($data)) {
+                http_response_code(204);
+                return ['success' => true, 'isEmpty' => true, 'message' => 'Data kosong', 'users' => []];
+            } else {
+                http_response_code(200);
+                return ['success' => true, 'isEmpty' => false, 'users' => $data];
+            }
+
+        } catch (PDOException $e) {
+            http_response_code(500);
+            return ['success' => false, 'message' => $e->getMessage()];
+        }
     }
+
+    public function searchUsersByRole($search, $role)
+    {
+        $query = "SELECT * FROM users WHERE role IN ($role) AND nama LIKE :search";
+        $stmt = $this->connection->prepare($query);
+        try {
+            $search = '%' . $search . '%';
+            $stmt->bindParam(":search", $search);
+            $stmt->execute();
+            $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            if (empty($data)) {
+                return ['success' => true, 'isEmpty' => true, 'message' => 'Data Kosong', 'users' => []];
+            } else {
+                return ['success' => true, 'isEmpty' => false, 'users' => $data];
+            }
+        } catch (PDOException $e) {
+            http_response_code(500);
+            return ['success' => false, 'message' => $e->getMessage()];
+        }
+    }
+
 }

@@ -67,7 +67,7 @@ document.getElementById('perbarui-profile').addEventListener('click', (e) => {
                 formData.append('profile_picture', file);
             }
 
-            axios.post(`profile/${id}`, formData, {
+            axios.post(`profile/admin/${id}`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }

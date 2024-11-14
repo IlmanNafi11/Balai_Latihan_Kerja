@@ -341,6 +341,11 @@ body
     text-decoration: none;
 }
 
+.table-title
+{
+    color: rgba(33, 37, 41, 0.75)
+}
+
 /* 
     Form input institusi
 */

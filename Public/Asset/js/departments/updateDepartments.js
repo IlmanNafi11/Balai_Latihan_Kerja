@@ -52,7 +52,6 @@ inputFoto.addEventListener('change', () => {
         reader.onload = function (e) {
             uploadIcon.src = e.target.result;
             uploadIcon.style.display = 'block';
-            ;
             uploadText.style.display = 'none';
             formatText.style.display = 'none';
         };

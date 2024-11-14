@@ -14,7 +14,6 @@ class UserManagementController
 
     public function index()
     {
-        $users = $this->model->getAllUsers();
         require_once '../App/Views/UserManagements/userManagement.php';
     }
 
@@ -23,14 +22,17 @@ class UserManagementController
         require_once '../App/Views/UserManagements/addAdmin.php';
     }
 
-    public function getAllUsers()
-    {
-        echo json_encode($this->model->getAllUsers());
-    }
 
     public function getUserById($id)
     {
-        echo json_encode($this->model->getUserById($id));
+        echo json_encode($this->model->getUsersById($id));
+    }
+
+    public function cekEmail()
+    {
+        $data = json_decode(file_get_contents("php://input"), true);
+        $email = $data['email'];
+        echo json_encode($this->model->cekEmail($email));
     }
 
     public function createUsers()
@@ -47,6 +49,12 @@ class UserManagementController
 
         if (empty($name) || empty($email) || empty($phone) || empty($pas_foto)) {
             echo json_encode(['success' => false, 'message' => 'Pastikan semua data telah diisi.']);
+            return;
+        }
+
+        $validate = $this->model->cekEmail($email);
+        if (!$validate['isEmpty']) {
+            echo json_encode($validate);
             return;
         }
 
@@ -93,4 +101,27 @@ class UserManagementController
     {
         echo json_encode($this->model->deleteUsers($id));
     }
+
+    public function getAdminUsers()
+    {
+        echo json_encode($this->model->getUsersByRole("'super admin', 'admin'"));
+    }
+
+    public function getPenggunaUsers()
+    {
+        echo json_encode($this->model->getUsersByRole("'pengguna'"));
+    }
+
+    public function searchAdminUsers()
+    {
+        $name = $_GET['search'] ?? '';
+        echo json_encode($this->model->searchUsersByRole($name, "'super admin', 'admin'"));
+    }
+
+    public function searchPenggunaUsers()
+    {
+        $name = $_GET['search'] ?? '';
+        echo json_encode($this->model->searchUsersByRole($name, "'pengguna'"));
+    }
+
 }
