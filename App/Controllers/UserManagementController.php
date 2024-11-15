@@ -123,5 +123,4 @@ class UserManagementController
         $name = $_GET['search'] ?? '';
         echo json_encode($this->model->searchUsersByRole($name, "'pengguna'"));
     }
-
 }

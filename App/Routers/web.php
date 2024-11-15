@@ -715,49 +715,77 @@ function handleApiRequest(string $uri)
 
     } // GET All Institute Data
     else if ($endPoint == 'institutes') {
-        if ($users = authenticate()) {
+        $token = $_SESSION['token'] ?? null;
+        $auth = authenticate($token);
+        if (is_array($auth)) {
+            echo json_encode($auth);
+        } else {
             if ($_SERVER['REQUEST_METHOD'] == 'GET') {
                 loadController('InstituteController', 'getAllInstitute');
             }
         }
     } // GET All Departments Data
     else if ($endPoint == 'departments') {
-        if ($users = authenticate()) {
+        $token = $_SESSION['token'] ?? null;
+        $auth = authenticate($token);
+        if (is_array($auth)) {
+            echo json_encode($auth);
+        } else {
             if ($_SERVER['REQUEST_METHOD'] == 'GET') {
                 loadController('DepartmentsController', 'getAllDepartments');
             }
         }
     } // GET All Programs by Department id
     else if (preg_match('/departments\/(\d+)\/programs$/', $endPoint, $matches)) {
-        if ($users = authenticate()) {
+        $token = $_SESSION['token'] ?? null;
+        $auth = authenticate($token);
+        if (is_array($auth)) {
+            echo json_encode($auth);
+        } else {
             if ($_SERVER['REQUEST_METHOD'] == 'GET') {
                 loadController('ProgramController', 'getProgramsByDepartment', $matches[1]);
             }
         }
     } // GET All Programs Detail
     else if (preg_match('/programs\/(\d+)$/', $endPoint, $matches)) {
-        if ($users = authenticate()) {
+        $token = $_SESSION['token'] ?? null;
+        $auth = authenticate($token);
+        if (is_array($auth)) {
+            echo json_encode($auth);
+        } else {
             if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-                loadController('ProgramController', 'getProgramsById', $matches[1]);
+                loadController('ProgramController', 'getProgramsDetail', $matches[1]);
             }
         }
     } // GET All Requirements By Programs Id
     else if (preg_match('/programs\/(\d+)\/requirements$/', $endPoint, $matches)) {
-        if ($users = authenticate()) {
+        $token = $_SESSION['token'] ?? null;
+        $auth = authenticate($token);
+        if (is_array($auth)) {
+            echo json_encode($auth);
+        } else {
             if ($_SERVER['REQUEST_METHOD'] == 'GET') {
                 loadController('RequirementsController', 'getRequirementsByProgram', $matches[1]);
             }
         }
     } // GET All Notifications
     else if ($endPoint == 'notifications') {
-        if ($users = authenticate()) {
+        $token = $_SESSION['token'] ?? null;
+        $auth = authenticate($token);
+        if (is_array($auth)) {
+            echo json_encode($auth);
+        } else {
             if ($_SERVER['REQUEST_METHOD'] == 'GET') {
                 loadController('NotificationController', 'getAllNotifications');
             }
         }
     } // GET Users Data By id
     else if (preg_match('/users\/(\d+)$/', $uri, $matches)) {
-        if ($users = authenticate()) {
+        $token = $_SESSION['token'] ?? null;
+        $auth = authenticate($token);
+        if (is_array($auth)) {
+            echo json_encode($auth);
+        } else {
             if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                 loadController('ProfileController', 'getUsersById', $matches[1]);
             }
@@ -815,6 +843,17 @@ function handleApiRequest(string $uri)
         } else {
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 loadController('UserManagementController', 'createUsers');
+            }
+        }
+    } // Register for Training
+    else if ($endPoint == 'user/registrations/training') {
+        $token = $_SESSION['token'] ?? null;
+        $auth = authenticate($token);
+        if (is_array($auth)) {
+            echo json_encode($auth);
+        } else {
+            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                loadController('RegistrationController', 'registrationsPrograms');
             }
         }
     }

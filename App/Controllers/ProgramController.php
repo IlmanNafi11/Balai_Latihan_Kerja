@@ -37,10 +37,15 @@ class ProgramController
         echo json_encode($this->model->getAllProgram());
     }
 
+    public function getProgramById($id)
+    {
+        return $this->model->getProgramById($id);
+    }
+
     public function getProgramsByIdForUpdate($id)
     {
         require_once '../App/Models/RequirementsModel.php';
-        $programs = $this->model->getProgramByIdForUpdate($id);
+        $programs = $this->model->getProgramById($id);
         if ($programs['success'] && !$programs['isEmpty']) {
             $requirementsModel = new RequirementsModel($this->db);
             $requirements = $requirementsModel->getRequirementsByProgram($id);
@@ -57,9 +62,9 @@ class ProgramController
         }
     }
 
-    public function getProgramsById($id)
+    public function getProgramsDetail($id)
     {
-        echo json_encode($this->model->getProgramsById($id));
+        echo json_encode($this->model->getProgramsDetail($id));
     }
 
     public function getProgramsByDepartment($id)

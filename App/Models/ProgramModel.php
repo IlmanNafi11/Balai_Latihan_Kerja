@@ -29,7 +29,7 @@ class ProgramModel
         }
     }
 
-    public function getProgramByIdForUpdate($id)
+    public function getProgramById($id)
     {
         $query = "SELECT * FROM programs WHERE id = :id";
         $stmt = $this->connection->prepare($query);
@@ -71,7 +71,7 @@ class ProgramModel
         }
     }
 
-    public function getProgramsById($id)
+    public function getProgramsDetail($id)
     {
         $query = "SELECT programs.*, buildings.nama AS building_name, departments.nama AS department_name, instructors.nama AS instructor_name, instructors.no_tlp AS instructors_contact, instructors.alamat AS instructors_address FROM programs LEFT JOIN buildings ON programs.building_id = buildings.id LEFT JOIN departments ON programs.department_id = departments.id LEFT JOIN instructors ON programs.instructor_id = instructors.id WHERE programs.id = :id";
         $stmt = $this->connection->prepare($query);
