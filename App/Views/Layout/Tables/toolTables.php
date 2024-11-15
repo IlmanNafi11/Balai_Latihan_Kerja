@@ -1,4 +1,4 @@
-<div class="tables tables-program-container px-0 m-0">
+<div class="tables tables-program-container px-0 m-0 d-flex flex-column row-gap-3 h-100">
     <div class="tables-topbar d-flex justify-content-between row-gap-3 w-100 flex-shrink-1">
         <div class="button-add-data-container">
             <a href="/tools/add">

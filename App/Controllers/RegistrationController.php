@@ -101,4 +101,76 @@ class RegistrationController
         }
     }
 
+    public function updateStatusRegistration($id)
+    {
+        $data = json_decode(file_get_contents("php://input"), true);
+        $status = $data['status'];
+        echo json_encode($this->model->updateStatusRegistration($id, $status));
+    }
+
+    public function deleteRegistration($id)
+    {
+        echo json_encode($this->model->deleteRegistration($id));
+    }
+
+    public function searchRegistrationsData()
+    {
+        $registrationNumber = $_GET['search'] ?? '';
+        echo json_encode($this->model->searchRegistrations($registrationNumber));
+    }
+
+    public function getAllRegistrationsData()
+    {
+        echo json_encode($this->model->getAllRegistration());
+    }
+
+    public function downloadBerkas()
+    {
+        $input = json_decode(file_get_contents('php://input'), true);
+        if (!isset($input['path'])) {
+            http_response_code(400);
+            echo json_encode(['success' => false, 'message' => 'Folder path tidak disediakan']);
+            exit();
+        }
+
+        $folderPath = $input['path'];
+        $fullFolderPath = $_SERVER['DOCUMENT_ROOT'] . "/$folderPath";
+
+        if (!is_dir($fullFolderPath)) {
+            http_response_code(404);
+            echo json_encode(['success' => false, 'message' => 'Folder tidak ditemukan']);
+            exit();
+        }
+
+        $userFolderName = basename($fullFolderPath);
+
+        $zipFileName = sys_get_temp_dir() . '/folder.zip';
+        $zip = new ZipArchive();
+
+        if ($zip->open($zipFileName, ZipArchive::CREATE | ZipArchive::OVERWRITE) === TRUE) {
+            $files = scandir($fullFolderPath);
+            foreach ($files as $file) {
+                if ($file !== '.' && $file !== '..') {
+                    $filePath = $fullFolderPath . '/' . $file;
+                    if (is_file($filePath)) {
+                        $zip->addFile($filePath, $userFolderName . '/' . $file);
+                    }
+                }
+            }
+            $zip->close();
+
+            header('Content-Type: application/zip');
+            header('Content-Disposition: attachment; filename="berkas.zip"');
+            header('Content-Length: ' . filesize($zipFileName));
+            readfile($zipFileName);
+
+            unlink($zipFileName);
+            exit();
+        } else {
+            http_response_code(500);
+            echo json_encode(['success' => false, 'message' => 'Gagal membuat file zip']);
+            exit();
+        }
+    }
+
 }

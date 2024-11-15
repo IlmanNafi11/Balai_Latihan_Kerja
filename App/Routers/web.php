@@ -106,7 +106,7 @@ if (str_starts_with($uri, 'api/v1/public/')) {
             exit();
         }
     } // UPDATE Department
-    else if (preg_match('/department\/update\/(\d+)$/', $uri, $matches)) { // verifed
+    else if (preg_match('/department\/update\/(\d+)$/', $uri, $matches)) {
         if (isset($_SESSION['userID'])) {
             $id = $matches[1];
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -119,7 +119,7 @@ if (str_starts_with($uri, 'api/v1/public/')) {
             exit();
         }
     } // DELETE Department
-    elseif (preg_match('/department\/delete\/(\d+)$/', $uri, $matches)) { // verifed
+    elseif (preg_match('/department\/delete\/(\d+)$/', $uri, $matches)) {
         if (isset($_SESSION['userID'])) {
             $id = $matches[1];
             if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
@@ -140,7 +140,7 @@ if (str_starts_with($uri, 'api/v1/public/')) {
             exit();
         }
     } // GET Department By ID
-    else if (preg_match('/department\/(\d+)\/data$/', $uri, $matches)) { // verifed
+    else if (preg_match('/department\/(\d+)\/data$/', $uri, $matches)) {
         if (isset($_SESSION['userID'])) {
             if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                 $id = $matches[1];
@@ -508,6 +508,47 @@ if (str_starts_with($uri, 'api/v1/public/')) {
             header('Location: /login');
             exit();
         }
+    } // Update Status Registration
+    else if (preg_match('/registration\/(\d+)/', $uri, $matches)) {
+        if (isset($_SESSION['userID'])) {
+            $id = $matches[1];
+            if ($_SERVER['REQUEST_METHOD'] === 'PUT') {
+                loadController('RegistrationController', 'updateStatusRegistration', $id);
+            }
+        } else {
+            header('Location: /login');
+            exit();
+        }
+    } // Search Registrations Data
+    else if ($uri == 'search-registration-data') {
+        if ($_SESSION['userID']) {
+            if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+                loadController('RegistrationController', 'searchRegistrationsData');
+            }
+        } else {
+            header('location: /login');
+            exit();
+        }
+    } // GET All Registration Data
+    else if ($uri == 'registration/all') {
+        if ($_SESSION['userID']) {
+            if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+                loadController('RegistrationController', 'getAllRegistrationsData');
+            }
+        } else {
+            header('location: /login');
+            exit();
+        }
+    }
+    else if ($uri == 'registration/download') {
+        if ($_SESSION['userID']) {
+            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                loadController('RegistrationController', 'downloadBerkas');
+            }
+        } else {
+            header('location: /login');
+            exit();
+        }
     } // Notification
     elseif ($uri == 'notification') {
         if (isset($_SESSION['userID'])) {
@@ -577,28 +618,6 @@ if (str_starts_with($uri, 'api/v1/public/')) {
             loadController('UserManagementController', 'createUsers');
         } else if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             loadController('UserManagementController', 'viewAddAdmin');
-        }
-    } // GET Users By ID
-    else if (preg_match('/user\/getUsers\/(\d+)/', $uri, $matches)) { // Noted
-        if (isset($_SESSION['userID'])) {
-            $id = $matches[1];
-            if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-                loadController('UserManagementController', 'getUserById', $id);
-            }
-        } else {
-            header('Location: /login');
-            exit();
-        }
-    } // UPDATE Users (Public)
-    else if (preg_match('/user\/updateUsers\/(\d+)/', $uri, $matches)) { // Noted
-        if (isset($_SESSION['userID'])) {
-            $id = $matches[1];
-            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-                loadController('UserManagementController', 'updateUsers', $id);
-            }
-        } else {
-            header('Location: /login');
-            exit();
         }
     } // DELETE Users
     else if (preg_match('/user\/(\d+)/', $uri, $matches)) {
@@ -711,10 +730,8 @@ if (str_starts_with($uri, 'api/v1/public/')) {
 function handleApiRequest(string $uri)
 {
     $endPoint = str_replace('api/v1/public/', '', $uri);
-    if ($endPoint == 'dashboards') {
-
-    } // GET All Institute Data
-    else if ($endPoint == 'institutes') {
+     // GET All Institute Data
+    if ($endPoint == 'institutes') {
         $token = $_SESSION['token'] ?? null;
         $auth = authenticate($token);
         if (is_array($auth)) {

@@ -63,4 +63,76 @@ class RegistrationsModel
             http_response_code(500);
         }
     }
+
+    public function updateStatusRegistration($id, $status)
+    {
+        $query = "UPDATE registrations SET status = :status WHERE id = :id";
+        $stmt = $this->connections->prepare($query);
+        try {
+            $stmt->bindParam(':status', $status);
+            $stmt->bindParam(':id', $id);
+            $stmt->execute();
+            http_response_code(200);
+            return ['success' => true, 'message' => 'Status berhasil diperbarui', 'redirect' => '/registration'];
+        } catch (PDOException $e) {
+            http_response_code(500);
+            return ['success' => false, 'message' => $e->getMessage()];
+        }
+    }
+
+    public function deleteRegistration($id)
+    {
+        $query = "DELETE FROM registrations WHERE id = :id";
+        $stmt = $this->connections->prepare($query);
+        try {
+            $stmt->bindParam(':id', $id);
+            $stmt->execute();
+            http_response_code(200);
+            return ['success' => true, 'message' => 'Data berhasil dihapus', 'redirect' => '/registration'];
+        } catch (PDOException $e) {
+            http_response_code(500);
+            return ['success' => false, 'message' => $e->getMessage()];
+        }
+    }
+
+    public function searchRegistrations($search)
+    {
+        $query = "SELECT registrations.*, users.id AS user_id, users.nama AS nama_user, programs.nama AS nama_program FROM registrations JOIN users ON registrations.user_id = users.id JOIN programs ON registrations.program_id = programs.id WHERE registrations.registration_number LIKE :search OR users.nama LIKE :search";
+        $stmt = $this->connections->prepare($query);
+        try {
+            $search = '%' . $search . '%';
+            $stmt->bindParam(":search", $search);
+            $stmt->execute();
+            $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            if (empty($data)) {
+                return ['success' => true, 'isEmpty' => true, 'message' => 'Data Kosong', 'registrations' => []];
+            } else {
+                http_response_code(200);
+                return ['success' => true, 'isEmpty' => false, 'registrations' => $data];
+            }
+        } catch (PDOException $e) {
+            http_response_code(500);
+            return ['success' => false, 'message' => $e->getMessage()];
+        }
+    }
+
+    public function getAllRegistration()
+    {
+        $query = "SELECT registrations.*, users.id AS user_id, users.nama AS nama_user, programs.nama AS nama_program FROM registrations JOIN users ON registrations.user_id = users.id JOIN programs ON registrations.program_id = programs.id";
+        $stmt = $this->connections->prepare($query);
+        try {
+            $stmt->execute();
+            $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            if (empty($data)) {
+                return ['success' => true, 'isEmpty' => true, 'message' => 'Data Kosong', 'registrations' => []];
+            } else {
+                http_response_code(200);
+                return ['success' => true, 'isEmpty' => false, 'registrations' => $data];
+            }
+        } catch (PDOException $e) {
+            http_response_code(500);
+            return ['success' => false, 'message' => $e->getMessage()];
+        }
+    }
 }

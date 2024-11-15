@@ -514,6 +514,21 @@ body
 }
 
 /*
+    Download Link
+*/
+
+.download-link
+{
+    color: #007BFF;
+    cursor: pointer;
+}
+
+.download-link:hover
+{
+    color: #0260c9;
+}
+
+/*
     Media query
 */
 

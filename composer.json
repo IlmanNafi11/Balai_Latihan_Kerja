@@ -4,6 +4,7 @@
         "symfony/polyfill-ctype": "^1.23",
         "firebase/php-jwt": "^6.10",
         "phpmailer/phpmailer": "^6.9",
-        "symfony/http-foundation": "^7.1"
+        "symfony/http-foundation": "^7.1",
+      "ext-zip": "*"
     }
 }

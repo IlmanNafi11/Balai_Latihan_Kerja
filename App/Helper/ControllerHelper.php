@@ -5,6 +5,8 @@ function loadController($controller, $method, $params = []) {
     if (!is_array($params)) {
         $params = [$params];
     }
+    error_log($controller);
+    error_log($method);
     call_user_func_array([$controllerInstance, $method], $params);
 }
 
