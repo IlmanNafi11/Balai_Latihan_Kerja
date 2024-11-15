@@ -63,6 +63,9 @@ function getTotalRegistrations() {
         })
         .catch(error => {
             errorAlert(error.response.data.message);
+            if (error.response.status === 408) {
+                window.location.href = '/login';
+            }
         });
 }
 
@@ -111,6 +114,9 @@ function getFavoritePrograms(){
         })
         .catch(error => {
             errorAlert(error.response.data.message);
+            if (error.response.status === 408) {
+                window.location.href = '/login';
+            }
         })
 }
 
@@ -158,5 +164,8 @@ function getMostPrograms(){
         })
         .catch(error => {
             errorAlert(error.response.data.message);
+            if (error.response.status === 408) {
+                window.location.href = '/login';
+            }
         })
 }

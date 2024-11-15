@@ -44,7 +44,7 @@ class LoginController
             $username = $user['nama'];
 
             $issuedAt = time();
-            $expired = $issuedAt + 3600;
+            $expired = $issuedAt + 86400;
 
             $payload = [
                 'iat' => $issuedAt,
