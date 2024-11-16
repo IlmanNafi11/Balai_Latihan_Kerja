@@ -275,7 +275,7 @@ if (str_starts_with($uri, 'api/v1/public/')) {
             $id = $matches[1];
             if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                 loadController('BuildingController', 'viewUpdateBuilding');
-            } elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            } elseif ($_SERVER['REQUEST_METHOD'] === 'PUT') {
                 loadController('BuildingController', 'updateBuilding', $id);
             }
         } else {
@@ -360,7 +360,7 @@ if (str_starts_with($uri, 'api/v1/public/')) {
     elseif (preg_match('/tools\/update\/(\d+)/', $uri, $matches)) {
         if (isset($_SESSION['userID'])) {
             $id = $matches[1];
-            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            if ($_SERVER['REQUEST_METHOD'] === 'PUT') {
                 loadController('ToolsController', 'updateTools', $id);
             } else if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                 loadController('ToolsController', 'viewUpdateTools', $id);

@@ -1,18 +1,21 @@
 <!-- Top Navbar -->
 <nav class="top-navbar d-flex px-3 py-2 justify-content-between align-items-center">
-    <div class="navbar-title-container d-flex align-items-center column-gap-3 h-100 w-auto">
-        <div class="logo-blk-container">
-            <img src="/Asset/images/logo-blk.png" alt="logo BLK">
+    <a href="/dashboard" class="text-decoration-none">
+        <div class="navbar-title-container d-flex align-items-center column-gap-2 h-100 w-auto">
+            <div class="logo-blk-container">
+                <img src="/Asset/images/Logo-PelatihanKu-Apps.png" alt="logo BLK">
+            </div>
+            <div class="navbar-title-container">
+                <span class="text-white">PelatihanKu</span>
+            </div>
         </div>
-        <div class="navbar-title-container">
-            <span class="text-white">Balai Latihan Kerja</span>
-        </div>
-    </div>
+    </a>
+
 
     <div class="sidebar-navigations d-flex column-gap-3 h-100 align-items-center">
         <a href="/profile/admin/<?php echo $_SESSION['userID'] ?? null ?>">
             <div class="avatar">
-                <img class="avatar-img w-100 h-100" src="http://<?= $_SERVER['HTTP_HOST']."/" . $_SESSION["path_profile"] ?? null ?>" alt="user-profile">
+                <img class="avatar-img w-100 h-100" src="http://<?= $_SERVER['HTTP_HOST'] . $_SESSION["path_profile"] ?? null ?>" alt="user-profile">
             </div>
         </a>
 
@@ -29,7 +32,7 @@
     <div class="slider-image-profile-container d-flex flex-column align-items-center row-gap-3 w-100 h-auto">
         <a href="/profile/admin/<?php echo $_SESSION['userID'] ?? null ?>">
             <div class="avatar slider-img-avatar overflow-hidden">
-                <img class="avatar-img object-fit-cover" src="http://<?= $_SERVER['HTTP_HOST']."/" . $_SESSION["path_profile"] ?? null ?>" alt="user_profile">
+                <img class="avatar-img object-fit-cover" src="http://<?= $_SERVER['HTTP_HOST'] . $_SESSION["path_profile"] ?? null ?>" alt="user_profile">
             </div>
         </a>
 
@@ -41,16 +44,36 @@
     <hr>
     <div class="slider-menu d-flex flex-column flex-grow-1 w-100 px-4">
         <ul class="d-flex flex-column row-gap-2">
-            <li class="list-menu"><a href="/dashboard">Beranda</a></li>
-            <li class="list-menu"><a href="/institute">Kelola Institusi</a></li>
-            <li class="list-menu"><a href="/department">Kelola Kejuruan</a></li>
-            <li class="list-menu"><a href="/programs">Kelola Program</a></li>
-            <li class="list-menu"><a href="/building">Kelola Gedung</a></li>
-            <li class="list-menu"><a href="/tools">Kelola Alat</a></li>
-            <li class="list-menu"><a href="/instructor">Kelola Instruktor</a></li>
-            <li class="list-menu"><a href="/registration">Kelola Pendaftaran</a></li>
-            <li class="list-menu"><a href="/notification">Kelola Notifikasi</a></li>
-            <li class="list-menu"><a href="/user">Kelola Pengguna</a></li>
+            <li class="list-menu">
+                <a href="/dashboard"><img src="/Asset/images/dashboard-icons-menu.png" alt="">Beranda</a>
+            </li>
+            <li class="list-menu">
+                <a href="/institute"><img src="/Asset/images/institutes-icons-menu.png" alt="">Kelola Institusi</a>
+            </li>
+            <li class="list-menu">
+                <a href="/department"><img src="/Asset/images/departments-icons-menu.png" alt="">Kelola Kejuruan</a>
+            </li>
+            <li class="list-menu">
+                <a href="/programs"><img src="/Asset/images/programs-icons-menu.png" alt="">Kelola Program</a>
+            </li>
+            <li class="list-menu">
+                <a href="/building"><img src="/Asset/images/buildings-icons-menu.png" alt="">Kelola Gedung</a>
+            </li>
+            <li class="list-menu">
+                <a href="/tools"><img src="/Asset/images/tools-icons-menu.png" alt="">Kelola Alat</a>
+            </li>
+            <li class="list-menu">
+                <a href="/instructor"><img class="me-2" src="/Asset/images/instructors-icons-menu.png" alt="">Kelola Instruktor</a>
+            </li>
+            <li class="list-menu">
+                <a href="/registration"><img src="/Asset/images/registrations-icons-menu.png" alt="">Kelola Pendaftaran</a>
+            </li>
+            <li class="list-menu">
+                <a href="/notification"><img src="/Asset/images/notifications-icons-menu.png" alt="">Kelola Notifikasi</a>
+            </li>
+            <li class="list-menu">
+                <a href="/user"><img src="/Asset/images/usersManagement-icons-menu.png" alt="">Kelola Pengguna</a>
+            </li>
         </ul>
     </div>
     <div class="slider-logout-navigations d-flex align-items-center column-gap-2">

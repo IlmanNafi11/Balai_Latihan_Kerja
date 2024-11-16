@@ -38,7 +38,7 @@ btnSimpan.addEventListener('click', (e) => {
     isValid = onSaveValidate(description, "Deskripsi Gedung", validDescription, invalidDescription, null, regexDecrp, 255) && isValid;
     if (isValid) {
         questionAlert("Perbarui data?", "Pastikan semua data telah diperbarui dengan benar!", "Ya, Perbarui", () => {
-            axios.post(`/building/update/${id}`, {
+            axios.put(`/building/update/${id}`, {
                 'name': name.value.trim(),
                 'description': description.value.trim(),
             })

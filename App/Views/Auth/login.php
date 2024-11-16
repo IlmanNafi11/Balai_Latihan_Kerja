@@ -14,6 +14,10 @@
             href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
             rel="stylesheet">
 
+    <link
+            href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Saira:ital,wght@0,100..900;1,100..900&display=swap"
+            rel="stylesheet">
+
     <link rel="stylesheet" href="/Asset/css/style.css">
     <title>Login | BLK NGANJUK</title>
 </head>
@@ -21,6 +25,9 @@
 <body>
 <!--        ROOT Container      -->
 <div class="container-fluid root-container-login main-root-container p-0 d-flex">
+
+    <?php require_once '../App/Views/Layout/overlay.php'; ?>
+
     <div class="container-login d-flex flex-column align-items-center justify-content-center rounded py-5 m-auto">
         <div class="inner-container h-100">
             <!-- Title -->
@@ -72,7 +79,10 @@
 <!-- SweetAlert -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+<script type="module" src="/Asset/js/script.js"></script>
+
 <script type="module" src="/Asset/js/auth/login.js"></script>
+
 
 </body>
 </html>

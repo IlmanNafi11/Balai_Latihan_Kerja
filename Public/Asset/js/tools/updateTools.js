@@ -45,7 +45,7 @@ btnSimpan.addEventListener('click', (e) => {
 
     if (isValid) {
         questionAlert("Perbarui Data?", "Pastikan semua data telah diperbarui dengan benar!", "Ya, Perbarui", () => {
-            axios.post(`/tools/update/${id}`, {
+            axios.put(`/tools/update/${id}`, {
                 'name': name.value,
                 'description': description.value,
                 'type': type.value,
