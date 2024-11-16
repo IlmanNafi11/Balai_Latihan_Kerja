@@ -74,9 +74,8 @@ document.getElementById('perbarui-profile').addEventListener('click', (e) => {
             })
                 .then(response => {
                     if (response.data.success) {
-                        successAlert("Profil Berhasil diperbarui!", response.data.redirect);
-                    } else {
-                        errorAlert("Profil Gagal diperbarui!");
+                        const redirectUri = `/profile/admin/${id}`;
+                        successAlert(response.data.message, redirectUri);
                     }
                 })
                 .catch(error => {

@@ -539,7 +539,7 @@ if (str_starts_with($uri, 'api/v1/public/')) {
             header('location: /login');
             exit();
         }
-    }
+    } // Download Form
     else if ($uri == 'registration/download') {
         if ($_SESSION['userID']) {
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -730,7 +730,7 @@ if (str_starts_with($uri, 'api/v1/public/')) {
 function handleApiRequest(string $uri)
 {
     $endPoint = str_replace('api/v1/public/', '', $uri);
-     // GET All Institute Data
+    // GET All Institute Data
     if ($endPoint == 'institutes') {
         $token = $_SESSION['token'] ?? null;
         $auth = authenticate($token);
@@ -853,13 +853,18 @@ function handleApiRequest(string $uri)
         }
     } // Registers Users
     else if ($endPoint == 'user/registrations') {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            loadController('UserManagementController', 'createUsers');
+        }
+    } // Update Profile User
+    else if (preg_match('/users\/auth\/(\d+)$/', $endPoint, $matches)) {
         $token = $_SESSION['token'] ?? null;
         $auth = authenticate($token);
         if (is_array($auth)) {
             echo json_encode($auth);
         } else {
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-                loadController('UserManagementController', 'createUsers');
+                loadController('ProfileController', 'updateProfile');
             }
         }
     } // Register for Training

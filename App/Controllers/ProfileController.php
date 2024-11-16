@@ -51,12 +51,12 @@ class ProfileController
                 $_SESSION['name'] = $name;
                 $_SESSION['userID'] = $id;
                 $_SESSION["path_profile"] = $filePath;
-                echo json_encode($this->model->updateAdmin($id, $name, $phone, $address, $filePath));
+                echo json_encode($this->model->updateUsers($id, $name, $phone, $address, $filePath));
             } else {
                 echo json_encode(['success' => false, 'message' => 'Gagal memindahkan foto profil']);
             }
         } else {
-            echo json_encode($this->model->updateAdmin($id, $name, $phone, $address, null));
+            echo json_encode($this->model->updateUsers($id, $name, $phone, $address, null));
         }
     }
 }

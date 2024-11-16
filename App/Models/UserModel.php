@@ -67,23 +67,7 @@ class UserModel
         }
     }
 
-    public function updateUsers($id, $name, $phone, $address)
-    {
-        $query = "UPDATE users SET nama = :name, tlp = :phone, alamat = :address WHERE id = :id";
-        $stmt = $this->connection->prepare($query);
-        try {
-            $stmt->bindParam(':id', $id);
-            $stmt->bindParam(':name', $name);
-            $stmt->bindParam(':phone', $phone);
-            $stmt->bindParam(':address', $address);
-            $stmt->execute();
-            return ['success' => true, 'message' => 'Data user berhasil diperbarui'];
-        } catch (PDOException $e) {
-            return ['success' => false, 'message' => $e->getMessage()];
-        }
-    }
-
-    public function updateAdmin($id, $name, $phone, $address, $profile_picture = null)
+    public function updateUsers($id, $name, $phone, $address, $profile_picture = null)
     {
         $query = "UPDATE users SET nama = :name, tlp = :phone, alamat = :address";
         if ($profile_picture) {
@@ -101,7 +85,7 @@ class UserModel
                 $stmt->bindParam(':path_profile', $profile_picture);
             }
             $stmt->execute();
-            return ['success' => true, 'message' => 'Data admin berhasil diperbarui', 'redirect' => '/profile/admin/' . $id];
+            return ['success' => true, 'message' => 'Profile berhasil diperbarui'];
         } catch (PDOException $e) {
             return ['success' => false, 'message' => $e->getMessage()];
         }
