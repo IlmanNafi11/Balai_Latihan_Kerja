@@ -49,7 +49,7 @@ class DepartmentsController
         $instituteID = $_POST['instituteId'];
         $image = $_FILES['image'];
 
-        if (empty($name) && empty($description) && empty($instituteID) && empty($image)) {
+        if (empty($name) || empty($description) || empty($instituteID) || empty($image)) {
             echo json_encode(['success' => false, 'message' => 'Data Tidak Lengkap']);
             return;
         }
@@ -77,7 +77,7 @@ class DepartmentsController
         $description = $_POST['description'];
         $image = $_FILES['image'] ?? null;
 
-        if (empty($name) && empty($description) && empty($instituteID) && empty($image)) {
+        if (empty($name) || empty($description) || empty($instituteID)) {
             echo json_encode(['success' => false, 'message' => 'Data Tidak Lengkap']);
             return;
         }

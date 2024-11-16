@@ -18,7 +18,7 @@ class LoginAuthModel
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if ($user) {
-            if ($password == $user['password']) {
+            if (password_verify($password, $user['password'])) {
                 unset($user['password']);
                 return $user;
             } else {

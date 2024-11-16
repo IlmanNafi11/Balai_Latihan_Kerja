@@ -87,7 +87,7 @@ class ProgramController
         $image = $_FILES['image'];
         $requirements = $_POST['array'];
 
-        if (empty($name) && empty($status_pendaftaran) && empty($tgl_mulai_pendaftaran) && empty($tgl_akhir_pendaftaran) && empty($standar) && empty($jml_peserta) && empty($deskripsi) && empty($instructor_id) && empty($building_id) && empty($department_id) && empty($image) && empty($requirements)) {
+        if (empty($name) || empty($status_pendaftaran) || empty($tgl_mulai_pendaftaran) || empty($tgl_akhir_pendaftaran) || empty($standar) || empty($jml_peserta) || empty($deskripsi) || empty($instructor_id) || empty($building_id) || empty($department_id) || empty($requirements)) {
             echo json_encode(['success' => false, 'message' => 'Data Tidak Lengkap']);
             return;
         }

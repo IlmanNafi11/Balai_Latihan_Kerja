@@ -40,17 +40,19 @@ class UserManagementController
         $name = $_POST['name'];
         $email = $_POST['email'];
         $phone = $_POST['phone'];
-        $password = $_POST['password'];
+        $pass = $_POST['password'];
         $tanggal_lahir = $_POST['tanggal_lahir'];
         $jenis_kelamin = $_POST['jenis_kelamin'];
         $alamat = $_POST['alamat'];
         $pas_foto = $_FILES['pas_foto'];
         $role = $_POST['role'] ?? 'admin';
 
-        if (empty($name) || empty($email) || empty($phone) || empty($pas_foto)) {
+        if (empty($name) || empty($email) || empty($phone) || empty($pas_foto) || empty($pass) || empty($tanggal_lahir) || empty($jenis_kelamin) || empty($alamat)) {
             echo json_encode(['success' => false, 'message' => 'Pastikan semua data telah diisi.']);
             return;
         }
+
+        $password = password_hash($pass, PASSWORD_DEFAULT);
 
         $validate = $this->model->cekEmail($email);
         if (!$validate['isEmpty']) {
@@ -90,7 +92,7 @@ class UserManagementController
         $name = $data['name'];
         $phone = $data['phone'];
         $address = $data['address'];
-        if (empty($name) && empty($phone) && empty($address)) {
+        if (empty($name) || empty($phone) || empty($address)) {
             return ['success' => false, 'message' => 'Data Tidak Lengkap'];
         } else {
             echo json_encode($this->model->updateUsers($id, $name, $phone, $address));

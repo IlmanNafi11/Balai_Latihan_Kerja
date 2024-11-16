@@ -52,7 +52,7 @@ class InstructorController
         $address = $_POST['address'];
         $image = $_FILES['image'];
 
-        if (empty($name) && empty($email) && empty($phone) && empty($address) && empty($image)) {
+        if (empty($name) || empty($email) || empty($phone) || empty($address) || empty($image)) {
             http_response_code(400);
             echo json_encode(['success' => false, 'message' => 'Data Tidak Lengkap']);
             return;
@@ -83,7 +83,7 @@ class InstructorController
         $address = $_POST['address'];
         $image = $_FILES['image'] ?? null;
 
-        if (empty($name) && empty($email) && empty($phone) && empty($address)) {
+        if (empty($name) || empty($email) || empty($phone) || empty($address)) {
             http_response_code(400);
             echo json_encode(['success' => false, 'message' => 'Data Tidak Lengkap']);
             return;
