@@ -58,7 +58,7 @@ function updateTable(tools) {
     tableBody.innerHTML = "";
 
     if (tools.length === 0) {
-        tableBody.innerHTML = "<tr><td colspan='4' class='text-center'>Data tidak ditemukan</td></tr>";
+        tableBody.innerHTML = "<tr><td colspan='5' class='text-center'>Data tidak ditemukan</td></tr>";
     } else {
         tools.forEach((row, index) => {
             const tr = document.createElement('tr');

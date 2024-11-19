@@ -17,7 +17,7 @@ class DepartmentModel
             $stmt->execute();
             $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
             if (empty($data)) {
-                return ['success' => true, 'isEmpty' => true, 'message' => 'Data Kosong'];
+                return ['success' => true, 'isEmpty' => true, 'message' => 'Data Kosong', 'departments' => []];
             } else {
                 return ['success' => true, 'isEmpty' => false, 'departments' => $data];
             }

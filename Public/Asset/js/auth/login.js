@@ -32,6 +32,8 @@ loginButton.addEventListener('click', () => {
             .catch(error => {
                 if (error.status === 401){
                     errorAlert(error.response.data.message);
+                } else if (error.status === 404) {
+                    errorAlert(error.response.data.message);
                 }
             });
     }

@@ -15,7 +15,7 @@ if (str_starts_with($uri, 'api/v1/public/')) {
     // Login
     if ($uri == '/' || $uri == '' || $uri == 'login') {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            loadController('LoginController', 'login');
+            loadController('LoginController', 'loginAdmin');
         } else if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             loadController('LoginController', 'index');
         }
@@ -737,7 +737,11 @@ function handleApiRequest(string $uri)
 {
     $endPoint = str_replace('api/v1/public/', '', $uri);
     // GET All Institute Data
-    if ($endPoint == 'institutes') {
+    if ($endPoint == 'auth/login') {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            loadController('LoginController', 'loginUsers');
+        }
+    } else if ($endPoint == 'institutes') {
         $token = $_SESSION['token'] ?? null;
         $auth = authenticate($token);
         if (is_array($auth)) {

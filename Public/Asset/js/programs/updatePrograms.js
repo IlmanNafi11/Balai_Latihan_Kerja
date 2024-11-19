@@ -1,5 +1,6 @@
 import {errorAlert, successAlert, questionAlert} from "../helper/exceptions.js";
 import {blurValidate, onSaveValidate, sliceUri, validateFile} from "../helper/validators.js";
+import {createOptions, setMinOnToday} from "../helper/helperFunction.js";
 
 const containerList = document.getElementById("container-persyaratan-list");
 const btnTambah = document.getElementById("btn-tambah-persyaratan");
@@ -15,7 +16,7 @@ const tglMulaiPendfataran = document.getElementById('tanggal-mulai');
 const tglAkhirPendfataran = document.getElementById('tanggal-akhir');
 const standarProgram = document.getElementById('standar-program');
 const deskripsi = document.getElementById('deskripsi-program');
-
+const namaAlat = document.getElementById('multiple-select-field');
 const validName = namaProgram.nextElementSibling;
 const invalidName = validName.nextElementSibling;
 const validKejuruan = namaKejuruan.nextElementSibling;
@@ -33,6 +34,8 @@ const invalidStandart = validStandart.nextElementSibling;
 const validDeskripsi = deskripsi.nextElementSibling;
 const invalidDeskripsi = validDeskripsi.nextElementSibling;
 const isEmptySyarat = btnTambah.nextElementSibling;
+const validAlat = document.getElementById('valid-alat');
+const invalidAlat = document.getElementById('invalid-alat');
 const inputFoto = document.getElementById('fileInput');
 const uploadArea = document.getElementById('upload-area');
 const uploadIcon = document.getElementById('uploadIcon');
@@ -45,11 +48,20 @@ const maxFileSize = 2 * 1024 * 1024;
 const id = sliceUri();
 let deleteRequirements = [];
 let imageUrl = null;
+let initialTools = [];
+let currentTools = [];
 
 const regexString = /^[a-zA-Z ]+$/;
 const regexComb = /^[a-zA-Z0-9 .,]+$/;
 const regexNum = /^[0-9]+$/;
 let file = null;
+
+$('#multiple-select-field').select2({
+    theme: "bootstrap-5",
+    width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+    placeholder: $(this).data('placeholder'),
+    closeOnSelect: true,
+});
 
 
 getDataOptions();
@@ -88,6 +100,19 @@ blurValidate(namaGedung, "Nama Gedung", validGedung, invalidGedung, "default", n
 blurValidate(jmlPeserta, "Jumlah Peserta", validJml, invalidJml, null, regexNum, 5);
 blurValidate(standarProgram, "Bagus!", validStandart, invalidStandart, null, regexString, 6);
 blurValidate(deskripsi, "Bagus!", validDeskripsi, invalidDeskripsi, null, regexComb, 255);
+
+function validateAlat() {
+    let isSelected = $('#multiple-select-field').val().length !== 0;
+    namaAlat.classList.remove('is-valid', 'is-invalid');
+    if (!isSelected) {
+        namaAlat.classList.add('is-invalid');
+        invalidAlat.textContent = 'Pilih alat yang tersedia!';
+        return false;
+    }
+    validAlat.textContent = "Alat alat program dipilih dengan baik";
+    namaAlat.classList.add('is-valid');
+    return true;
+}
 
 function validateInputPersyaratan() {
     const inputs = document.querySelectorAll('input[name="persyaratan-program"]');
@@ -191,20 +216,19 @@ btnSimpan.addEventListener('click', (e) => {
     e.preventDefault();
     let requirements = [];
     let newRequirements = [];
-
-    let allFilled = validateInputPersyaratan();
-
+    currentTools = $('#multiple-select-field').val();
     let isValid = true;
+    isValid = validateInputPersyaratan() && isValid;
     isValid = onSaveValidate(namaProgram, "Nama Program", validName, invalidName, null, regexString, 50) && isValid;
     isValid = onSaveValidate(namaKejuruan, "Nama Kejuruan", validKejuruan, invalidKejuruan, "default", null, 50) && isValid;
     isValid = onSaveValidate(namaInstruktor, "Nama Instruktor", validInstructor, invalidInstructor, "default", null, 50) && isValid;
     isValid = onSaveValidate(statusPendaftaran, "Status Pendaftaran", validStatus, invalidStatus, "status", null, 10) && isValid;
     isValid = onSaveValidate(namaGedung, "Nama Gedung", validGedung, invalidGedung, "default", null, 50) && isValid;
     isValid = onSaveValidate(jmlPeserta, "Jumlah Peserta", validJml, invalidJml, null, regexNum, 5) && isValid;
-    isValid = onSaveValidate(standarProgram, "Bagus!", validStandart, invalidStandart, null, regexString, 6) && isValid;
-    isValid = onSaveValidate(deskripsi, "Bagus!", validDeskripsi, invalidDeskripsi, null, regexComb, 255) && isValid;
-
-    if (isValid && allFilled) {
+    isValid = onSaveValidate(standarProgram, "Standar Program", validStandart, invalidStandart, null, regexString, 6) && isValid;
+    isValid = onSaveValidate(deskripsi, "Deskripsi Program", validDeskripsi, invalidDeskripsi, null, regexComb, 255) && isValid;
+    isValid = validateAlat() && isValid;
+    if (isValid) {
         questionAlert('Perbarui Data?', 'Pastikan semua data telah diisi dengan benar!', "Ya, Perbarui", () => {
             const formData = new FormData();
             formData.append('name', namaProgram.value);
@@ -218,6 +242,8 @@ btnSimpan.addEventListener('click', (e) => {
             formData.append('building_id', namaGedung.value);
             formData.append('department_id', namaKejuruan.value);
             formData.append('image', file);
+            formData.append('initial_tools', JSON.stringify(initialTools));
+            formData.append('current_tools', JSON.stringify(currentTools));
             const inputs = document.querySelectorAll('input[name="persyaratan-program"]');
             inputs.forEach((input, index) => {
                 let dataId = input.getAttribute("data-id");
@@ -245,15 +271,12 @@ btnSimpan.addEventListener('click', (e) => {
                 }
             })
                 .then(response => {
-                    console.log(response);
                     if (response.data.success) {
-                        successAlert("Data berhasil disimpan", response.data.redirect);
-                    } else {
-                        errorAlert(response.data.message);
+                        successAlert(response.data.message, response.data.redirect);
                     }
                 })
                 .catch(error => {
-                    errorAlert("Terjadi kesalahan saat menyimpan data: " + error.message);
+                    errorAlert(error.response.data.message);
                 })
         });
     }
@@ -262,11 +285,8 @@ btnSimpan.addEventListener('click', (e) => {
 
 
 function configDate() {
-    const today = new Date().toLocaleDateString('en-CA');
-    tglMulaiPendfataran.setAttribute("min", today);
-    tglMulaiPendfataran.value = today;
-    tglAkhirPendfataran.setAttribute("min", today);
-    tglAkhirPendfataran.value = today;
+    setMinOnToday(tglMulaiPendfataran);
+    setMinOnToday(tglAkhirPendfataran);
     tglMulaiPendfataran.addEventListener("change", function () {
         let startDate = tglMulaiPendfataran.value;
         tglAkhirPendfataran.setAttribute("min", startDate);
@@ -276,14 +296,11 @@ function configDate() {
     });
 }
 
-// Mengambil data untuk di tambahkan ke options element select
 function getDataOptions() {
     axios.get(`/department/department-name`)
         .then(response => {
             if (response.data.success) {
                 createOptions(response.data.departments, namaKejuruan, false, "Pilih Kejuruan");
-            } else {
-                errorAlert(response.data.message);
             }
         })
         .catch(error => {
@@ -294,8 +311,6 @@ function getDataOptions() {
         .then(response => {
             if (response.data.success) {
                 createOptions(response.data.instructors, namaInstruktor, false, "Pilih Instruktor");
-            } else {
-                errorAlert(response.data.message);
             }
         })
         .catch(error => {
@@ -306,58 +321,54 @@ function getDataOptions() {
         .then(response => {
             if (response.data.success) {
                 createOptions(response.data.buildings, namaGedung, false, "Pilih Gedung");
-            } else {
-                errorAlert(response.data.message);
             }
         })
         .catch(error => {
             console.log(error.message)
         })
+
+    axios.get(`/tools/tools-name`)
+        .then(response => {
+            if (response.data.success) {
+                createOptions(response.data.tools, namaAlat, false);
+            }
+        })
+        .catch(error => {
+            errorAlert(error.data.message);
+        })
 }
 
 axios.get(`/programs/${id}/data`)
     .then(response => {
-        let programs = response.data.programs;
-        let requirements = response.data.requirements;
-        namaProgram.value = programs[0]['nama'];
-        namaKejuruan.value = programs[0]['department_id'];
-        namaInstruktor.value = programs[0]['instructor_id'];
-        statusPendaftaran.value = programs[0]['status_pendaftaran'];
-        namaGedung.value = programs[0]['building_id'];
-        jmlPeserta.value = programs[0]['jml_peserta'];
-        tglMulaiPendfataran.value = programs[0]['tgl_mulai_pendaftaran'];
-        tglAkhirPendfataran.value = programs[0]['tgl_akhir_pendaftaran'];
-        standarProgram.value = programs[0]['standar'];
-        deskripsi.value = programs[0]['deskripsi'];
-        requirements.forEach(requirement => {
-            createNewInputRequirements(requirement.requirement, requirement.id);
-        });
-        if (programs[0]['image_path']) {
-            imageUrl = "/" + programs[0]['image_path'];
-            uploadIcon.src = imageUrl;
-            uploadText.style.display = 'none';
+        if (response.data.success){
+            let programs = response.data.programs;
+            let requirements = response.data.requirements;
+            let tools = response.data.tools;
+
+            namaProgram.value = programs[0]['nama'];
+            namaKejuruan.value = programs[0]['department_id'];
+            namaInstruktor.value = programs[0]['instructor_id'];
+            statusPendaftaran.value = programs[0]['status_pendaftaran'];
+            namaGedung.value = programs[0]['building_id'];
+            jmlPeserta.value = programs[0]['jml_peserta'];
+            tglMulaiPendfataran.value = programs[0]['tgl_mulai_pendaftaran'];
+            tglAkhirPendfataran.value = programs[0]['tgl_akhir_pendaftaran'];
+            standarProgram.value = programs[0]['standar'];
+            deskripsi.value = programs[0]['deskripsi'];
+            requirements.forEach(requirement => {
+                createNewInputRequirements(requirement.requirement, requirement.id);
+            });
+
+            initialTools = tools.map(tool => tool.tool_id);
+            $('#multiple-select-field').val(initialTools).trigger('change');
+
+            if (programs[0]['image_path']) {
+                imageUrl = "/" + programs[0]['image_path'];
+                uploadIcon.src = imageUrl;
+                uploadText.style.display = 'none';
+            }
         }
     })
     .catch(error => {
-        errorAlert(error.message);
+        errorAlert(error.response.data.message);
     })
-
-function createOptions(data, element, selectedID, defaultContent) {
-    element.innerHTML = '';
-    const defOption = document.createElement('option');
-    defOption.value = "default";
-    defOption.textContent = defaultContent;
-    defOption.disabled = true;
-    defOption.selected = true;
-    element.appendChild(defOption);
-    data.forEach(item => {
-        const option = document.createElement('option');
-        option.value = item.id;
-        option.textContent = item.nama;
-        element.appendChild(option);
-    });
-    if (selectedID) {
-        element.selected = selectedID;
-    }
-}
-

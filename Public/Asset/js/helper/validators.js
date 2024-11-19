@@ -65,7 +65,7 @@ export function validateFile(file, message, validFeedback, invalidFeedback, allo
     element.classList.remove('is-valid', 'is-invalid');
     if (file == null) {
         element.classList.add('is-invalid');
-        invalidFeedback.textContent = `${message} tidak valid!`;
+        invalidFeedback.textContent = `${message} tidak boleh kosong!`;
         return false;
     }
     if (!allowedTypes.includes(file.type)) {
