@@ -11,7 +11,7 @@ function authenticate($token = null)
         try {
             return JWT::decode($token, new Key($secretKey, 'HS256'));
         } catch (Exception $e) {
-            http_response_code(408);
+            http_response_code(401);
             return ['success' => false, 'message' => "Token tidak valid atau kadaluarsa"];
         }
 
@@ -22,12 +22,12 @@ function authenticate($token = null)
             try {
                 return JWT::decode($jwt, new Key($secretKey, 'HS256'));
             } catch (Exception $e) {
-                http_response_code(408);
+                http_response_code(401);
                 return ['success' => false, 'message' => "Token tidak valid atau kadaluarsa"];
             }
         }
     } else {
-        http_response_code(401);
+        http_response_code(400);
         return ['success' => false, 'message' => 'Token tidak ditemukan'];
     }
 }

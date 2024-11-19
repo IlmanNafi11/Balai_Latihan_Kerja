@@ -52,9 +52,9 @@ class RequirementsModel
             $stm->bindParam(':id', $requirementId);
             $stm->bindParam(':requirement', $requirement);
             $stm->execute();
-            return ['success' => true, 'message' => 'Requirements Berhasil diperbarui'];
+            return true;
         } catch (PDOException $e) {
-            return ['success' => false, 'message' => $e->getMessage()];
+            return false;
         }
     }
 

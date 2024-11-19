@@ -48,7 +48,7 @@ class ServiceOtp
                 <table style="margin: 0 auto;">
                     <tr>
                         <td>
-                            <img src="Logo-PelatihanKu-Apps.png" alt="Logo-PelatihanKu-Apps" width="20" style=" margin: 0 auto; display: block; margin-right: 5px;">
+                            <img src="https://alive-fluent-sponge.ngrok-free.app/Asset/images/Logo-PelatihanKu-Apps.png" alt="Logo-PelatihanKu-Apps" width="20" style=" margin: 0 auto; display: block; margin-right: 5px;">
                         </td>
                         <td>
                             <h2 style="font-size: 1.2rem; color: #333333;">Balai Latihan Kerja</h2>
@@ -65,7 +65,7 @@ class ServiceOtp
         
         <!-- Body Content -->
         <tr>
-            <td style="padding: 20px; color: #333333;">
+            <td style="padding: 20px; color: #000;">
                 <p>Hai,</p>
                 <p>Kami telah menerima permintaan untuk menyetel ulang kata sandi untuk akun PelatihanKu yang terkait dengan email ini.</p>
                 <p>Anda dapat menyetel ulang kata sandi menggunakan kode OTP di bawah ini:</p>
@@ -100,6 +100,7 @@ class ServiceOtp
                 'redirect' => '/password-reset/verify'
             ];
         } catch (Exception $e) {
+            http_response_code(500);
             return ['success' => false, 'message' => $mail->ErrorInfo];
         }
     }

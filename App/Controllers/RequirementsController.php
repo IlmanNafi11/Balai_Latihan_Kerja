@@ -14,18 +14,16 @@ class RequirementsController
 
     public function updateRequirements($requirements = [])
     {
-        $updateResult = ['success' => true];
         foreach ($requirements as $requirement) {
             $idRequirements = $requirement['id'];
             $requirementDesc = $requirement['requirement'];
 
             $result = $this->model->updateRequirements($idRequirements, $requirementDesc);
-            if (!$result['success']) {
-                $updateResult['success'] = false;
-                break;
+            if (!$result) {
+                return false;
             }
         }
-        return $updateResult;
+        return true;
     }
 
     public function addNewRequirements($requirements = [], $id)
@@ -56,7 +54,7 @@ class RequirementsController
 
     public function getRequirementsByProgram($id)
     {
-        echo json_encode($this->model->getRequirementsByProgram($id));
+        return $this->model->getRequirementsByProgram($id);
     }
 
     public function createRequirements($programId, $requirements = [])

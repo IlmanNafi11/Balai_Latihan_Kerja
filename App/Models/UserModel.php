@@ -113,11 +113,13 @@ class UserModel
             $stmt->execute();
             $data = $stmt->fetch(PDO::FETCH_ASSOC);
             if (empty($data)) {
+                http_response_code(401);
                 return ['success' => true, 'isEmpty' => true, 'message' => 'Email tidak terdaftar'];
             } else {
                 return ['success' => true, 'isEmpty' => false, 'message' => 'Email terdaftar', 'users' => $data];
             }
         } catch (PDOException $e) {
+            http_response_code(500);
             return ['success' => false, 'message' => $e->getMessage()];
         }
     }
@@ -134,6 +136,7 @@ class UserModel
             $stmt->execute();
             return ['success' => true, 'message' => 'Kode OTP Berhasil disimpan di database'];
         } catch (PDOException $e) {
+            http_response_code(500);
             return ['success' => false, 'message' => $e->getMessage()];
         }
     }
@@ -148,9 +151,9 @@ class UserModel
             $data = $stmt->fetch(PDO::FETCH_ASSOC);
             if (empty($data)) {
                 http_response_code(401);
-                return ['success' => true, 'isEmpty' => true, 'message' => 'Email tidak terdaftar'];
+                return ['success' => true, 'isEmpty' => true, 'message' => 'User tidak ditemukan'];
             } else {
-                return ['success' => true, 'isEmpty' => false, 'message' => 'Email terdaftar', 'users' => $data];
+                return ['success' => true, 'isEmpty' => false, 'message' => 'User ditemukan', 'users' => $data];
             }
         } catch (PDOException $e) {
             http_response_code(500);

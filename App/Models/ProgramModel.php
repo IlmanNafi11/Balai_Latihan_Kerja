@@ -52,7 +52,7 @@ class ProgramModel
 
     public function getProgramsByDepartment($id)
     {
-        $query = "SELECT id, nama, deskripsi FROM programs WHERE department_id = :id";
+        $query = "SELECT id, nama, deskripsi, image_path, department_id FROM programs WHERE department_id = :id";
         $stmt = $this->connection->prepare($query);
         try {
             $stmt->bindParam(":id", $id);
@@ -73,7 +73,7 @@ class ProgramModel
 
     public function getProgramsDetail($id)
     {
-        $query = "SELECT programs.*, buildings.nama AS building_name, departments.nama AS department_name, instructors.nama AS instructor_name, instructors.no_tlp AS instructors_contact, instructors.alamat AS instructors_address FROM programs LEFT JOIN buildings ON programs.building_id = buildings.id LEFT JOIN departments ON programs.department_id = departments.id LEFT JOIN instructors ON programs.instructor_id = instructors.id WHERE programs.id = :id";
+        $query = "SELECT programs.*, buildings.nama AS building_name, departments.nama AS department_name, instructors.nama AS instructor_name, instructors.no_tlp AS instructor_contact, instructors.alamat AS instructor_address, instructors.image_path AS instructor_image FROM programs LEFT JOIN buildings ON programs.building_id = buildings.id LEFT JOIN departments ON programs.department_id = departments.id LEFT JOIN instructors ON programs.instructor_id = instructors.id WHERE programs.id = :id";
         $stmt = $this->connection->prepare($query);
         $stmt->bindParam(":id", $id);
         try {
@@ -94,7 +94,6 @@ class ProgramModel
 
     public function createProgram($data = [])
     {
-        require_once '../App/Controllers/RequirementsController.php';
         $query = "INSERT INTO programs (nama, status_pendaftaran, tgl_mulai_pendaftaran, tgl_akhir_pendaftaran, standar, jml_peserta, deskripsi, instructor_id, building_id, department_id, image_path) VALUES (:name, :status_pendaftaran, :tgl_mulai, :tgl_akhir, :standar, :jml_peserta, :deskripsi, :instructor_id, :building_id, :department_id, :image_path)";
         $stmt = $this->connection->prepare($query);
         try {
@@ -110,16 +109,7 @@ class ProgramModel
             $stmt->bindParam(":department_id", $data['department_id']);
             $stmt->bindParam(":image_path", $data['image_path']);
             $stmt->execute();
-            $programId = $this->connection->lastInsertId();
-
-            $requirementsController = new RequirementsController();
-            $insertRequirements = $requirementsController->createRequirements($programId, $data['requirements']);
-            if ($insertRequirements['success']) {
-                http_response_code(200);
-                return ['success' => true, 'message' => 'Data berhasil disimpan', 'redirect' => '/programs'];
-            } else {
-                return ['success' => false, 'message' => $insertRequirements['message']];
-            }
+            return $this->connection->lastInsertId();;
         } catch (PDOException|Exception $e) {
             http_response_code(500);
             return ['success' => false, 'message' => $e->getMessage()];
@@ -165,10 +155,11 @@ class ProgramModel
 
             $stmt->bindParam(":id", $data['id']);
             $stmt->execute();
-            return ['success' => true, 'message' => 'Data berhasil diupdate'];
+            http_response_code(200);
+            return true;
         } catch (PDOException $e) {
             http_response_code(500);
-            return ['success' => false, 'message' => $e->getMessage()];
+            return false;
         }
     }
 

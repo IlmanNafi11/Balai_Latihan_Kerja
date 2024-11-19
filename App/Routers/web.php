@@ -411,6 +411,12 @@ if (str_starts_with($uri, 'api/v1/public/')) {
             header('location: /login');
             exit();
         }
+    } else if ($uri == 'tools/tools-name') {
+        if (isset($_SESSION['userID'])) {
+            if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+                loadController('ToolsController', 'getToolsName');
+            }
+        }
     } // Instructor
     else if ($uri == 'instructor') {
         if (isset($_SESSION['userID'])) {

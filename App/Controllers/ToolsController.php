@@ -38,6 +38,27 @@ class ToolsController
         echo json_encode($this->model->getToolsById($id));
     }
 
+    public function getToolsName()
+    {
+        echo json_encode($this->model->getToolsName());
+    }
+
+    public function getToolsByProgram($id)
+    {
+        return $this->model->getToolsByPrograms($id);
+    }
+
+    public function insertProgramTools($tools, $programId)
+    {
+        foreach ($tools as $tool) {
+            $result = $this->model->insertProgramsTools($tool, $programId);
+            if (!$result) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     public function createTools()
     {
         $data = json_decode(file_get_contents("php://input"), true);
@@ -69,6 +90,17 @@ class ToolsController
     public function deleteTools($id)
     {
         echo json_encode($this->model->deleteTools($id));
+    }
+
+    public function deleteProgramTools($data, $programId)
+    {
+        foreach ($data as $id) {
+            $result = $this->model->deleteProgramsTools($id, $programId);
+            if (!$result) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public function searchTools()

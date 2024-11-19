@@ -170,6 +170,7 @@ class ResetPasswordController
         $token = $_COOKIE['token'] ?? null;
         $auth = authenticate($token);
         if (is_array($auth) && !$auth['success']) {
+            http_response_code(401);
             echo json_encode($auth);
             return;
         }
@@ -200,7 +201,7 @@ class ResetPasswordController
                     echo json_encode(['success' => false, 'message' => 'Kode OTP tidak valid!']);
                 }
             } else {
-                http_response_code(408);
+                http_response_code(400);
                 echo json_encode(['success' => false, 'message' => 'OTP Kadaluarsa']);
             }
         }
@@ -210,7 +211,6 @@ class ResetPasswordController
     {
         $data = json_decode(file_get_contents("php://input"), true);
         if (empty($data['password'])) {
-            var_dump($data['password']);
             echo json_encode(['success' => false, 'message' => 'Input tidak boleh kosong!']);
             return;
         }
@@ -223,7 +223,7 @@ class ResetPasswordController
         }
 
         $userId = $auth->userId;
-        $result = $this->model->updatePassword($data['password'], $userId);
+        $result = $this->model->updatePassword(password_hash($data['password'], PASSWORD_DEFAULT), $userId);
         unset($_COOKIE['token']);
         echo json_encode($result);
     }

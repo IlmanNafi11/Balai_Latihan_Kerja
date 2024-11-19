@@ -77,7 +77,7 @@ class DepartmentsController
         $description = $_POST['description'];
         $image = $_FILES['image'] ?? null;
 
-        if (empty($name) || empty($description) || empty($instituteID)) {
+        if (empty($name) || empty($description)) {
             echo json_encode(['success' => false, 'message' => 'Data Tidak Lengkap']);
             return;
         }
