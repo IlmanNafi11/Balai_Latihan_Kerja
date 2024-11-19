@@ -5,6 +5,7 @@
         "firebase/php-jwt": "^6.10",
         "phpmailer/phpmailer": "^6.9",
         "symfony/http-foundation": "^7.1",
-      "ext-zip": "*"
+      "ext-zip": "*",
+        "apalfrey/select2-bootstrap-5-theme": "^1.3"
     }
 }
