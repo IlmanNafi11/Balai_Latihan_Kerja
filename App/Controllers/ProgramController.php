@@ -50,7 +50,7 @@ class ProgramController
         if ($programs['success'] && !$programs['isEmpty']) {
             $requirementsController = new RequirementsController();
             $toolsController = new ToolsController();
-            $requirements = $requirementsController->getRequirementsByProgram($id);
+            $requirements = $requirementsController->getRequirementsProgram($id);
             $tools = $toolsController->getToolsByProgram($id);
             if ($requirements['success'] && !$requirements['isEmpty'] && $tools['success'] && !$tools['isEmpty']) {
                 $programs['requirements'] = $requirements['requirements'];

@@ -52,9 +52,14 @@ class RequirementsController
         return $deleteResult;
     }
 
-    public function getRequirementsByProgram($id)
+    public function getRequirementsProgram($id)
     {
         return $this->model->getRequirementsByProgram($id);
+    }
+
+    public function getRequirementsByProgram($id)
+    {
+        echo json_encode($this->model->getRequirementsByProgram($id));
     }
 
     public function createRequirements($programId, $requirements = [])

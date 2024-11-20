@@ -874,7 +874,8 @@ function handleApiRequest(string $uri)
             echo json_encode($auth);
         } else {
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-                loadController('ProfileController', 'updateProfile');
+                $id = $matches[1];
+                loadController('ProfileController', 'updateProfile', $id);
             }
         }
     } // Register for Training

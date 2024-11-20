@@ -37,11 +37,13 @@ class ProfileController
         }
 
         if ($pas_foto && $pas_foto['error'] === UPLOAD_ERR_OK) {
-            $allowedTypes = ['image/jpeg', 'image/png'];
-            if (!in_array($pas_foto['type'], $allowedTypes)) {
+            $fileExtension = strtolower(pathinfo($pas_foto['name'], PATHINFO_EXTENSION));
+            $allowedExtensions = ['jpeg', 'jpg', 'png'];
+            if (!in_array($fileExtension, $allowedExtensions)) {
                 echo json_encode(['success' => false, 'message' => 'Format foto tidak didukung!']);
                 return;
             }
+
 
             $uploadDirectory = 'Uploads/profiles/';
             $fileName = uniqid() . '-' . basename($pas_foto['name']);
