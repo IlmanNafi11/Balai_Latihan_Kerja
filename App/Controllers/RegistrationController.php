@@ -36,6 +36,12 @@ class RegistrationController
         $isSucces = true;
         $uploadDir = "Uploads/registration_files/$namaProgram/$nama-$registrationNumber/";
 
+        if (empty($userId) && empty($programId) && empty($namaProgram) && empty($nama)) {
+            echo json_encode(['success' => false, 'message' => 'Data tidak lengkap']);
+            http_response_code(400);
+            return;
+        }
+
         $programController = new ProgramController();
         $program = $programController->getProgramById($programId);
         if (!$program['isEmpty']) {
