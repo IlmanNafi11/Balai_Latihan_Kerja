@@ -878,7 +878,19 @@ function handleApiRequest(string $uri)
                 loadController('ProfileController', 'updateProfile', $id);
             }
         }
-    } // Register for Training
+    }
+    else if (preg_match('/users\/image\/(\d+)$/', $endPoint, $matches)) {
+        $token = $_SESSION['token'] ?? null;
+        $auth = authenticate($token);
+        if (is_array($auth)) {
+            echo json_encode($auth);
+        } else {
+            if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+                $id = $matches[1];
+                loadController('ProfileController', 'getImageById', $id);
+            }
+        }
+    }// Register for Training
     else if ($endPoint == 'user/registrations/training') {
         $token = $_SESSION['token'] ?? null;
         $auth = authenticate($token);
@@ -889,5 +901,8 @@ function handleApiRequest(string $uri)
                 loadController('RegistrationController', 'registrationsPrograms');
             }
         }
+    } else {
+        http_response_code(404);
+        exit();
     }
 }
