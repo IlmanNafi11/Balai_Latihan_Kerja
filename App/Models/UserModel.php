@@ -46,6 +46,27 @@ class UserModel
         }
     }
 
+    public function getImageById($id)
+    {
+        $query = "SELECT profile_picture FROM users WHERE id = :id";
+        $stmt = $this->connection->prepare($query);
+        try {
+            $stmt->bindParam(':id', $id);
+            $stmt->execute();
+            $data = $stmt->fetch(PDO::FETCH_ASSOC);
+            if (empty($data)) {
+                http_response_code(404);
+                return ['success' => true, 'isEmpty' => true, 'message' => 'Data tidak ditemukan', 'path' => ''];
+            } else {
+                http_response_code(200);
+                return ['success' => true, 'isEmpty' => false, 'path' => $data['profile_picture']];
+            }
+        } catch (PDOException $e) {
+            http_response_code(500);
+            return ['success' => false, 'message' => $e->getMessage()];
+        }
+    }
+
     public function createUsers($data = [])
     {
         $query = "INSERT INTO users (nama, email, password, tlp, tanggal_lahir, jenis_kelamin, alamat, role, profile_picture) VALUES (:name, :email, :password, :phone, :tanggal_lahir, :jenis_kelamin, :alamat, :role, :profile_picture)";
