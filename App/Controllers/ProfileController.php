@@ -24,6 +24,11 @@ class ProfileController
         echo json_encode($this->model->getUsersById($id));
     }
 
+    public function getImageById($id)
+    {
+        echo json_encode($this->model->getImageById($id));
+    }
+
     public function updateProfile($id)
     {
         $name = $_POST['name'] ?? null;
