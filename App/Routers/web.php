@@ -901,7 +901,32 @@ function handleApiRequest(string $uri)
                 loadController('RegistrationController', 'registrationsPrograms');
             }
         }
-    } else {
+    }
+    else if (preg_match('/notifications\/is-read\/(\d+)$/', $endPoint, $matches)) {
+        $token = $_SESSION['token'] ?? null;
+        $auth = authenticate($token);
+        if (is_array($auth)) {
+            echo json_encode($auth);
+        } else {
+            if ($_SERVER['REQUEST_METHOD'] === 'PUT') {
+                $id = $matches[1];
+                loadController('NotificationController', 'updateIsRead', $id);
+            }
+        }
+    }
+    else if (preg_match('/notifications\/is-deleted\/(\d+)$/', $endPoint, $matches)) {
+        $token = $_SESSION['token'] ?? null;
+        $auth = authenticate($token);
+        if (is_array($auth)) {
+            echo json_encode($auth);
+        } else {
+            if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
+                $id = $matches[1];
+                loadController('NotificationController', 'updateIsDeleted', $id);
+            }
+        }
+    }
+    else {
         http_response_code(404);
         exit();
     }
