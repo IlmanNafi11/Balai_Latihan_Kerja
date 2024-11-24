@@ -20,7 +20,7 @@ class RegistrationsModel
             $stmt->execute();
             $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
             if (empty($data)) {
-                return ['success' => true, 'isEmpty' => true, 'message' => 'Data Kosong'];
+                return ['success' => true, 'isEmpty' => true, 'message' => 'Data Kosong', 'data' => []];
             } else {
                 return ['success' => true, 'isEmpty' => false, 'data' => $data];
             }
