@@ -100,7 +100,7 @@ function updateTable(registrations) {
     tableBody.innerHTML = "";
 
     if (registrations.length === 0) {
-        tableBody.innerHTML = "<tr><td colspan='7' class='text-center'>Data tidak ditemukan</td></tr>";
+        tableBody.innerHTML = "<tr><td colspan='8' class='text-center'>Data tidak ditemukan</td></tr>";
     } else {
         registrations.forEach((row, index) => {
             const tr = document.createElement('tr');

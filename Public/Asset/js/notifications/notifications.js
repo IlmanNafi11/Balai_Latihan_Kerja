@@ -63,7 +63,7 @@ function updateTable(notifications) {
             tr.innerHTML = `
                 <td>${index + 1}</td>
                 <td>${row.pesan}</td>
-                <td>${row.tipe}</td>
+                <td>${row.target}</td>
                 <td class="d-flex row-gap-2 column-gap-2 pe-3 table-data-actions">
                     <button class="btn btn-danger d-flex align-items-center column-gap-1" onclick="deleteNotification(${row.id})">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">

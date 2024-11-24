@@ -5,7 +5,7 @@ const message = document.getElementById('pesan-notifikasi');
 const btnSimpan = document.getElementById('btn-simpan');
 const validMessage = message.nextElementSibling;
 const invalidMessage = validMessage.nextElementSibling;
-const regex = /^[a-zA-Z0-9 .,]+$/;
+const regex = /^[a-zA-Z0-9 .,;()\-\/&"'!:]+$/;
 
 blurValidate(message, "Pesan Notifikasi", validMessage, invalidMessage, null, regex, 255);
 btnSimpan.addEventListener('click', e => {
