@@ -12,10 +12,17 @@ function getTotalRegistrations() {
             let data = response.data.data;
             let labels = [];
             let dataPoints = [];
-            data.forEach(element => {
-                labels.push(element.year);
-                dataPoints.push(element.total);
-            })
+
+            if (data.length > 0) {
+                data.forEach(element => {
+                    labels.push(element.year);
+                    dataPoints.push(element.total);
+                });
+            } else {
+                labels = ['Tidak ada data'];
+                dataPoints = [0];
+            }
+
 
             const chartBar = document.getElementById('ChartBar');
             new Chart(chartBar, {
@@ -55,30 +62,36 @@ function getTotalRegistrations() {
                     plugins: {
                         title: {
                             display: true,
-                            text: 'Total Pendaftar 5 Tahun Terakhir '
+                            text: data.length > 0 ? 'Total Pendaftar 5 Tahun Terakhir ' : 'Data Tidak Tersedia'
                         }
                     }
                 }
             });
         })
         .catch(error => {
-            errorAlert(error.response.data.message);
-            if (error.response.status === 408) {
-                window.location.href = '/login';
-            }
+            // errorAlert(error.response.data.message);
+            // if (error.response.status === 408) {
+            //     window.location.href = '/login';
+            // }
         });
 }
 
-function getFavoritePrograms(){
+function getFavoritePrograms() {
     axios.get('api/v1/public/programs/favorite')
         .then(response => {
             let data = response.data.data;
             let labels = [];
             let dataPoints = [];
-            data.forEach(program => {
-                labels.push(program.program_name);
-                dataPoints.push(program.total_registrations);
-            })
+
+            if (data.length > 0) {
+                data.forEach(program => {
+                    labels.push(program.program_name);
+                    dataPoints.push(program.total_registrations);
+                });
+            } else {
+                labels = ['Tidak ada data'];
+                dataPoints = [0];
+            }
 
             const chartPolar = document.getElementById('ChartPolar');
             const currentYear = new Date().getFullYear();
@@ -104,7 +117,7 @@ function getFavoritePrograms(){
                     plugins: {
                         title: {
                             display: true,
-                            text: '5 Program Favorit Tahun ' + currentYear
+                            text: data.length > 0 ? '5 Program Favorit Tahun ' + currentYear : 'Data Tidak Tersedia'
                         }
                     }
                 }
@@ -120,16 +133,23 @@ function getFavoritePrograms(){
         })
 }
 
-function getMostPrograms(){
+function getMostPrograms() {
     axios.get('api/v1/public/departments/most-programs')
         .then(response => {
             let data = response.data.data;
             let labels = [];
             let dataPoints = [];
-            data.forEach(department => {
-                labels.push(department.department_name);
-                dataPoints.push(department.total_programs);
-            })
+
+            if (data.length > 0) {
+                data.forEach(department => {
+                    labels.push(department.department_name);
+                    dataPoints.push(department.total_programs);
+                });
+            } else {
+                labels = ['Tidak ada data'];
+                dataPoints = [0];
+            }
+
             const chartPie = document.getElementById('ChartPie');
             const dataChartPie = {
                 labels: labels,
@@ -154,7 +174,7 @@ function getMostPrograms(){
                     plugins: {
                         title: {
                             display: true,
-                            text: '5 Kejuruan dengan Program Terbanyak '
+                            text: data.length > 0 ? '5 Kejuruan dengan Program Terbanyak ' : 'Data Tidak Tersedia'
                         }
                     }
                 }
@@ -163,9 +183,9 @@ function getMostPrograms(){
             new Chart(chartPie, configChartPie);
         })
         .catch(error => {
-            errorAlert(error.response.data.message);
-            if (error.response.status === 408) {
-                window.location.href = '/login';
-            }
+            // errorAlert(error.response.data.message);
+            // if (error.response.status === 408) {
+            //     window.location.href = '/login';
+            // }
         })
 }
