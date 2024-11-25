@@ -736,12 +736,13 @@ if (str_starts_with($uri, 'api/v1/public/')) {
 function handleApiRequest(string $uri)
 {
     $endPoint = str_replace('api/v1/public/', '', $uri);
-    // GET All Institute Data
+    // login users
     if ($endPoint == 'auth/login') {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             loadController('LoginController', 'loginUsers');
         }
-    } else if ($endPoint == 'institutes') {
+    } // GET All Institute Data
+    else if ($endPoint == 'institutes') {
         $token = $_SESSION['token'] ?? null;
         $auth = authenticate($token);
         if (is_array($auth)) {
@@ -793,17 +794,6 @@ function handleApiRequest(string $uri)
         } else {
             if ($_SERVER['REQUEST_METHOD'] == 'GET') {
                 loadController('RequirementsController', 'getRequirementsByProgram', $matches[1]);
-            }
-        }
-    } // GET All Notifications
-    else if ($endPoint == 'notifications') {
-        $token = $_SESSION['token'] ?? null;
-        $auth = authenticate($token);
-        if (is_array($auth)) {
-            echo json_encode($auth);
-        } else {
-            if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-                loadController('NotificationController', 'getAllNotifications');
             }
         }
     } // GET Users Data By id
@@ -878,7 +868,7 @@ function handleApiRequest(string $uri)
                 loadController('ProfileController', 'updateProfile', $id);
             }
         }
-    }
+    } // GET User profile image
     else if (preg_match('/users\/image\/(\d+)$/', $endPoint, $matches)) {
         $token = $_SESSION['token'] ?? null;
         $auth = authenticate($token);
@@ -901,28 +891,26 @@ function handleApiRequest(string $uri)
                 loadController('RegistrationController', 'registrationsPrograms');
             }
         }
-    }
-    else if (preg_match('/notifications\/is-read\/(\d+)$/', $endPoint, $matches)) {
+    } // PUT is_read notification
+    else if ($endPoint == 'notification/is-read') {
         $token = $_SESSION['token'] ?? null;
         $auth = authenticate($token);
         if (is_array($auth)) {
             echo json_encode($auth);
         } else {
             if ($_SERVER['REQUEST_METHOD'] === 'PUT') {
-                $id = $matches[1];
-                loadController('NotificationController', 'updateIsRead', $id);
+                loadController('NotificationController', 'updateIsRead');
             }
         }
-    }
-    else if (preg_match('/notifications\/is-deleted\/(\d+)$/', $endPoint, $matches)) {
+    } // PUT is_deleted Notification
+    else if ($endPoint == 'notification/is-deleted') {
         $token = $_SESSION['token'] ?? null;
         $auth = authenticate($token);
         if (is_array($auth)) {
             echo json_encode($auth);
         } else {
-            if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
-                $id = $matches[1];
-                loadController('NotificationController', 'updateIsDeleted', $id);
+            if ($_SERVER['REQUEST_METHOD'] === 'PUT') {
+                loadController('NotificationController', 'updateIsDeleted');
             }
         }
     }
