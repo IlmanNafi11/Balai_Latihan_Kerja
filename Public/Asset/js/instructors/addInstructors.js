@@ -25,7 +25,7 @@ const invalidAddress = validAddress.nextElementSibling;
 
 const regexNama = /^[a-zA-Z ,.']+$/;
 const regexNoTlp = /^08[0-9]+$/;
-const regexEmail = /^[\w.-]+@[a-zA-Z\d.-]+\.[a-zA-Z]{2,}$/;
+const regexEmail = /^[a-zA-Z0-9._]+@gmail\.com$/;
 const regexKombinasi = /^[a-zA-Z0-9 ,.]+$/;
 let file = null;
 

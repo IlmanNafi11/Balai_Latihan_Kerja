@@ -21,7 +21,7 @@ const id = sliceUri();
 
 const regexName = /^[a-zA-Z ',.\s']+$/;
 const regexNoTlp = /^08[0-9]+$/;
-const regexEmail = /^[\w.-]+@[a-zA-Z\d.-]+\.[a-zA-Z]{2,}$/;
+const regexEmail = /^[a-zA-Z0-9._]+@gmail\.com$/;
 const regexKombinasi = /^[a-zA-Z0-9 ,.]+$/;
 
 blurValidate(name, "Input Nama", validName, invalidName, null, regexName, 50);

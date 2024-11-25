@@ -35,7 +35,7 @@ const regexNama = /^[a-zA-Z ,.']+$/;
 const regexPassword = /^[a-zA-Z0-9]+$/;
 const regexAlamat = /^[a-zA-Z0-9 ,.]+$/;
 const regexNoTlp = /^08[0-9]+$/;
-const regexEmail = /^[\w.-]+@[a-zA-Z\d.-]+\.[a-zA-Z]{2,}$/;
+const regexEmail = /^[a-zA-Z0-9._]+@gmail\.com$/;
 const allowedTypes = ['image/jpeg', 'image/png'];
 const maxFileSize = 2 * 1024 * 1024;
 
