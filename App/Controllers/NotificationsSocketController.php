@@ -60,7 +60,7 @@ class NotificationsSocketController implements MessageComponentInterface
                     if (!$notifications['isEmpty']) {
                         $from->send(json_encode($notifications));
                     } else {
-                        $from->send(json_encode(['success' => false, 'message' => 'No notifications found.']));
+                        $from->send(json_encode(['success' => false, 'message' => 'Notification tidak ditemukan']));
                     }
                 }
             } else {

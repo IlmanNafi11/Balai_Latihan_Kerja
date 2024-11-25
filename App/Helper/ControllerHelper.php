@@ -10,7 +10,8 @@ function loadController($controller, $method, $params = []) {
 
 function generateOtp()
 {
-    return str_pad(random_int(0, 999999), 6, '0', STR_PAD_LEFT);
+    $otp = random_int(0, 999999);
+    return str_pad((string) $otp, 6, '0', STR_PAD_LEFT);
 }
 
 function generateRegistrationNumber($length = 6)
