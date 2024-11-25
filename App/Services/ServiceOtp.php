@@ -37,6 +37,10 @@ class ServiceOtp
             $mail->addAddress($toEmail);
             $mail->addReplyTo($this->replyAddress, $this->replyname);
 
+            $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') ? "https" : "http";
+            $host = $_SERVER['HTTP_HOST'];
+            $imageUrl = $protocol . "://" . $host . "/Asset/images/Logo-PelatihanKu-Apps.png";
+            $mail->AddEmbeddedImage(__DIR__ . '../../../Public/Asset/images/Logo-PelatihanKu-Apps-email.png', 'logo_cid');
             $mail->isHTML(true);
             $mail->Subject = 'Kode OTP untuk Reset Password';
             $mail->Body = '<body style="margin: 0; padding: 2rem; background-color: #F5F9FC; font-family: Arial, sans-serif;">
@@ -48,7 +52,7 @@ class ServiceOtp
                 <table style="margin: 0 auto;">
                     <tr>
                         <td>
-                            <img src="https://alive-fluent-sponge.ngrok-free.app/Asset/images/Logo-PelatihanKu-Apps.png" alt="Logo-PelatihanKu-Apps" width="20" style=" margin: 0 auto; display: block; margin-right: 5px;">
+                            <img src="cid:logo_cid" alt="Logo PelatihanKu" width="35px" height="55px">
                         </td>
                         <td>
                             <h2 style="font-size: 1.2rem; color: #333333;">Balai Latihan Kerja</h2>
@@ -65,13 +69,13 @@ class ServiceOtp
         
         <!-- Body Content -->
         <tr>
-            <td style="padding: 20px; color: #000;">
-                <p>Hai,</p>
-                <p>Kami telah menerima permintaan untuk menyetel ulang kata sandi untuk akun PelatihanKu yang terkait dengan email ini.</p>
-                <p>Anda dapat menyetel ulang kata sandi menggunakan kode OTP di bawah ini:</p>
+            <td style="padding: 20px;">
+                <p style="color: #000000;">Hai,</p>
+                <p style="color: #000000;">Kami telah menerima permintaan untuk menyetel ulang kata sandi untuk akun PelatihanKu yang terkait dengan email ini.</p>
+                <p style="color: #000000;">Anda dapat menyetel ulang kata sandi menggunakan kode OTP di bawah ini:</p>
                 <h2 style="text-align: center; color: #FF9228; margin: 15px 0;"> ' . htmlspecialchars($otp) . '</h2>
-                <p>Jika Anda tidak meminta untuk mengubah kata sandi, Anda dapat mengabaikan email ini, dan kata sandi Anda tidak akan diubah.</p>
-                <small>Kode OTP ini hanya berlaku selama 1 jam setelah dikirim.</small>
+                <p style="color: #000000;">Jika Anda tidak meminta untuk mengubah kata sandi, Anda dapat mengabaikan email ini, dan kata sandi Anda tidak akan diubah.</p>
+                <small style="color: #000000;">Kode OTP ini hanya berlaku selama 1 jam setelah dikirim.</small>
             </td>
         </tr>
 
