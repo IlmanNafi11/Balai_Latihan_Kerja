@@ -55,14 +55,20 @@ class NotificationController
         echo json_encode($this->model->searchNotifications($name));
     }
 
-    public function updateIsRead($id)
+    public function updateIsRead()
     {
-        echo json_encode($this->model->updateIsRead($id));
+        $data = json_decode(file_get_contents("php://input"), true);
+        $id = $data['notificationId'];
+        $userId = $data['userId'];
+        echo json_encode($this->model->updateIsRead($id, $userId));
     }
 
-    public function updateIsDeleted($id)
+    public function updateIsDeleted()
     {
-        echo json_encode($this->model->updateIsDeleted($id));
+        $data = json_decode(file_get_contents("php://input"), true);
+        $id = $data['notificationId'];
+        $userId = $data['userId'];
+        echo json_encode($this->model->updateIsDeleted($id, $userId));
     }
 
     public function getNotificationByUserId($id)
