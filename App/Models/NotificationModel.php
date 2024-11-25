@@ -102,7 +102,7 @@ class NotificationModel
 
     public function getUpdateNotification($lastCeck)
     {
-        $query = "SELECT * FROM notifications WHERE created_at > :lastCheck";
+        $query = "SELECT id AS notification_id, pesan AS pesan, target AS target, created_at AS created_at FROM notifications WHERE created_at > :lastCheck";
         $stmt = $this->connection->prepare($query);
         try {
             $stmt->bindParam(':lastCheck', $lastCeck);
@@ -125,7 +125,7 @@ class NotificationModel
 
     public function getNotificationByUserId($id)
     {
-        $query = "SELECT n.id AS notification_id, n.pesan, n.created_at AS notification_created_at, un.id AS id, un.is_read, un.is_deleted FROM notifications n INNER JOIN user_notifications un ON n.id = un.notification_id WHERE un.user_id = :user_id AND un.is_deleted = 0 ORDER BY n.created_at DESC";
+        $query = "SELECT n.id AS notification_id, n.pesan, n.created_at AS notification_created_at, un.id AS id, un.is_read, un.is_deleted FROM notifications n INNER JOIN user_notifications un ON n.id = un.notification_id WHERE un.user_id = :user_id AND un.is_deleted = 0 ORDER BY n.created_at ASC";
         $stmt = $this->connection->prepare($query);
         try {
             $stmt->bindParam(':user_id', $id);
@@ -141,12 +141,13 @@ class NotificationModel
         }
     }
 
-    public function updateIsRead($id)
+    public function updateIsRead($id, $userId)
     {
-        $query = "UPDATE user_notifications SET is_read = TRUE WHERE id = :id";
+        $query = "UPDATE user_notifications SET is_read = TRUE WHERE notification_id = :id AND user_id = :user_id";
         $stmt = $this->connection->prepare($query);
         try {
             $stmt->bindParam(':id', $id);
+            $stmt->bindParam(':user_id', $userId);
             $stmt->execute();
             http_response_code(200);
             return ['success' => true, 'message' => 'Notifikasi berhasil diperbarui'];
@@ -156,12 +157,13 @@ class NotificationModel
         }
     }
 
-    public function updateIsDeleted($id)
+    public function updateIsDeleted($id, $userId)
     {
-        $query = "UPDATE user_notifications SET is_deleted = 1 WHERE id = :id";
+        $query = "UPDATE user_notifications SET is_deleted = 1 WHERE notification_id = :id AND user_id = :user_id";
         $stmt = $this->connection->prepare($query);
         try {
             $stmt->bindParam(':id', $id);
+            $stmt->bindParam(':user_id', $userId);
             $stmt->execute();
             http_response_code(200);
             return ['success' => true, 'message' => 'Notifikasi berhasil dihapus'];
