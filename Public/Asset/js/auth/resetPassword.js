@@ -147,8 +147,7 @@ if (backButton) {
                 }
             })
             .catch(error => {
-                // errorAlert(error.response.data.message);
-                console.log(error.response.data.message);
+                errorAlert(error.response.data.message);
             })
     })
 }

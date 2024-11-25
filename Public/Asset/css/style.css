@@ -586,6 +586,19 @@ body
 }
 
 /*
+    Button Logout
+*/
+
+.btn-logout
+{
+    color: #fff;
+    cursor: pointer;
+    font-size: 1rem;
+    font-family: 'Saira', 'Inter', sans-serif;
+    font-weight: 500;
+}
+
+/*
     Media query
 */
 
@@ -716,45 +729,4 @@ body
     {
         height: 100%;
     }
-}
-
-/* 
-Lanscape dan layar > 576px
-*/
-@media screen and (min-width: 576px)
-{
-
-}
-
-/* 
-Tablet dan layar > 768px
-*/
-@media screen and (min-width: 768px)
-{
-
-}
-
-/* 
-desktop > 992px
-*/
-
-@media screen and (min-width: 992px)
-{
-
-}
-
-/* 
-medium desktop > 1200px
-*/
-@media screen and (min-width: 1200px)
-{
-
-}
-
-/* 
-extra desktop > 1400px
-*/
-@media screen and (min-width: 1400px)
-{
-
 }

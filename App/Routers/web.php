@@ -724,7 +724,7 @@ if (str_starts_with($uri, 'api/v1/public/')) {
     elseif ($uri == 'logout') {
         session_unset();
         session_destroy();
-        header('Location: /');
+        header('Location: /login');
         exit();
     } else {
         http_response_code(404);

@@ -1,16 +1,19 @@
+import {questionAlert} from "/Asset/js/helper/exceptions.js";
+
 const hamburgerMenu = document.getElementById("hamburger-menu");
 const sliderNavigation = document.getElementById("slider-navigation");
 
 document.addEventListener("DOMContentLoaded", function () {
     const overlay = document.querySelector('.overlay-container');
     if (overlay) {
-        overlay.classList.add('overlay-hidden')
+        setTimeout(function () {
+            overlay.classList.add('overlay-hidden')
+        }, 3000)
     }
 })
 
 if (hamburgerMenu) {
     hamburgerMenu.addEventListener("click", function () {
-        // Toggle class active pada hamburger dan slider
         hamburgerMenu.classList.toggle("active");
         sliderNavigation.classList.toggle("active");
     });
@@ -30,6 +33,14 @@ if (inputs) {
                 inputs[index - 1].focus();
             }
         });
+    });
+}
+
+window.logOut = logOut;
+
+function logOut() {
+    questionAlert("Yakin keluar dari aplikasi?", "Anda harus login kembali jika sesi berakhir!", "Ya, Keluar", () => {
+        window.location.href = "/logout"
     });
 }
 

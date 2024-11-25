@@ -119,14 +119,14 @@
         integrity="sha384-i+Yu7CmJG/p8FA6Avyg4ZheFvxNjJQ5taj5ArZf94yQt1lWZiVwkXyPrgE/QqbJi"
         crossorigin="anonymous"></script>
 
-<!-- Custmo Js-->
-<script src="/Asset/js/script.js"></script>
-
 <!-- AXIOS -->
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
 <!-- SweetAlert -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<!-- Custmo Js-->
+<script type="module" src="/Asset/js/script.js"></script>
 
 <!-- Chart Js -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.6/dist/chart.umd.min.js"></script>

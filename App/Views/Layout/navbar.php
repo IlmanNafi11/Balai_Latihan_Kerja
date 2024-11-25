@@ -77,7 +77,7 @@
         </ul>
     </div>
     <div class="slider-logout-navigations d-flex align-items-center column-gap-2">
-        <a href="/logout"><Span>Keluar</Span></a>
+        <span class="btn-logout" onclick="logOut()"><Span>Keluar</Span></span>
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#fff" class="bi bi-box-arrow-right"
             viewBox="0 0 16 16">
             <path fill-rule="evenodd"

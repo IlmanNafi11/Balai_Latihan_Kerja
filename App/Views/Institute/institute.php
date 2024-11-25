@@ -47,8 +47,6 @@
             <!-- Tables -->
              <?php require_once '../App/Views/Layout/Tables/InstituteTables.php' ?>
         </div>
-
-
     </div>
 
     <!--    Bootstrap Js-->
@@ -61,8 +59,11 @@
         integrity="sha384-i+Yu7CmJG/p8FA6Avyg4ZheFvxNjJQ5taj5ArZf94yQt1lWZiVwkXyPrgE/QqbJi"
         crossorigin="anonymous"></script>
 
+    <!-- Sweet Alert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <!-- Custom Js-->
-    <script src="/Asset/js/script.js"></script>
+    <script type="module" src="/Asset/js/script.js"></script>
 
 </body>
 

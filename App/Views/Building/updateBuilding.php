@@ -83,9 +83,6 @@
         integrity="sha384-i+Yu7CmJG/p8FA6Avyg4ZheFvxNjJQ5taj5ArZf94yQt1lWZiVwkXyPrgE/QqbJi"
         crossorigin="anonymous"></script>
 
-<!-- Custom Js-->
-<script src="/Asset/js/script.js"></script>
-
 <!-- AXIOS -->
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
@@ -94,6 +91,9 @@
 
 <!-- Logic Update -->
 <script type="module" src="/Asset/js/buildings/updateBuilding.js"></script>
+
+<!-- Custom Js-->
+<script type="module" src="/Asset/js/script.js"></script>
 
 </body>
 

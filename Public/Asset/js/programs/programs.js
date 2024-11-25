@@ -1,5 +1,4 @@
 import {successAlert, errorAlert, cancelAlert, questionAlert} from "../helper/exceptions.js";
-import {sliceUri} from "../helper/validators.js";
 
 window.deletePrograms = deletePrograms;
 function deletePrograms(id){

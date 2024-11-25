@@ -21,7 +21,7 @@ class ResetPasswordController
 
     public function viewOtp()
     {
-        $token = $_COOKIE['token'] ?? null;
+        $token = $_SESSION['token'] ?? null;
         if ($token === null) {
             header('Location: /password-reset/request');
             exit();
@@ -44,7 +44,7 @@ class ResetPasswordController
 
     public function viewResetPassword()
     {
-        $token = $_COOKIE['token'] ?? null;
+        $token = $_SESSION['token'] ?? null;
         if ($token === null) {
             header('Location: /password-reset/request');
             exit();
@@ -67,7 +67,7 @@ class ResetPasswordController
 
     public function resetStep()
     {
-        $token = $_COOKIE['token'] ?? null;
+        $token = $_SESSION['token'] ?? null;
         if ($token === null) {
             header('Location: /password-reset/request');
             exit();
@@ -82,7 +82,7 @@ class ResetPasswordController
         $userId = $auth->userId;
         $userEmail = $auth->email;
 
-        unset($_COOKIE['token']);
+        unset($_SESSION['token']);
         $payloadJwt = [
             'userId' => $userId,
             'email' => $userEmail,
@@ -90,8 +90,8 @@ class ResetPasswordController
             'exp' => time() + 3600
         ];
         $token = $this->service->createToken($payloadJwt);
-        setcookie('token', $token, time() + 3600, '/', '', true, true);
-        echo json_encode(['success' => true, 'redirect' => '/password-reset/verify', 'message' => 'Reset password link sent on your email.']);
+        $_SESSION['token'] = $token;
+        echo json_encode(['success' => true, 'redirect' => '/password-reset/verify', 'message' => 'Step berhasil direset']);
     }
 
     public function sendOtp()
@@ -117,7 +117,7 @@ class ResetPasswordController
             $insertOtp = $this->model->insertOtp($user_id, $user_email, $kode_otp, $expiresAt);
 
             if ($insertOtp['success']) {
-                setcookie('token', $token, time() + 3600, '/', '', true, true);
+                $_SESSION['token'] = $token;
                 $otpSender = new ServiceOtp();
                 $result = $otpSender->sendOtp($user_email, $kode_otp, $token);
                 echo json_encode($result);
@@ -128,7 +128,7 @@ class ResetPasswordController
     public function resendOtp()
     {
         require_once "../App/Services/ServiceOtp.php";
-        $token = $_COOKIE['token'] ?? null;
+        $token = $_SESSION['token'] ?? null;
         $auth = authenticate($token);
         if (is_array($auth) && !$auth['success']) {
             echo json_encode($auth);
@@ -137,7 +137,7 @@ class ResetPasswordController
 
         $userId = $auth->userId;
         $userEmail = $auth->email;
-        unset($_COOKIE['token']);
+        unset($_SESSION['token']);
         $payload = [
             'userId' => $userId,
             'email' => $userEmail,
@@ -154,7 +154,7 @@ class ResetPasswordController
             $otpSender = new ServiceOtp();
             $result = $otpSender->sendOtp($userEmail, $kodeOtp, $token);
             if ($result['success']) {
-                setcookie('token', $token, time() + 3600, '/', '', true, true);
+                $_SESSION['token'] = $token;
                 echo json_encode(['success' => true, 'message' => 'Kode OTP Berhasil dikirim Ulang!']);
             } else {
                 echo json_encode($result);
@@ -167,7 +167,7 @@ class ResetPasswordController
     public function verifyOtp()
     {
         $data = json_decode(file_get_contents("php://input"), true);
-        $token = $_COOKIE['token'] ?? null;
+        $token = $_SESSION['token'] ?? null;
         $auth = authenticate($token);
         if (is_array($auth) && !$auth['success']) {
             http_response_code(401);
@@ -186,7 +186,7 @@ class ResetPasswordController
             if ($expired_at > $current_time) {
                 $inputOtp = $data['otp'];
                 if ($inputOtp == $usersOtp['users']['otp_code']) {
-                    unset($_COOKIE['token']);
+                    unset($_SESSION['token']);
                     $payloadJwt = [
                         'userId' => $userId,
                         'email' => $userEmail,
@@ -194,7 +194,7 @@ class ResetPasswordController
                         'exp' => time() + 3600
                     ];
                     $token = $this->service->createToken($payloadJwt);
-                    setcookie('token', $token, time() + 3600, '/', '', true, true);
+                    $_SESSION['token'] = $token;
                     echo json_encode(['success' => true, 'message' => 'Kode OTP Valid', 'redirect_url' => '/password-reset/new', 'token' => $token]);
                 } else {
                     http_response_code(400);
@@ -215,7 +215,7 @@ class ResetPasswordController
             return;
         }
 
-        $token = $_COOKIE['token'] ?? null;
+        $token = $_SESSION['token'] ?? null;
         $auth = authenticate($token);
         if (is_array($auth) && !$auth['success']) {
             echo json_encode($auth);
@@ -224,7 +224,8 @@ class ResetPasswordController
 
         $userId = $auth->userId;
         $result = $this->model->updatePassword(password_hash($data['password'], PASSWORD_DEFAULT), $userId);
-        unset($_COOKIE['token']);
+        session_unset();
+        session_destroy();
         echo json_encode($result);
     }
 }

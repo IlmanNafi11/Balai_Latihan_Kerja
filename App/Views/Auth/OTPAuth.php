@@ -67,8 +67,6 @@
         integrity="sha384-yoEOGIfJg9mO8eOS9dgSYBXwb2hCCE+AMiJYavhAofzm8AoyVE241kjON695K1v5"
         crossorigin="anonymous"></script>
 
-<script src="/Asset/js/script.js"></script>
-
 <!-- AXIOS -->
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
@@ -77,5 +75,6 @@
 
 <script type="module" src="/Asset/js/auth/resetPassword.js"></script>
 
+<script type="module" src="/Asset/js/script.js"></script>
 </body>
 </html>
