@@ -6,7 +6,7 @@ use Firebase\JWT\Key;
 function authenticate($token = null)
 {
     $secretKey = $_ENV['JWT_SECRET'];
-    $headers = apache_request_headers();
+    $headers = getallheaders();
     if ($token != null) {
         try {
             return JWT::decode($token, new Key($secretKey, 'HS256'));
