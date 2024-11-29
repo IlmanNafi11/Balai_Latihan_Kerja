@@ -27,6 +27,16 @@
 </head>
 
 <body class="index-page">
+<!-- Preloader -->
+<div class="overlay-container-loader overlay vh-100 vw-100 position-fixed top-0 start-0 d-flex justify-content-center align-items-center column-gap-3 overflow-hidden"
+     style="z-index: 9999999 !important; min-height: 100vh; min-width: 100vw">
+    <div id="preloader" class="preloader"></div>
+    <div class="subtitle-overlay-container d-flex flex-column align-items-start justify-content-center">
+        <span>Balai</span>
+        <span>Latihan</span>
+        <span>Kerja</span>
+    </div>
+</div>
 
 <header id="header" class="header d-flex align-items-center fixed-top">
     <div class="container-fluid position-relative d-flex align-items-center justify-content-between">
@@ -54,7 +64,6 @@
 </header>
 
 <main class="main">
-
     <!-- Hero Section -->
     <section id="hero" class="hero section dark-background">
 
@@ -477,16 +486,7 @@
 <a href="" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i
             class="bi bi-arrow-up-short"></i></a>
 
-<!-- Preloader -->
-<div class="overlay-container-loader overlay vh-100 vw-100 position-fixed top-0 start-0 d-flex justify-content-center align-items-center column-gap-3 overflow-hidden"
-     style="z-index: 9999999; height: 100%; width: 100%; min-height: 100vh; min-width: 100vh">
-    <div id="preloader" class="preloader"></div>
-    <div class="subtitle-overlay-container d-flex flex-column align-items-start justify-content-center">
-        <span>Balai</span>
-        <span>Latihan</span>
-        <span>Kerja</span>
-    </div>
-</div>
+
 
 <!-- Vendor JS Files -->
 <script src="/Asset/landingPage/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
