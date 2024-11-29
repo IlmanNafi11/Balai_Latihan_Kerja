@@ -15,8 +15,7 @@ if (str_starts_with($uri, 'api/v1/public/')) {
     if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         loadController('LandingPageController', 'index');
     }
-}
-else if ($uri == 'login') {
+} else if ($uri == 'login') {
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         loadController('LoginController', 'loginAdmin');
     } else if ($_SERVER['REQUEST_METHOD'] === 'GET') {
@@ -913,6 +912,16 @@ function handleApiRequest(string $uri)
         } else {
             if ($_SERVER['REQUEST_METHOD'] === 'PUT') {
                 loadController('NotificationController', 'updateIsDeleted');
+            }
+        }
+    } else if (preg_match('/notification\/(\d+)$/', $uri, $matches)) {
+        $token = $_SESSION['token'] ?? null;
+        $auth = authenticate($token);
+        if (is_array($auth)) {
+            echo json_encode($auth);
+        } else {
+            if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+                loadController('NotificationController', 'getNotificationByUserId', $matches[1]);
             }
         }
     } else {
