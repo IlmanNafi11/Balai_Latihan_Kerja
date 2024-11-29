@@ -66,11 +66,6 @@ function updateTable(instructors) {
                 <td>${row.no_tlp}</td>
                 <td>${row.email}</td>
                 <td>${row.alamat}</td>
-                <td>
-                    <div class="avatar avatar-instruktor">
-                         <img class="avatar-img w-100 h-100" src="/${row.image_path}" alt="${row.email}">
-                    </div>
-                </td>
                 <td class="d-flex row-gap-2 column-gap-2 pe-3 table-data-actions">
                     <a href="/instructor/update/${row.id}">
                         <button class="btn btn-warning d-flex align-items-center column-gap-1 text-white">

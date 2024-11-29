@@ -24,7 +24,7 @@
                 <td>Nomor Telepon</td>
                 <td>Email</td>
                 <td>Alamat</td>
-                <td>Pas Foto</td>
+<!--                <td>Pas Foto</td>-->
                 <td class="action-table-column">Aksi</td>
             </tr>
             </thead>

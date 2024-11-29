@@ -106,11 +106,6 @@ function updateTable(users, tableBodyId, mainContainerId) {
                 <td>${row.tlp}</td>
                 <td>${row.email}</td>
                 <td>${row.role}</td>
-                <td>
-                    <div class="avatar avatar-users">
-                         <img class="avatar-img w-100 h-100" src="${row.profile_picture}" alt="${row.email}">
-                    </div>
-                </td>
                 <td class="pe-3 table-data-actions">
                     <button class="btn btn-danger d-flex align-items-center column-gap-1"
                             onclick="deleteUser(${row.id})"

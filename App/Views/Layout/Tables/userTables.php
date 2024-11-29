@@ -24,7 +24,7 @@
                     <td>No Telepon</td>
                     <td>Email</td>
                     <td>Role</td>
-                    <td>Pas Foto</td>
+<!--                    <td>Pas Foto</td>-->
                     <td class="action-table-column">Aksi</td>
                 </tr>
                 </thead>
@@ -55,7 +55,7 @@
                     <td>No Telepon</td>
                     <td>Email</td>
                     <td>Role</td>
-                    <td>Pas Foto</td>
+<!--                    <td>Pas Foto</td>-->
                     <td class="action-table-column">Aksi</td>
                 </tr>
                 </thead>
