@@ -2384,18 +2384,3 @@ section,
 .map-container iframe {
     border-radius: 10px; /* Sudut membulat pada peta */
 }
-
-@media screen and (max-width: 576px) and (max-height: 932px)
-{
-    .overlay-container-loader
-    {
-        width: 100vw !important;
-        height: 100vh !important;
-        top: 0;
-        right: 0;
-        left: 0;
-        column-gap: 0;
-        position: relative;
-        justify-content: center !important;
-    }
-}

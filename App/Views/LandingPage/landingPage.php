@@ -152,12 +152,12 @@
         <img src="/Asset/landingPage/img/stats-bg.jpg" alt="" data-aos="fade-in">
 
         <div class="container position-relative" data-aos="fade-up" data-aos-delay="100">
-
+            <?php if (!empty($summary) && $summary['success']) {?>
             <div class="row gy-4">
 
                 <div class="col-lg-3 col-md-6">
                     <div class="stats-item text-center w-100 h-100">
-                        <span data-purecounter-start="0" data-purecounter-end="232" data-purecounter-duration="1"
+                        <span data-purecounter-start="0" data-purecounter-end="<?php echo $summary['data']['0']['total_peserta'];?>"data-purecounter-duration="1"
                               class="purecounter"></span>
                         <p>Peserta Pelatihan</p>
                     </div>
@@ -165,7 +165,7 @@
 
                 <div class="col-lg-3 col-md-6">
                     <div class="stats-item text-center w-100 h-100">
-                        <span data-purecounter-start="0" data-purecounter-end="521" data-purecounter-duration="1"
+                        <span data-purecounter-start="0" data-purecounter-end="<?php echo $summary['data']['0']['total_programs'];?>" data-purecounter-duration="1"
                               class="purecounter"></span>
                         <p>Program Pelatihan</p>
                     </div>
@@ -173,7 +173,7 @@
 
                 <div class="col-lg-3 col-md-6">
                     <div class="stats-item text-center w-100 h-100">
-                        <span data-purecounter-start="0" data-purecounter-end="1453" data-purecounter-duration="1"
+                        <span data-purecounter-start="0" data-purecounter-end="6" data-purecounter-duration="1"
                               class="purecounter"></span>
                         <p>Jam Pelatihan</p>
                     </div>
@@ -181,14 +181,14 @@
 
                 <div class="col-lg-3 col-md-6">
                     <div class="stats-item text-center w-100 h-100">
-                        <span data-purecounter-start="0" data-purecounter-end="32" data-purecounter-duration="1"
+                        <span data-purecounter-start="0" data-purecounter-end="<?php echo $summary['data']['0']['total_instructors'];?>" data-purecounter-duration="1"
                               class="purecounter"></span>
                         <p>Pengajar Ahli</p>
                     </div>
                 </div><!-- End Stats Item -->
 
             </div>
-
+            <?php }?>
         </div>
 
     </section><!-- /Stats Section -->
@@ -328,7 +328,7 @@
 
         <!-- Section Title -->
         <div class="container section-title" data-aos="fade-up">
-            <h2>Fitur Aplikasi Mobile</h2>
+            <h2 class="title-section-header-main-content">Fitur Aplikasi Mobile</h2>
             <p>Unduh aplikasi kami untuk pengalaman belajar yang lebih mudah, praktis, dan terintegrasi langsung dengan
                 layanan Balai Latihan Kerja.</p>
         </div><!-- End Section Title -->
@@ -402,7 +402,7 @@
 
             <!-- Section Title -->
             <div class="container section-title" data-aos="fade-up">
-                <h2>Hubungi Kami</h2>
+                <h2 class="title-section-header-main-content">Hubungi Kami</h2>
                 <p>Jika Anda memiliki pertanyaan, saran, atau ingin mendapatkan informasi lebih lanjut, jangan ragu
                     untuk menghubungi kami melalui kontak yang tersedia.</p>
             </div><!-- End Section Title -->
