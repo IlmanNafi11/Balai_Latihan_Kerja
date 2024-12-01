@@ -12,7 +12,7 @@ use Google\Client;
 use GuzzleHttp\Client as Guzzle;
 
 const PROJECT_ID = 'balai-latihan';
-const FIREBASE_SERVICE_ACCOUNT = __DIR__ . '/../Config/balai-latihan-firebase-adminsdk-lrsix-3bbd66d9ad.json';
+const FIREBASE_SERVICE_ACCOUNT = '/home/u137138991/domains/pelatihanku.pbltifnganjuk.com/public_html/App/Config/balai-latihan-firebase-adminsdk-lrsix-501c430b4e.json';
 const FIREBASE_URL = 'https://fcm.googleapis.com/v1/projects/balai-latihan/messages:send';
 class FcmController
 {
@@ -75,7 +75,7 @@ class FcmController
      */
     function checkerData()
     {
-        date_default_timezone_set('Asia/Jakarta');
+        date_default_timezone_set('UTC');
         $lastCheck = date('Y-m-d H:i:s', strtotime('-1 minute'));
         $topic = "all_users";
         $result = $this->notificationModel->getUpdateNotification($lastCheck);
