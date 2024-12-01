@@ -140,7 +140,7 @@ class RegistrationController
         }
 
         $folderPath = $input['path'];
-        $fullFolderPath = $_SERVER['DOCUMENT_ROOT'] . "/$folderPath";
+        $fullFolderPath = $_SERVER['DOCUMENT_ROOT'] . "/Public/" .$folderPath;
 
         if (!is_dir($fullFolderPath)) {
             http_response_code(404);
