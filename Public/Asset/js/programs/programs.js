@@ -6,13 +6,7 @@ function deletePrograms(id){
         axios.delete(`programs/${id}`)
             .then(response => {
                 if (response.data.success) {
-                    const row = document.getElementById(`row-${id}`);
-                    if (row) {
-                        row.remove();
-                    }
                     successAlert(response.data.message, response.data.redirect_url);
-                } else {
-                    errorAlert(response.data.message);
                 }
             })
             .catch(error => {
