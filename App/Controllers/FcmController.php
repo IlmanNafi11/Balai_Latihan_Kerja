@@ -7,6 +7,7 @@ use Dotenv\Dotenv;
 
 $dotenv = Dotenv::createImmutable('../../');
 $dotenv->load();
+
 use Google\Client;
 use GuzzleHttp\Client as Guzzle;
 
@@ -52,8 +53,8 @@ class FcmController
                     'body' => $message
                 ],
                 "data" => [
-                    "id" => (string) $data['id'],
-                    "is_read" => (string) $data['is_read'],
+                    "id" => (string)$data['id'],
+                    "is_read" => (string)$data['is_read'],
                 ]
             ]
         ];
@@ -77,24 +78,20 @@ class FcmController
         date_default_timezone_set('Asia/Jakarta');
         $lastCheck = date('Y-m-d H:i:s');
         $topic = "all_users";
-        while (true){
-            $result = $this->notificationModel->getUpdateNotification($lastCheck);
-            if (!$result['isEmpty']) {
-                foreach ($result['notifications'] as $notification) {
-                    $data = [
-                        "id" => $notification['id'],
-                        "is_read" => $notification['is_read']
-                    ];
-                    json_encode($this->sendNotification(
-                        "Notifikasi Baru!",
-                        $notification['pesan'],
-                        $topic,
-                        $data
-                    ));
-                }
+        $result = $this->notificationModel->getUpdateNotification($lastCheck);
+        if (!$result['isEmpty']) {
+            foreach ($result['notifications'] as $notification) {
+                $data = [
+                    "id" => $notification['id'],
+                    "is_read" => $notification['is_read']
+                ];
+                json_encode($this->sendNotification(
+                    "Notifikasi Baru!",
+                    $notification['pesan'],
+                    $topic,
+                    $data
+                ));
             }
-            $lastCheck = date('Y-m-d H:i:s');
-            sleep(60);
         }
     }
 }
