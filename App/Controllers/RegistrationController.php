@@ -144,7 +144,7 @@ class RegistrationController
 
         if (!is_dir($fullFolderPath)) {
             http_response_code(404);
-            echo json_encode(['success' => false, 'message' => 'Folder tidak ditemukan']);
+            echo json_encode(['success' => false, 'message' => 'Folder tidak ditemukan', 'path' => $fullFolderPath]);
             exit();
         }
 

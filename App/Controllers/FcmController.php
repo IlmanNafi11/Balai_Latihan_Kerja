@@ -76,7 +76,7 @@ class FcmController
     function checkerData()
     {
         date_default_timezone_set('Asia/Jakarta');
-        $lastCheck = date('Y-m-d H:i:s');
+        $lastCheck = date('Y-m-d H:i:s', strtotime('-1 minute'));
         $topic = "all_users";
         $result = $this->notificationModel->getUpdateNotification($lastCheck);
         if (!$result['isEmpty']) {
