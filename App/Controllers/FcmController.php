@@ -11,7 +11,7 @@ use Google\Client;
 use GuzzleHttp\Client as Guzzle;
 
 const PROJECT_ID = 'balai-latihan';
-const FIREBASE_SERVICE_ACCOUNT = __DIR__ . '/../Config/balai-latihan-firebase-adminsdk-lrsix-b4d8d1bf14.json';
+const FIREBASE_SERVICE_ACCOUNT = __DIR__ . '/../Config/balai-latihan-firebase-adminsdk-lrsix-3bbd66d9ad.json';
 const FIREBASE_URL = 'https://fcm.googleapis.com/v1/projects/balai-latihan/messages:send';
 class FcmController
 {
