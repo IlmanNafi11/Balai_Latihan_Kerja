@@ -10,7 +10,7 @@ function deletePrograms(id){
                     if (row) {
                         row.remove();
                     }
-                    successAlert("Data Berhasil dihapus!", response.data.redirect_url);
+                    successAlert(response.data.message, response.data.redirect_url);
                 } else {
                     errorAlert(response.data.message);
                 }
