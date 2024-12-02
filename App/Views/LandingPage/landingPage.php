@@ -152,43 +152,49 @@
         <img src="/Asset/landingPage/img/stats-bg.jpg" alt="" data-aos="fade-in">
 
         <div class="container position-relative" data-aos="fade-up" data-aos-delay="100">
-            <?php if (!empty($summary) && $summary['success']) {?>
-            <div class="row gy-4">
+            <?php if (!empty($summary) && $summary['success']) { ?>
+                <div class="row gy-4">
 
-                <div class="col-lg-3 col-md-6">
-                    <div class="stats-item text-center w-100 h-100">
-                        <span data-purecounter-start="0" data-purecounter-end="<?php echo $summary['data']['0']['total_peserta'];?>"data-purecounter-duration="1"
+                    <div class="col-lg-3 col-md-6">
+                        <div class="stats-item text-center w-100 h-100">
+                        <span data-purecounter-start="0"
+                              data-purecounter-end="<?php echo $summary['data']['0']['total_peserta']; ?>"
+                              data-purecounter-duration="1"
                               class="purecounter"></span>
-                        <p>Peserta Pelatihan</p>
-                    </div>
-                </div><!-- End Stats Item -->
+                            <p>Peserta Pelatihan</p>
+                        </div>
+                    </div><!-- End Stats Item -->
 
-                <div class="col-lg-3 col-md-6">
-                    <div class="stats-item text-center w-100 h-100">
-                        <span data-purecounter-start="0" data-purecounter-end="<?php echo $summary['data']['0']['total_programs'];?>" data-purecounter-duration="1"
+                    <div class="col-lg-3 col-md-6">
+                        <div class="stats-item text-center w-100 h-100">
+                        <span data-purecounter-start="0"
+                              data-purecounter-end="<?php echo $summary['data']['0']['total_programs']; ?>"
+                              data-purecounter-duration="1"
                               class="purecounter"></span>
-                        <p>Program Pelatihan</p>
-                    </div>
-                </div><!-- End Stats Item -->
+                            <p>Program Pelatihan</p>
+                        </div>
+                    </div><!-- End Stats Item -->
 
-                <div class="col-lg-3 col-md-6">
-                    <div class="stats-item text-center w-100 h-100">
+                    <div class="col-lg-3 col-md-6">
+                        <div class="stats-item text-center w-100 h-100">
                         <span data-purecounter-start="0" data-purecounter-end="6" data-purecounter-duration="1"
                               class="purecounter"></span>
-                        <p>Jam Pelatihan</p>
-                    </div>
-                </div><!-- End Stats Item -->
+                            <p>Jam Pelatihan</p>
+                        </div>
+                    </div><!-- End Stats Item -->
 
-                <div class="col-lg-3 col-md-6">
-                    <div class="stats-item text-center w-100 h-100">
-                        <span data-purecounter-start="0" data-purecounter-end="<?php echo $summary['data']['0']['total_instructors'];?>" data-purecounter-duration="1"
+                    <div class="col-lg-3 col-md-6">
+                        <div class="stats-item text-center w-100 h-100">
+                        <span data-purecounter-start="0"
+                              data-purecounter-end="<?php echo $summary['data']['0']['total_instructors']; ?>"
+                              data-purecounter-duration="1"
                               class="purecounter"></span>
-                        <p>Pengajar Ahli</p>
-                    </div>
-                </div><!-- End Stats Item -->
+                            <p>Pengajar Ahli</p>
+                        </div>
+                    </div><!-- End Stats Item -->
 
-            </div>
-            <?php }?>
+                </div>
+            <?php } ?>
         </div>
 
     </section><!-- /Stats Section -->
@@ -342,7 +348,8 @@
                         Aplikasi mobile kami memberikan akses cepat dan mudah ke semua layanan pelatihan, pendaftaran,
                         serta informasi Balai Latihan Kerja.
                     </p>
-                    <a href="/Asset/downloads/PelatihanKu.apk" class="btn btn-get-started" download="PelatihanKu.apk">Install App</a>
+                    <a href="/Asset/downloads/PelatihanKu.apk" class="btn btn-get-started" download="PelatihanKu.apk">Install
+                        App</a>
                 </div>
                 <!-- Gambar di sebelah kanan -->
                 <div class="col-lg-7 order-1 order-lg-2 d-flex flex-column align-items-center" data-aos="zoom-out"
@@ -485,7 +492,6 @@
 <!-- Scroll Top -->
 <a href="" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i
             class="bi bi-arrow-up-short"></i></a>
-
 
 
 <!-- Vendor JS Files -->
