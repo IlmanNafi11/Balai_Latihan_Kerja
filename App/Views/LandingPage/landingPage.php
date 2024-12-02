@@ -342,7 +342,7 @@
                         Aplikasi mobile kami memberikan akses cepat dan mudah ke semua layanan pelatihan, pendaftaran,
                         serta informasi Balai Latihan Kerja.
                     </p>
-                    <a href="#" class="btn btn-get-started">Install App</a>
+                    <a href="/Asset/downloads/PelatihanKu.apk" class="btn btn-get-started" download="PelatihanKu.apk">Install App</a>
                 </div>
                 <!-- Gambar di sebelah kanan -->
                 <div class="col-lg-7 order-1 order-lg-2 d-flex flex-column align-items-center" data-aos="zoom-out"
