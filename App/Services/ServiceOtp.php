@@ -39,8 +39,7 @@ class ServiceOtp
 
             $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') ? "https" : "http";
             $host = $_SERVER['HTTP_HOST'];
-            $imageUrl = $protocol . "://" . $host . "/Asset/images/Logo-PelatihanKu-Apps.png";
-            $mail->AddEmbeddedImage(__DIR__ . '../../../Public/Asset/images/Logo-PelatihanKu-Apps-email.png', 'logo_cid');
+            $mail->AddEmbeddedImage('/home/u137138991/domains/pelatihanku.pbltifnganjuk.com/public_html/Public/Asset/images/Logo-PelatihanKu-Apps-email.png', 'logo_cid');
             $mail->isHTML(true);
             $mail->Subject = 'Kode OTP untuk Reset Password';
             $mail->Body = '<body style="margin: 0; padding: 2rem; background-color: #F5F9FC; font-family: Arial, sans-serif;">
