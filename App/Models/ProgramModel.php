@@ -220,4 +220,18 @@ class ProgramModel
             return ['success' => false, 'message' => $e->getMessage()];
         }
     }
+
+    public function updateStatusPendaftaran()
+    {
+        $query = "UPDATE programs SET status_pendaftaran = 'Ditutup' WHERE status_pendaftaran = 'Dibuka' AND tgl_akhir_pendaftaran < CURDATE()";
+        $stmt = $this->connection->prepare($query);
+        try {
+            $stmt->execute();
+            http_response_code(200);
+            return ['success' => true, 'message' => 'Status Pendaftaran berhasil diperbarui'];
+        } catch (PDOException $e) {
+            http_response_code(500);
+            return ['success' => false, 'message' => $e->getMessage()];
+        }
+    }
 }
