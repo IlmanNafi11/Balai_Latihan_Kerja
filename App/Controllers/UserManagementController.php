@@ -48,6 +48,7 @@ class UserManagementController
         $role = $_POST['role'] ?? 'admin';
 
         if (empty($name) || empty($email) || empty($phone) || empty($pas_foto) || empty($pass) || empty($tanggal_lahir) || empty($jenis_kelamin) || empty($alamat)) {
+            http_response_code(400);
             echo json_encode(['success' => false, 'message' => 'Pastikan semua data telah diisi.']);
             return;
         }
@@ -79,9 +80,11 @@ class UserManagementController
                 ];
                 echo json_encode($this->model->createUsers($users));
             } else {
+                http_response_code(500);
                 echo json_encode(['success' => false, 'message' => 'Gagal dalam memindahkan directory penyimpanan foto']);
             }
         } else {
+            http_response_code(500);
             echo json_encode(['success' => false, 'message' => $pas_foto['error']]);
         }
     }
@@ -93,6 +96,7 @@ class UserManagementController
         $phone = $data['phone'];
         $address = $data['address'];
         if (empty($name) || empty($phone) || empty($address)) {
+            http_response_code(400);
             return ['success' => false, 'message' => 'Data Tidak Lengkap'];
         } else {
             echo json_encode($this->model->updateUsers($id, $name, $phone, $address));

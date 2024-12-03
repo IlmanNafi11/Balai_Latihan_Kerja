@@ -54,8 +54,8 @@ class RegistrationController
             $programTerdaftar = $programController->getProgramById($isRegisters['program_id']);
             $departmentIdTerdaftar = $programTerdaftar['programs'][0]['department_id'];
             if ($departmentIdTerdaftar != $departmentId) {
+                http_response_code(409);
                 echo json_encode(['success' => false, 'message' => 'Anda sudah terdaftar di program lain pada tahun yang sama. Pendaftaran hanya diperbolehkan untuk program dalam departemen yang sama.']);
-                http_response_code(400);
                 exit();
             }
         }
@@ -74,7 +74,6 @@ class RegistrationController
 
         if ($isSucces) {
             echo json_encode($this->model->insertRegistration($userId, $programId, $uploadDir, $tahunSekarang, $registrationNumber));
-            http_response_code(200);
         }
     }
 
@@ -102,7 +101,7 @@ class RegistrationController
             }
         } else {
             echo json_encode(['success' => false, 'message' => $file['error']]);
-            http_response_code(400);
+            http_response_code(500);
             exit();
         }
     }
@@ -178,5 +177,4 @@ class RegistrationController
             exit();
         }
     }
-
 }

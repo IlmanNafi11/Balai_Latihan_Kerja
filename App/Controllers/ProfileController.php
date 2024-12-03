@@ -37,6 +37,7 @@ class ProfileController
         $pas_foto = $_FILES['profile_picture'] ?? null;
 
         if (empty($name) || empty($phone) || empty($address)) {
+            http_response_code(400);
             echo json_encode(['success' => false, 'message' => 'Data tidak lengkap!']);
             return;
         }
@@ -45,6 +46,7 @@ class ProfileController
             $fileExtension = strtolower(pathinfo($pas_foto['name'], PATHINFO_EXTENSION));
             $allowedExtensions = ['jpeg', 'jpg', 'png'];
             if (!in_array($fileExtension, $allowedExtensions)) {
+                http_response_code(400);
                 echo json_encode(['success' => false, 'message' => 'Format foto tidak didukung!']);
                 return;
             }
@@ -60,6 +62,7 @@ class ProfileController
                 $_SESSION["path_profile"] = $filePath;
                 echo json_encode($this->model->updateUsers($id, $name, $phone, $address, $filePath));
             } else {
+                http_response_code(500);
                 echo json_encode(['success' => false, 'message' => 'Gagal memindahkan foto profil']);
             }
         } else {

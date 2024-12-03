@@ -18,7 +18,7 @@ class RequirementsModel
             $stm->execute();
             $data = $stm->fetchAll(PDO::FETCH_ASSOC);
             if (empty($data)) {
-                http_response_code(204);
+                http_response_code(404);
                 return ['success' => true, 'isEmpty' => true, 'message' => 'Data requirements tidak ditemukan'];
             } else {
                 http_response_code(200);

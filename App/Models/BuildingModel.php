@@ -17,8 +17,10 @@ class BuildingModel
             $stmt->execute();
             $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
             if ($data) {
+                http_response_code(200);
                 return ['success' => true, 'isEmpty' => false, 'buildings' => $data];
             } else {
+                http_response_code(200);
                 return ['success' => true, 'isEmpty' => true, 'message' => 'Data Kosong', 'buildings' => []];
             }
         } catch (PDOException $e) {
@@ -35,11 +37,14 @@ class BuildingModel
             $stmt->execute();
             $data = $stmt->fetch(PDO::FETCH_ASSOC);
             if ($data) {
+                http_response_code(200);
                 return ['success' => true, 'isEmpty' => false, 'buildings' => $data];
             } else {
+                http_response_code(404);
                 return ['success' => true, 'isEmpty' => true, 'message' => "Data tidak ditemukan"];
             }
         } catch (PDOException $e) {
+            http_response_code(500);
             return ['success' => false, 'message' => 'Terjadi Kesalahan: ' . $e->getMessage()];
         }
     }
@@ -52,11 +57,14 @@ class BuildingModel
             $stmt->execute();
             $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
             if ($data) {
+                http_response_code(200);
                 return ["success" => true, 'isEmpty' => false, "buildings" => $data];
             } else {
+                http_response_code(200);
                 return ['success' => true, 'isEmpty' => true, 'message' => 'Data Kosong'];
             }
         } catch (PDOException $e) {
+            http_response_code(500);
             return ['success' => false, 'message' => 'Terjadi Kesalahan : ' . $e->getMessage()];
         }
     }

@@ -50,6 +50,7 @@ class DepartmentsController
         $image = $_FILES['image'];
 
         if (empty($name) || empty($description) || empty($instituteID) || empty($image)) {
+            http_response_code(400);
             echo json_encode(['success' => false, 'message' => 'Data Tidak Lengkap']);
             return;
         }
@@ -60,15 +61,16 @@ class DepartmentsController
             $filePath = $uploadDirectory . $fileName;
 
             if (move_uploaded_file($image['tmp_name'], $filePath)) {
+                http_response_code(200);
                 echo json_encode($this->departmentModel->createDepartment($name, $description, $instituteID, $filePath));
             } else {
+                http_response_code(500);
                 echo json_encode(['success' => false, 'message' => 'Gagal dalam memindahkan directory penyimpanan foto']);
             }
         } else {
+            http_response_code(500);
             echo json_encode(['success' => false, 'message' => $image['error']]);
         }
-
-
     }
 
     public function updateDepartment($id)
@@ -78,6 +80,7 @@ class DepartmentsController
         $image = $_FILES['image'] ?? null;
 
         if (empty($name) || empty($description)) {
+            http_response_code(400);
             echo json_encode(['success' => false, 'message' => 'Data Tidak Lengkap']);
             return;
         }
@@ -91,6 +94,7 @@ class DepartmentsController
             if (move_uploaded_file($image['tmp_name'], $filePath)) {
                 $imagePath = $filePath;
             } else {
+                http_response_code(500);
                 echo json_encode(['success' => false, 'message' => 'Gagal dalam memindahkan directory penyimpanan foto']);
                 return;
             }

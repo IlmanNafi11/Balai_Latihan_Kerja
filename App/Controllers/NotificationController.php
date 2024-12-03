@@ -40,6 +40,7 @@ class NotificationController
             $result = $this->model->createNotification($message);
             echo json_encode($result);
         } else {
+            http_response_code(400);
             echo json_encode(['success' => false, 'message' => 'Data Kosong']);
         }
     }

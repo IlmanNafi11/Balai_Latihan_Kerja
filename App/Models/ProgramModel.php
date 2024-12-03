@@ -20,7 +20,7 @@ class ProgramModel
                 http_response_code(200);
                 return ['success' => true, 'isEmpty' => false, 'programs' => $data];
             } else {
-                http_response_code(204);
+                http_response_code(200);
                 return ['success' => true, 'isEmpty' => true, 'message' => 'Data Kosong', 'programs' => []];
             }
         } catch (PDOException $e) {
@@ -41,7 +41,6 @@ class ProgramModel
                 http_response_code(200);
                 return ['success' => true, 'isEmpty' => false, 'programs' => $data];
             } else {
-                http_response_code(204);
                 return ['success' => true, 'isEmpty' => true, 'message' => 'Data Tidak ditemukan'];
             }
         } catch (PDOException $e) {
@@ -83,7 +82,7 @@ class ProgramModel
                 http_response_code(200);
                 return ['success' => true, 'isEmpty' => false, 'programs' => $data];
             } else {
-                http_response_code(204);
+                http_response_code(404);
                 return ['success' => true, 'isEmpty' => true, 'message' => 'Data Tidak ditemukan'];
             }
         } catch (PDOException $e) {

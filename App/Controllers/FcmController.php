@@ -34,6 +34,7 @@ class FcmController
         $accessToken = $client->fetchAccessTokenWithAssertion();
 
         if (isset($accessToken['error'])) {
+            http_response_code(500);
             throw new Exception("Error fetching access token: " . $accessToken['error']);
         }
 

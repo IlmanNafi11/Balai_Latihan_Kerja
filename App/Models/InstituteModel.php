@@ -17,11 +17,14 @@ class InstituteModel
             $stmt->execute();
             $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
             if (empty($data)) {
+                http_response_code(200);
                 return ['success' => true, 'isEmpty' => true, 'message' => 'Data Kosong'];
             } else {
+                http_response_code(200);
                 return ['success' => true, 'isEmpty' => false, 'institutes' => $data];
             }
         } catch (PDOException $e) {
+            http_response_code(500);
             ['success' => false, 'message' => 'Terjadi Kesalahan : ' . $e->getMessage()];
         }
     }
@@ -34,11 +37,14 @@ class InstituteModel
             $stmt->execute();
             $data = $stmt->fetch(PDO::FETCH_ASSOC);
             if (empty($data)) {
-                return ['success' => true, 'isEmpty' => true, 'message' => 'Data Kosong'];
+                http_response_code(404);
+                return ['success' => true, 'isEmpty' => true, 'message' => 'Data Tidak Ditemukan'];
             } else {
+                http_response_code(200);
                 return ['success' => true, 'isEmpty' => false, 'institutes' => $data];
             }
         } catch (PDOException $e) {
+            http_response_code(500);
             ['success' => false, 'message' => 'Terjadi Kesalahan : ' . $e->getMessage()];
         }
     }
@@ -52,11 +58,14 @@ class InstituteModel
             $stmt->execute();
             $data = $stmt->fetch(PDO::FETCH_ASSOC);
             if (empty($data)) {
+                http_response_code(404);
                 return ['success' => true, 'isEmpty' => true, 'message' => 'Data Tidak Ditemukan'];
             } else {
+                http_response_code(200);
                 return ['success' => true, 'isEmpty' => false, 'institutes' => $data];
             }
         } catch (PDOException $e) {
+            http_response_code(500);
             return ['success' => false, 'message' => $e->getMessage()];
         }
     }
@@ -81,8 +90,10 @@ class InstituteModel
             $stmt->bindParam(':website', $data['website']);
             $stmt->bindParam(':deskripsi', $data['deskripsi']);
             $stmt->execute();
+            http_response_code(200);
             return ['success' => true, 'message' => 'Data Berhasil diperbarui', 'redirect_url' => '/institute'];
         } catch (PDOException $e) {
+            http_response_code(500);
             return ['success' => false, 'message' => $e->getMessage()];
         }
     }

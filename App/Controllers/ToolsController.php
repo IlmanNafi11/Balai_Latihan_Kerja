@@ -69,6 +69,7 @@ class ToolsController
             $result = $this->model->createTools($name, $description, $type);
             echo json_encode($result);
         } else {
+            http_response_code(400);
             echo json_encode(['status' => false, 'message' => 'Data tidak lengkap']);
         }
     }
@@ -83,6 +84,7 @@ class ToolsController
             $result = $this->model->updateTools($id, $name, $description, $type);
             echo json_encode($result);
         } else {
+            http_response_code(400);
             echo json_encode(['status' => false, 'message' => 'Data tidak lengkap']);
         }
     }

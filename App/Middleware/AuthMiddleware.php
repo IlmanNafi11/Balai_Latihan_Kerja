@@ -27,7 +27,7 @@ function authenticate($token = null)
             }
         }
     } else {
-        http_response_code(400);
+        http_response_code(401);
         return ['success' => false, 'message' => 'Token tidak ditemukan'];
     }
 }

@@ -19,11 +19,13 @@ class UserModel
             $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
             if ($result) {
+                http_response_code(409);
                 return ['isEmpty' => false, 'success' => false, 'message' => 'Email sudah terdaftar'];
             } else {
                 return ['isEmpty' => true, 'success' => true, 'message' => 'Email belum terdaftar'];
             }
         } catch (PDOException $e) {
+            http_response_code(500);
             return ['success' => false, 'message' => $e->getMessage()];
         }
     }
@@ -37,11 +39,14 @@ class UserModel
             $stmt->execute();
             $data = $stmt->fetch(PDO::FETCH_ASSOC);
             if (empty($data)) {
+                http_response_code(404);
                 return ['success' => true, 'isEmpty' => true, 'message' => 'Data tidak ditemukan'];
             } else {
+                http_response_code(200);
                 return ['success' => true, 'isEmpty' => false, 'users' => $data];
             }
         } catch (PDOException $e) {
+            http_response_code(500);
             return ['success' => false, 'message' => $e->getMessage()];
         }
     }
@@ -84,6 +89,7 @@ class UserModel
             $stmt->execute();
             return ['success' => true, 'message' => 'Registrasi Berhasil', 'redirect' => '/user'];
         } catch (PDOException $e) {
+            http_response_code(500);
             return ['success' => false, 'message' => $e->getMessage()];
         }
     }
@@ -106,8 +112,10 @@ class UserModel
                 $stmt->bindParam(':path_profile', $profile_picture);
             }
             $stmt->execute();
+            http_response_code(200);
             return ['success' => true, 'message' => 'Profile berhasil diperbarui'];
         } catch (PDOException $e) {
+            http_response_code(500);
             return ['success' => false, 'message' => $e->getMessage()];
         }
     }
@@ -121,6 +129,7 @@ class UserModel
             $stmt->execute();
             return ['success' => true, 'message' => 'Data user berhasil dihapus', 'redirect' => '/user'];
         } catch (PDOException $e) {
+            http_response_code(500);
             return ['success' => false, 'message' => $e->getMessage()];
         }
     }
@@ -171,7 +180,7 @@ class UserModel
             $stmt->execute();
             $data = $stmt->fetch(PDO::FETCH_ASSOC);
             if (empty($data)) {
-                http_response_code(401);
+                http_response_code(404);
                 return ['success' => true, 'isEmpty' => true, 'message' => 'User tidak ditemukan'];
             } else {
                 return ['success' => true, 'isEmpty' => false, 'message' => 'User ditemukan', 'users' => $data];

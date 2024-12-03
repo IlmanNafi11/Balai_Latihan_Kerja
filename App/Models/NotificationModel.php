@@ -17,11 +17,14 @@ class NotificationModel
             $stmt->execute();
             $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
             if (empty($data)) {
+                http_response_code(200);
                 return ['success' => true, 'isEmpty' => true, 'message' => "Data Kosong", 'notifications' => []];
             } else {
+                http_response_code(200);
                 return ['success' => true, 'isEmpty' => false, 'notifications' => $data];
             }
         } catch (PDOException $e) {
+            http_response_code(500);
             return ['success' => false, 'message' => $e->getMessage()];
         }
     }
@@ -35,7 +38,7 @@ class NotificationModel
             $stmt->execute();
             $data = $stmt->fetch(PDO::FETCH_ASSOC);
             if (empty($data)) {
-                http_response_code(204);
+                http_response_code(404);
                 return ['success' => true, 'isEmpty' => true, 'message' => "Data Tidak Ditemukan", 'notifications' => []];
             } else {
                 http_response_code(200);
@@ -116,6 +119,7 @@ class NotificationModel
             }
 
         } catch (PDOException $e) {
+            http_response_code(500);
             return [
                 'success' => false,
                 'message' => $e->getMessage()
@@ -134,9 +138,11 @@ class NotificationModel
             if (empty($data)) {
                 return ['success' => true, 'isEmpty' => true, 'message' => 'Data Kosong', 'notifications' => []];
             } else {
+                http_response_code(200);
                 return ['success' => true, 'isEmpty' => false, 'notifications' => $data];
             }
         } catch (PDOException $e) {
+            http_response_code(500);
             return ['success' => false, 'message' => $e->getMessage()];
         }
     }

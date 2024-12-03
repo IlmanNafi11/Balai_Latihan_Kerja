@@ -17,8 +17,10 @@ class DepartmentModel
             $stmt->execute();
             $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
             if (empty($data)) {
+                http_response_code(200);
                 return ['success' => true, 'isEmpty' => true, 'message' => 'Data Kosong', 'departments' => []];
             } else {
+                http_response_code(200);
                 return ['success' => true, 'isEmpty' => false, 'departments' => $data];
             }
         } catch (PDOException $e) {
@@ -37,8 +39,10 @@ class DepartmentModel
             $stmt->execute();
             $data = $stmt->fetch(PDO::FETCH_ASSOC);
             if (empty($data)) {
+                http_response_code(404);
                 return ['success' => true, 'isEmpty' => true, 'message' => 'Data Tidak Ditemukan'];
             } else {
+                http_response_code(200);
                 return ['success' => true, 'isEmpty' => false, 'department' => $data];
             }
         } catch (PDOException $e) {
@@ -55,8 +59,10 @@ class DepartmentModel
             $stmt->execute();
             $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
             if (empty($data)) {
+                http_response_code(200);
                 return ['success' => true, 'isEmpty' => true, 'message' => 'Data Kosong'];
             } else {
+                http_response_code(200);
                 return ['success' => true, 'isEmpty' => false, 'departments' => $data];
             }
         } catch (PDOException $e) {
@@ -103,6 +109,7 @@ class DepartmentModel
             }
 
             $stmt->execute();
+            http_response_code(200);
             return ['success' => true, 'message' => 'Data berhasil diperbarui', 'redirect' => '/department'];
         } catch (PDOException $e) {
             http_response_code(500);
@@ -117,6 +124,7 @@ class DepartmentModel
         try {
             $stmt->bindParam(":id", $id);
             $stmt->execute();
+            http_response_code(200);
             return ['success' => true, 'message' => 'Data berhasil dihapus', 'redirect_url' => '/department'];
         } catch (PDOException $e) {
             http_response_code(500);
@@ -132,8 +140,10 @@ class DepartmentModel
             $stmt->execute();
             $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
             if (empty($data)) {
+                http_response_code(200);
                 return ['success' => true, 'isEmpty' => true, 'message' => 'Data Kosong', 'data' => []];
             } else {
+                http_response_code(200);
                 return ['success' => true, 'isEmpty' => false, 'data' => $data];
             }
         } catch (PDOException $e) {
@@ -153,8 +163,10 @@ class DepartmentModel
             $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
             if (empty($data)) {
+                http_response_code(200);
                 return ['success' => true, 'isEmpty' => true, 'message' => 'Data Kosong', 'departments' => []];
             } else {
+                http_response_code(200);
                 return ['success' => true, 'isEmpty' => false, 'departments' => $data];
             }
         } catch (PDOException $e) {
@@ -162,5 +174,4 @@ class DepartmentModel
             return ['success' => false, 'message' => $e->getMessage()];
         }
     }
-
 }

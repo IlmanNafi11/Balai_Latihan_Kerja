@@ -132,12 +132,15 @@ class ProgramController
                         echo json_encode(['success' => true, 'message' => 'Data berhasil disimpan', 'redirect' => '/programs']);
                     }
                 } else {
+                    http_response_code(500);
                     echo json_encode(['success' => false, 'message' => $insertRequirements['message']]);
                 }
             } else {
+                http_response_code(500);
                 echo json_encode(['success' => false, 'message' => 'Gagal dalam memindahkan directory penyimpanan foto']);
             }
         } else {
+            http_response_code(500);
             echo json_encode(['success' => false, 'message' => $image['error']]);
         }
     }
