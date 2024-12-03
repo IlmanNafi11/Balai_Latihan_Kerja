@@ -1,5 +1,6 @@
 <?php
 
+require_once '/home/u137138991/domains/pelatihanku.pbltifnganjuk.com/public_html/vendor/autoload.php';
 require_once '/home/u137138991/domains/pelatihanku.pbltifnganjuk.com/public_html/App/Models/ProgramModel.php';
 require_once '/home/u137138991/domains/pelatihanku.pbltifnganjuk.com/public_html/App/Config/Database.php';
 
@@ -12,6 +13,7 @@ class StatusPendaftaranHandler
 {
 
     private $model;
+
     public function __construct()
     {
         $database = new Database();
