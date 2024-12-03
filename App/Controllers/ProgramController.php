@@ -274,6 +274,3 @@ class ProgramController
         echo json_encode($this->model->updateStatusPendaftaran());
     }
 }
-
-$programs = new ProgramController();
-$programs->updateStatusPendaftaran();
