@@ -178,4 +178,19 @@ class NotificationModel
             return ['success' => false, 'message' => $e->getMessage()];
         }
     }
+
+    public function deleteExpiredNotifications($startDate, $endDate)
+    {
+        $query = "DELETE FROM notifications WHERE created_at BETWEEN :start_date AND :end_date";
+        $stmt = $this->connection->prepare($query);
+        try {
+            $stmt->bindParam(':start_date', $startDate);
+            $stmt->bindParam(':end_date', $endDate);
+            $stmt->execute();
+            http_response_code(204);
+        } catch (PDOException $e) {
+            http_response_code(500);
+            return ['success' => false, 'message' => 'Terjadi Kesalahan: ' . $e->getMessage()];
+        }
+    }
 }
