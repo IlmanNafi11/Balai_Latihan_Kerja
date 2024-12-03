@@ -1,15 +1,27 @@
 <?php
 
-class StatusPendaftaranHandler extends ProgramController
+require_once '/home/u137138991/domains/pelatihanku.pbltifnganjuk.com/public_html/App/Models/ProgramModel.php';
+require_once '/home/u137138991/domains/pelatihanku.pbltifnganjuk.com/public_html/App/Config/Database.php';
+
+use Dotenv\Dotenv;
+
+$dotenv = Dotenv::createImmutable('/home/u137138991/domains/pelatihanku.pbltifnganjuk.com/public_html/');
+$dotenv->load();
+
+class StatusPendaftaranHandler
 {
+
+    private $model;
     public function __construct()
     {
-        parent::__construct();
+        $database = new Database();
+        $db = $database->getConnection();
+        $this->model = new ProgramModel($db);
     }
 
     public function updateStatusPendaftaran()
     {
-        echo json_encode(parent::updateStatusPendaftaran());
+        echo json_encode($this->model->updateStatusPendaftaran());
     }
 }
 

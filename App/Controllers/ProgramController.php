@@ -268,9 +268,4 @@ class ProgramController
         $programs = $this->model->searchPrograms($name);
         echo json_encode($programs);
     }
-
-    public function updateStatusPendaftaran()
-    {
-        echo json_encode($this->model->updateStatusPendaftaran());
-    }
 }
