@@ -187,7 +187,8 @@ class NotificationModel
             $stmt->bindParam(':start_date', $startDate);
             $stmt->bindParam(':end_date', $endDate);
             $stmt->execute();
-            http_response_code(204);
+            http_response_code(200);
+            return ['success' => true, 'message' => 'Notifikasi berhasil dihapus'];
         } catch (PDOException $e) {
             http_response_code(500);
             return ['success' => false, 'message' => 'Terjadi Kesalahan: ' . $e->getMessage()];
