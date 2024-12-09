@@ -51,8 +51,8 @@ class NotificationController
 
     public function searchNotifications()
     {
-        $name = $_GET['search'] ?? '';
-        echo json_encode($this->model->searchNotifications($name));
+        $message = $_GET['search'] ?? '';
+        echo json_encode($this->model->searchNotifications($message));
     }
 
     public function updateIsRead()
