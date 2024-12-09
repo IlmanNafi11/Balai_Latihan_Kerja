@@ -23,12 +23,14 @@ class ResetPasswordController
     {
         $token = $_SESSION['token'] ?? null;
         if ($token === null) {
+            http_response_code(401);
             header('Location: /password-reset/request');
             exit();
         }
 
         $auth = authenticate($token);
         if (is_array($auth) && !$auth['success']) {
+            http_response_code(401);
             header('Location: /password-reset/request');
             exit();
         }
@@ -37,6 +39,7 @@ class ResetPasswordController
         if ($step == '2') {
             require_once "../App/Views/Auth/OTPAuth.php";
         } else {
+            http_response_code(401);
             header('Location: /password-reset/request');
             exit();
         }
@@ -46,12 +49,14 @@ class ResetPasswordController
     {
         $token = $_SESSION['token'] ?? null;
         if ($token === null) {
+            http_response_code(401);
             header('Location: /password-reset/request');
             exit();
         }
 
         $auth = authenticate($token);
         if (is_array($auth) && !$auth['success']) {
+            http_response_code(401);
             header('Location: /password-reset/request');
             exit();
         }
@@ -60,6 +65,7 @@ class ResetPasswordController
         if ($step == '3') {
             require_once "../App/Views/Auth/resetPassword.php";
         } else {
+            http_response_code(401);
             header('Location: /password-reset/request');
             exit();
         }
@@ -69,12 +75,14 @@ class ResetPasswordController
     {
         $token = $_SESSION['token'] ?? null;
         if ($token === null) {
+            http_response_code(401);
             header('Location: /password-reset/request');
             exit();
         }
 
         $auth = authenticate($token);
         if (is_array($auth) && !$auth['success']) {
+            http_response_code(401);
             header('Location: /password-reset/request');
             exit();
         }
@@ -131,6 +139,7 @@ class ResetPasswordController
         $token = $_SESSION['token'] ?? null;
         $auth = authenticate($token);
         if (is_array($auth) && !$auth['success']) {
+            http_response_code(401);
             echo json_encode($auth);
             return;
         }
@@ -157,6 +166,7 @@ class ResetPasswordController
                 $_SESSION['token'] = $token;
                 echo json_encode(['success' => true, 'message' => 'Kode OTP Berhasil dikirim Ulang!']);
             } else {
+                http_response_code(500);
                 echo json_encode($result);
             }
         } else {
@@ -201,7 +211,7 @@ class ResetPasswordController
                     echo json_encode(['success' => false, 'message' => 'Kode OTP tidak valid!']);
                 }
             } else {
-                http_response_code(400);
+                http_response_code(410);
                 echo json_encode(['success' => false, 'message' => 'OTP Kadaluarsa']);
             }
         }
@@ -211,6 +221,7 @@ class ResetPasswordController
     {
         $data = json_decode(file_get_contents("php://input"), true);
         if (empty($data['password'])) {
+            http_response_code(400);
             echo json_encode(['success' => false, 'message' => 'Input tidak boleh kosong!']);
             return;
         }
@@ -218,7 +229,15 @@ class ResetPasswordController
         $token = $_SESSION['token'] ?? null;
         $auth = authenticate($token);
         if (is_array($auth) && !$auth['success']) {
+            http_response_code(401);
             echo json_encode($auth);
+            return;
+        }
+
+        $regexPassword = '/^[a-zA-Z0-9]{8,}$/';
+        if (!preg_match($regexPassword, $data['password'])) {
+            http_response_code(400);
+            echo json_encode(['success' => false, 'message' => 'Password minimum terdiri dari 8 digit']);
             return;
         }
 
