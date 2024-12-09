@@ -78,7 +78,7 @@ class ToolsModel
             $stmt->execute();
             $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
             if (empty($data)) {
-                http_response_code(204);
+                http_response_code(200);
                 return ['success' => true, 'isEmpty' => true, 'message' => 'Data Kosong'];
             } else {
                 http_response_code(200);
