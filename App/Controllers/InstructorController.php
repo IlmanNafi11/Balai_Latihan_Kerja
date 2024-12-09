@@ -14,7 +14,6 @@ class InstructorController
 
     public function index()
     {
-        $instructors = $this->model->GetAllInstructor();
         require_once '../App/Views/Instructors/instructors.php';
     }
 
