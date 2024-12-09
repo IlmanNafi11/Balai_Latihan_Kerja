@@ -27,7 +27,7 @@
             rel="stylesheet">
 
 
-    <title>Instruktor | BLK</title>
+    <title>Data Pengguna | BLK</title>
 </head>
 
 <body>

@@ -143,7 +143,7 @@ class UserModel
             $stmt->execute();
             $data = $stmt->fetch(PDO::FETCH_ASSOC);
             if (empty($data)) {
-                http_response_code(401);
+                http_response_code(404);
                 return ['success' => true, 'isEmpty' => true, 'message' => 'Email tidak terdaftar'];
             } else {
                 return ['success' => true, 'isEmpty' => false, 'message' => 'Email terdaftar', 'users' => $data];
@@ -214,7 +214,7 @@ class UserModel
             $stmt->execute();
             $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
             if (empty($data)) {
-                http_response_code(204);
+                http_response_code(200);
                 return ['success' => true, 'isEmpty' => true, 'message' => 'Data kosong', 'users' => []];
             } else {
                 http_response_code(200);

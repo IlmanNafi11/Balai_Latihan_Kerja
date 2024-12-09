@@ -557,7 +557,18 @@ else if ($uri == 'registration/download') {
         header('location: /login');
         exit();
     }
-} // Notification
+}
+else if (preg_match('/registration\/delete\/(\d+)/', $uri, $matches)) {
+    $id = $matches[1];
+    if (isset($_SESSION['userID'])) {
+        if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
+            loadController('RegistrationController', 'deleteRegistration', $id);
+        }
+    } else {
+        header('Location: /login');
+        exit();
+    }
+}// Notification
 elseif ($uri == 'notification') {
     if (isset($_SESSION['userID'])) {
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {

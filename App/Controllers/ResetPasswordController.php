@@ -234,6 +234,13 @@ class ResetPasswordController
             return;
         }
 
+        $regexPassword = '/^[a-zA-Z0-9]{8,}$/';
+        if (!preg_match($regexPassword, $data['password'])) {
+            http_response_code(400);
+            echo json_encode(['success' => false, 'message' => 'Password minimum terdiri dari 8 digit']);
+            return;
+        }
+
         $userId = $auth->userId;
         $result = $this->model->updatePassword(password_hash($data['password'], PASSWORD_DEFAULT), $userId);
         session_unset();

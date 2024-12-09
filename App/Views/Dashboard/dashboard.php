@@ -50,12 +50,10 @@
         <div class="hero-card-dashboard-information d-flex p-0 m-0 column-gap-3">
             <?php if (!empty($summary) && !$summary['isEmpty']) {
                 foreach ($summary['data'] as $data):
-                    // Menentukan nilai yang akan ditampilkan berdasarkan nama tabel
                     $total = $data['total'];
-                    $title = ''; // Inisialisasi judul
-                    $iconSrc = ''; // Inisialisasi ikon gambar
+                    $title = '';
+                    $iconSrc = '';
 
-                    // Menentukan judul dan ikon sesuai dengan table_name
                     switch ($data['table_name']) {
                         case 'departments':
                             $title = 'Total Kejuruan';

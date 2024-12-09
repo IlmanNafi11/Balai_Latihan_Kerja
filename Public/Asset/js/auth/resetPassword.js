@@ -109,7 +109,7 @@ if (btnVerifyOtp) {
 const newPassword = document.getElementById("input-new-password");
 const validNewPassword = document.getElementById("valid-new-password");
 const invalidPassword = document.getElementById("invalid-new-password");
-const regexPassword = /^[a-zA-Z0-9]+$/;
+const regexPassword = /^[a-zA-Z0-9]{8,}$/;
 const btnReset = document.getElementById('btn-reset');
 
 if (btnReset) {
