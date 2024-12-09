@@ -6,7 +6,7 @@ window.deleteRegisterData = deleteRegisterData;
 
 function deleteRegisterData(id) {
     questionAlert("Hapus data?", "Data tidak dapat dikembalikan setelah dihapus!", "Ya, Hapus", () => {
-        axios.delete(`/department/delete/${id}`)
+        axios.delete(`/registration/delete/${id}`)
             .then((response) => {
                 if (response.data.success) {
                     successAlert(response.data.message, response.data.redirect);

@@ -32,7 +32,7 @@ const validPasFoto = uploadArea.nextElementSibling;
 const invalidPasFoto = validPasFoto.nextElementSibling;
 
 const regexNama = /^[a-zA-Z ,.']+$/;
-const regexPassword = /^[a-zA-Z0-9]+$/;
+const regexPassword = /^[a-zA-Z0-9]{8,}$/;
 const regexAlamat = /^[a-zA-Z0-9 ,.]+$/;
 const regexNoTlp = /^08[0-9]+$/;
 const regexEmail = /^[a-zA-Z0-9._]+@gmail\.com$/;
@@ -111,15 +111,17 @@ document.getElementById('btn-simpan').addEventListener('click', (e) => {
                 .then(response => {
                     if (response.data.success) {
                         successAlert(response.data.message, response.data.redirect);
-                    } else if (!response.data.isEmpty) {
-                        warningAlert(response.data.message);
-                        email.classList.remove('is-valid');
-                        email.classList.add('is-invalid');
-                        invalidEmail.textContent = "Silahkan gunakan email yang lain!";
                     }
                 })
                 .catch(error => {
-                    errorAlert(error.response);
+                    if (error.status === 409) {
+                        warningAlert(error.data.message);
+                        email.classList.remove('is-valid');
+                        email.classList.add('is-invalid');
+                        invalidEmail.textContent = "Silahkan gunakan email yang lain!";
+                    } else {
+                        errorAlert(error.data.response);
+                    }
                 })
         });
     }
