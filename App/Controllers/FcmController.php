@@ -70,7 +70,7 @@ class FcmController
 
     /**
      * Fungsi untuk melakukan pengecekan data notification secara berkala menggunakan cron job
-     * @return void
+     *
      */
     function checkerData()
     {
